@@ -1,0 +1,28 @@
+body {
+    background-color: aliceblue;
+}
+.title {
+    font-size: 70px;
+    font-style: italic;
+    position: absolute;
+    left: 15%;
+    top: -30px;
+    background-color: lightcoral;
+}
+.tree_container {
+    width:700px;
+    height: 850px;
+    background-color: lightgreen;
+    padding-top: 100px;
+    float: right;
+}
+.tree {
+    width: 100%;
+    height: 100%;
+}
+.left_container {
+    background-color: lightblue;
+    width: 1148px;
+    height: 950px;
+    float: left;
+}
