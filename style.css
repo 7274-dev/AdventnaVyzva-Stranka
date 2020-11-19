@@ -9,6 +9,19 @@ body {
     top: -30px;
     background-color: lightcoral;
 }
+.describtion_container {
+    background-color: lightblue;
+    width: 1140px;
+    height: 950px;
+    float: left;
+    flex-wrap: wrap;
+}
+.describtion_text {
+    margin-top: 120px;
+    font-size: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
 .tree_container {
     width:700px;
     height: 850px;
@@ -26,27 +39,21 @@ body {
     height: 40px;
     position: absolute;
     z-index: 1;
+}
+.star {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    z-index: 1;
+    top: 0%;
+    right: 15.5%;
+    transform: rotate(2deg);
+}
+#ball1 {
     top: 20%;
     right: 15%;
 }
-.star {
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    z-index: 1;
-    top: 2%;
-    right: 16.5%;
-}
-.describtion_container {
-    background-color: lightblue;
-    width: 1140px;
-    height: 950px;
-    float: left;
-    flex-wrap: wrap;
-}
-.describtion_text {
-    margin-top: 120px;
-    font-size: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
+#ball2 {
+    top: 40%;
+    right: 25%;
 }
