@@ -1,6 +1,9 @@
 body {
     background-color: lightgreen;
 }
+button {
+    cursor: pointer;
+}
 .title {
     font-size: 70px;
     font-style: italic;
@@ -48,12 +51,4 @@ body {
     top: 0%;
     right: 15.5%;
     transform: rotate(2deg);
-}
-#ball1 {
-    top: 20%;
-    right: 15%;
-}
-#ball2 {
-    top: 40%;
-    right: 25%;
 }
