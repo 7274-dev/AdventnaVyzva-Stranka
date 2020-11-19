@@ -1,3 +1,4 @@
+// todo: add relative coordinates
 var positions = [
     {top:"41", right:"15"},
     {top:"60", right:"25"}
