@@ -73,7 +73,6 @@ function on_load() {
 
     for (var i = 0; i < positions.length; i++) {
         var currentPosition = positions[i];
-
         var currentBall = document.createElement("div");
 
         var ballImage;
@@ -84,6 +83,7 @@ function on_load() {
         else {
             ballImage = ballImageIndexes[i];
         }
+
         currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + ")";
         currentBall.innerHTML = i + 1;
         
