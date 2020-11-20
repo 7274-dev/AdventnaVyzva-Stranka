@@ -1,9 +1,6 @@
-body {
-    background-color: lightgreen;
-}
 #title {
     font-size: 70px;
-    font-style: italic;
+    /* font-style: italic; */
     left: 10%;
     top: -1px;
     float: left;
@@ -26,7 +23,6 @@ body {
 #treecontainer {
     width: 700px;
     height: 850px;
-    background-color: lightgreen;
     padding-top: 80px;
     float: right;
 }
