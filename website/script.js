@@ -1,3 +1,5 @@
+var backendURL = "http://localhost:8080/";
+
 var positions = [
     {top:"20", right:"48"},//blue right up 01
     {top:"60", right:"45"},//orange left middle_down 02
@@ -55,8 +57,24 @@ function getCookie(name) {
     return decodeURI(dc.substring(begin + prefix.length, end) ).replace(/\"/g, ''); 
 }
 
-function on_click() {
-    alert("ball pressed")
+function on_click(event) {
+    element = event.target; // rip IE 6-8
+    var dayNumber = element.innerHTML;
+    const http = new XMLHttpRequest();
+    const url = backendURL + "text?day=" + dayNumber;
+    http.open("GET", url);
+    http.send();
+    
+    http.onreadystatechange= (e)=> {
+        if (this.readyState == 4 && // request is done 
+            this.status == 200) { // response code is OK
+            const textElement = document.getElementById("description");
+            textElement.innerHTML = http.responseText;
+        }
+        else {
+            alert("server error! http status code " + e.status);
+        }
+    }
 };
 
 function randomInt(bound) {
@@ -93,7 +111,9 @@ function on_load() {
         currentBall.classList.add("fluid-image");
         currentBall.classList.add("ball");
 
-        currentBall.onclick = on_click;
+        currentBall.onclick = function(e) {
+            on_click(e);
+        };
 
         ballContainer.appendChild(currentBall);
     };
