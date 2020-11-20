@@ -17,34 +17,7 @@ var ballImages = [
     "purple_ball.png",
     "red_ball.png",
     "white_ball.png",
-    "pink2_ball.png",
     "yellow_ball.png"
-];
-
-var color_list = [
-    ballImages[0],
-    ballImages[1],
-    ballImages[2],
-    ballImages[3],
-    ballImages[4],
-    ballImages[5],
-    ballImages[6],
-    ballImages[7],
-    ballImages[8],
-    ballImages[9],
-    ballImages[1],
-    ballImages[2],
-    ballImages[3],
-    ballImages[4],
-    ballImages[5],
-    ballImages[6],
-    ballImages[7],
-    ballImages[8],
-    ballImages[9],
-    ballImages[1],
-    ballImages[2],
-    ballImages[3],
-    ballImages[4]
 ];
 
 function on_click() {
@@ -55,13 +28,54 @@ function randomInt(bound) {
     return Math.floor(Math.random() * bound);
 }
 
+// https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
+function getCookie(name) {
+    var dc,
+        prefix,
+        begin,
+        end;
+
+    dc = document.cookie;
+    prefix = name + "=";
+    begin = dc.indexOf("; " + prefix);
+    end = dc.length;
+
+    if (begin !== -1) {
+        begin += 2;
+    } else {
+        begin = dc.indexOf(prefix);
+        if (begin === -1 || begin !== 0 ) return null;
+    } 
+
+    if (dc.indexOf(";", begin) !== -1) {
+        end = dc.indexOf(";", begin);
+    }
+
+    return decodeURI(dc.substring(begin + prefix.length, end) ).replace(/\"/g, ''); 
+}
+
 function on_load() {
     var ballContainer = document.getElementById("treecontainer");
+    var ballImageIndexes = [];
+    var cookieExists = document.cookie.indexOf("balls=") != -1;
+    console.log(cookieExists);
+    if (cookieExists) {
+        ballImageIndexes = JSON.parse(getCookie("balls"));
+    }
+    
     for (var i = 0; i < positions.length; i++) {
         var currentPosition = positions[i];
         var currentBall = document.createElement("img");
 
-        currentBall.src = ballResourcePath + color_list[i];
+        var ballImage;
+        if (!cookieExists) {
+            ballImage = randomInt(ballImages.length);
+            ballImageIndexes.push(ballImage);
+        }
+        else {
+            ballImage = ballImageIndexes[i];
+        }
+        currentBall.src = ballResourcePath + ballImages[ballImage];
         
         currentBall.style.top = currentPosition.top + "%";
         currentBall.style.right = currentPosition.right + "%";
@@ -75,6 +89,8 @@ function on_load() {
 
         ballContainer.appendChild(currentBall);
     };
+    document.cookie += "balls=" + JSON.stringify(ballImageIndexes);
+    console.log(document.cookie);
 };
 
 on_load()

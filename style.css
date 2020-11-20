@@ -13,7 +13,7 @@ button {
     float: left;
     background-color: lightcoral;
 }
-.describtion_container {
+#describtion {
     background-color: lightblue;
     float: left;
     padding-top: 100px;
