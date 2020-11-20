@@ -11,22 +11,24 @@ button {
     left: 15%;
     top: -1px;
     float: left;
-
     background-color: lightcoral;
 }
 .describtion_container {
     background-color: lightblue;
-    clear: left;
-    margin-top: 120px;
+    float: left;
+    padding-top: 100px;
     font-size: 20px;
     padding-left: 10px;
     padding-right: 10px;
+    height: 830px;
+    width: 1120px;
+    flex-wrap: wrap;
 }
 #treecontainer {
     width: 700px;
     height: 850px;
     background-color: lightgreen;
-    padding-top: 100px;
+    padding-top: 80px;
     float: right;
     border: 1px solid darkgreen;
 }
@@ -39,7 +41,7 @@ button {
     height: 150px;
     position: absolute;
     z-index: 1;
-    top: 11%;
-    right: 15.5%;
+    top: 3%;
+    right: 15.2%;
     transform: rotate(2deg);
 }
