@@ -2,7 +2,9 @@
 var positions = [
     {top:"41", right:"15"},
     {top:"60", right:"25"},
-    {top:"31", right:"20"}
+    {top:"31", right:"20"},
+    {top:"45", right:"25"},
+    {top:"50", right:"18"}
 ];
 
 var ballResourcePath = "img/balls/";
