@@ -41,7 +41,7 @@ button {
     height: 150px;
     position: absolute;
     z-index: 1;
-    top: 11%;
-    right: 15.5%;
+    top: 3%;
+    right: 15.2%;
     transform: rotate(2deg);
 }
