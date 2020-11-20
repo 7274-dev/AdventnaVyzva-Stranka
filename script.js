@@ -1,10 +1,10 @@
 // todo: add relative coordinates
 var positions = [
-    {top:"41", right:"15"},
+    {top:"20", right:"14"},
     {top:"60", right:"25"},
-    {top:"31", right:"20"},
-    {top:"45", right:"25"},
-    {top:"50", right:"18"}
+    {top:"33", right:"27"},
+    {top:"46", right:"28"},
+    {top:"50", right:"7"}
 ];
 
 var ballResourcePath = "img/balls/";
@@ -14,10 +14,10 @@ var ballImages = [
     "orange_ball.png",
     "orange_red_ball.png",
     "pink_ball.png",
-    "pink2_ball.png",
     "purple_ball.png",
     "red_ball.png",
     "white_ball.png",
+    "pink2_ball.png",
     "yellow_ball.png"
 ];
 
