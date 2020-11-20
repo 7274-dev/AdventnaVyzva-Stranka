@@ -1,10 +1,10 @@
 // todo: add relative coordinates
 var positions = [
-    {top:"20", right:"14"},
-    {top:"60", right:"25"},
-    {top:"33", right:"27"},
-    {top:"46", right:"28"},
-    {top:"50", right:"7"}
+    {top:"20", right:"14"},//blue right up
+    {top:"60", right:"25"},//orange left middle_down
+    {top:"33", right:"27"},//orange_red left middle_up
+    {top:"46", right:"28"},//pink left middle
+    {top:"55", right:"7"},//purple right middle_down
 ];
 
 var ballResourcePath = "img/balls/";
@@ -69,8 +69,7 @@ function on_load() {
         currentBall.style.height = "40px";
         currentBall.style.position = "absolute";
         currentBall.style.zIndex = 1;
-        currentBall.classList.add("img-fluid");
-        
+
         currentBall.onclick = on_click;
 
         ballContainer.appendChild(currentBall);
