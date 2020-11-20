@@ -73,7 +73,8 @@ function on_load() {
 
     for (var i = 0; i < positions.length; i++) {
         var currentPosition = positions[i];
-        var currentBall = document.createElement("img");
+
+        var currentBall = document.createElement("div");
 
         var ballImage;
         if (!cookieExists) {
@@ -83,15 +84,14 @@ function on_load() {
         else {
             ballImage = ballImageIndexes[i];
         }
-        currentBall.src = ballResourcePath + ballImages[ballImage];
-
+        currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + ")";
+        currentBall.innerHTML = i + 1;
+        
         currentBall.style.top = currentPosition.top + "%";
         currentBall.style.right = currentPosition.right + "%";
-        currentBall.style.width = "40px";
-        currentBall.style.height = "40px";
-        currentBall.style.position = "absolute";
-        currentBall.style.zIndex = 1;
+
         currentBall.classList.add("fluid-image");
+        currentBall.classList.add("ball");
 
         currentBall.onclick = on_click;
 

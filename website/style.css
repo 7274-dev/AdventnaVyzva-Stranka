@@ -39,7 +39,20 @@ body {
     height: 150px;
     position: absolute;
     z-index: 1;
-    top: 0%;
+    top: 0%; /* when this is removed, everything is fucked up? */
     right: 40%;
     transform: rotate(2deg);
+}
+
+.ball {
+    background-repeat: no-repeat;
+    background-size: contain;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-position: center center;
+    width: 40px;
+    height: 40px;
+    position: absolute;
 }
