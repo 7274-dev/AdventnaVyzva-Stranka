@@ -60,6 +60,7 @@ function on_load() {
     var cookieExists = document.cookie.indexOf("balls=") != -1;
     console.log(cookieExists);
     if (cookieExists) {
+        console.log(getCookie("balls"))
         ballImageIndexes = JSON.parse(getCookie("balls"));
     }
     
@@ -88,7 +89,7 @@ function on_load() {
 
         ballContainer.appendChild(currentBall);
     };
-    document.cookie += "balls=" + JSON.stringify(ballImageIndexes);
+    document.cookie = "balls=" + JSON.stringify(ballImageIndexes);
     console.log(document.cookie);
 };
 
