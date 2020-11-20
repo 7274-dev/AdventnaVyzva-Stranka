@@ -4,7 +4,6 @@
     left: 10%;
     top: -1px;
     float: left;
-    background-color: gold;
 }
 #description {
     padding-top: 100px;
@@ -35,7 +34,7 @@
     height: 150px;
     position: absolute;
     z-index: 1;
-    top: 0%; /* when this is removed, everything is fucked up? */
+    top: 1%; /* when this is removed, everything is fucked up? */
     right: 40%;
     transform: rotate(2deg);
 }
