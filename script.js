@@ -37,7 +37,8 @@ function on_load() {
         currentBall.style.height = "40px";
         currentBall.style.position = "absolute";
         currentBall.style.zIndex = 1;
-
+        currentBall.classList.add("img-fluid");
+        
         currentBall.onclick = on_click;
 
         ballContainer.appendChild(currentBall);
