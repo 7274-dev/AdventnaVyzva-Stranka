@@ -1,0 +1,3 @@
+[submodule "AdventnaVyzva-Backend"]
+	path = AdventnaVyzva-Backend
+	url = https://github.com/Magiccop990/AdventnaVyzva-Backend.git
