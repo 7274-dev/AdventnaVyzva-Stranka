@@ -1,32 +1,32 @@
 var positions = [
-    {top:"21", right:"18"},//blue right up 01
-    {top:"60", right:"25"},//orange left middle_down 02
-    {top:"33", right:"23"},//orange_red left middle_up 03
-    {top:"46", right:"27"},//pink left middle 04
-    {top:"55", right:"8"},//purple right middle_down 05
-    {top:"40", right:"16"},//red midle_right midle 06
-    {top:"38", right:"19"},//white midle midle 07
-    {top:"30", right:"14"},//pink2 right up 08
-    {top:"54", right:"17"},//yellow midle midle_down 09
-    {top:"50", right:"11"},//blue right midle 10
-    {top:"65", right:"9"},//orange right down 11
-    {top:"70", right:"19"},//orange_red midle down 12
-    {top:"72", right:"30"},//pink left down 13
-    {top:"51", right:"22"},//purple left midle 14
+    {top:"20", right:"48"},//blue right up 01
+    {top:"60", right:"45"},//orange left middle_down 02
+    {top:"33", right:"43"},//orange_red left middle_up 03
+    {top:"46", right:"47"},//pink left middle 04
+    {top:"55", right:"18"},//purple right middle_down 05
+    {top:"40", right:"26"},//red midle_right midle 06
+    {top:"38", right:"59"},//white midle midle 07
+    {top:"30", right:"34"},//pink2 right up 08
+    {top:"54", right:"57"},//yellow midle midle_down 09
+    {top:"50", right:"71"},//blue right midle 10
+    {top:"65", right:"29"},//orange right down 11
+    {top:"70", right:"39"},//orange_red midle down 12
+    {top:"72", right:"60"},//pink left down 13
+    {top:"51", right:"32"},//purple left midle 14
 ];
 
 var ballResourcePath = "img/balls/";
 
 var ballImages = [
-    "blue_ball.png",//0
-    "orange_ball.png",//1
-    "orange_red_ball.png",//2
-    "pink_ball.png",//3
-    "purple_ball.png",//4
-    "red_ball.png",//5
-    "white_ball.png",//6
-    "pink_ball.png",//7
-    "yellow_ball.png"//8
+    "blue_ball.png",
+    "orange_ball.png",
+    "orange_red_ball.png",
+    "pink_ball.png",
+    "purple_ball.png",
+    "red_ball.png",
+    "white_ball.png",
+    "pink_ball.png",
+    "yellow_ball.png"
 ];
 
 // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
@@ -67,9 +67,7 @@ function on_load() {
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
     var cookieExists = document.cookie.indexOf("balls=") != -1;
-    console.log(cookieExists);
     if (cookieExists) {
-        console.log(getCookie("balls"))
         ballImageIndexes = JSON.parse(getCookie("balls"));
     }
 
@@ -79,7 +77,7 @@ function on_load() {
 
         var ballImage;
         if (!cookieExists) {
-            ballImage = randomInt(ballImages.length);
+            ballImage = randomInt(ballImages.length - 1);
             ballImageIndexes.push(ballImage);
         }
         else {
@@ -93,13 +91,13 @@ function on_load() {
         currentBall.style.height = "40px";
         currentBall.style.position = "absolute";
         currentBall.style.zIndex = 1;
+        currentBall.classList.add("fluid-image");
 
         currentBall.onclick = on_click;
 
         ballContainer.appendChild(currentBall);
     };
     document.cookie = "balls=" + JSON.stringify(ballImageIndexes);
-    console.log(document.cookie);
 };
 
-on_load()
+on_load();
