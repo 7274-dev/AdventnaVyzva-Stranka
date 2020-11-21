@@ -63,9 +63,11 @@ function on_click(event) {
     const http = new XMLHttpRequest();
     const url = backendURL + "text?day=" + dayNumber;
     http.open("GET", url);
+    http.setRequestHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8887");
     http.send();
     
     http.onreadystatechange= (e)=> {
+        console.log(this.readyState);
         if (this.readyState == 4 && // request is done 
             this.status == 200) { // response code is OK
             const textElement = document.getElementById("description");
