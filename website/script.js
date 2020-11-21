@@ -72,7 +72,8 @@ function on_click(event) {
             textElement.innerHTML = http.responseText;
         }
         else {
-            alert("server error! http status code " + e.status);
+            const textElement = document.getElementById("description");
+            textElement.innerHTML = "Server error!";
         }
     }
 };
