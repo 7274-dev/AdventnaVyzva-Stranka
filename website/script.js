@@ -31,6 +31,51 @@ var ballImages = [
     "yellow_ball.png"
 ];
 
+function login() {
+    var isLoggedIn = getCookie("isLoggedIn") == null;
+    if (isLoggedIn) {
+        var isLoggedInCookie = getCookie("isLoggedIn");
+        if (isLoggedInCookie == "true") {
+        } else {
+            var loginDiv = document.createElement("div");
+            var loginInput = document.createElement("input");
+            var loginButton = document.createElement("button")
+            var body = document.body;
+            //login div parameters
+            loginDiv.innerHTML = "Prosím zadajte svoje meno:";
+            loginDiv.style.textAlign = "center";
+            loginDiv.style.position = "absolute";
+            loginDiv.style.top = "40%";
+            loginDiv.style.left = "40%";
+            loginDiv.style.height = "100px";
+            loginDiv.style.width = "200px";
+            loginDiv.style.backgroundColor = "lightblue";
+            //login input parameters
+            loginInput.placeholder = "Vaše meno";
+            loginInput.type = "text";
+            loginInput.id = "loginInput"
+            loginInput.style.margin = "8px";
+            loginInput.style.marginBottom = "0px";
+            //login button config
+            loginButton.innerHTML = "Potvrdiť";
+            loginButton.style.marginTop = "5px";
+            loginButton.style.marginLeft = "8px";
+            loginButton.onclick = function() {
+                var name = document.getElementById("loginInput").value;
+                console.log(name);
+                document.cookie += ";isLoggedIn=true";
+                loginDiv.removeChild(loginInput);
+                loginDiv.removeChild(loginButton);
+                body.removeChild(loginDiv);
+            };
+            //adding to webpage
+            loginDiv.appendChild(loginInput);
+            loginDiv.appendChild(loginButton);
+            body.appendChild(loginDiv);
+        };
+    };
+};
+
 // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
 function getCookie(name) {
     var dc,
@@ -85,6 +130,7 @@ function randomInt(bound) {
 }
 
 function on_load() {
+    login();
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
     var cookieExists = document.cookie.indexOf("balls=") != -1;
