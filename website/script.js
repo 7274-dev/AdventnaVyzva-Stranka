@@ -118,7 +118,10 @@ function on_load() {
 
         ballContainer.appendChild(currentBall);
     };
-    document.cookie = "balls=" + JSON.stringify(ballImageIndexes);
+    if (!cookieExists) {
+        document.cookie += "balls=" + JSON.stringify(ballImageIndexes);
+    }
+    
 };
 
 on_load();
