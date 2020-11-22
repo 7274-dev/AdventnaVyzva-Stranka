@@ -76,17 +76,26 @@
     position: absolute;
     top: 40%;
     left: 40%;
-    height: 100px;
+    height: 105px;
     width: 200px;
-    background-color: lightblue;
+    background-color: white;
+    font-family: Textt;
+    border-radius: 10px;
+    border: 1px solid #c9c9c9;
 }
 #loginInput {
     margin: 8px;
     margin-bottom: 0px;
+    font-family: Textt;
+    border-radius: 10px;
+    border: 1px solid #c9c9c9
 }
 #loginButton {
     margin-top: 5px;
     margin-left: 8px;
+    font-family: Textt;
+    border-radius: 10px;
+    border: 0
 }
 #alertDiv {
     background-color: lightgreen;
@@ -97,10 +106,16 @@
     top: 40%;
     left: 40%;
     text-align: center;
+    font-family: Textt;
+    border-radius: 10px;
+    border: 1px solid #c9c9c9;
 }
 #alertButton {
     margin-top: 8px;
     margin-left: 8px;
+    font-family: Textt;
+    border-radius: 10px;
+    border: 0
 }
 #map {
     width: 300px;
