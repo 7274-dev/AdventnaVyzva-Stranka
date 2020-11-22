@@ -108,6 +108,7 @@ function login() {
                     for (var i=0; i < unavailableSymbols.length; i++) {
                         if (name.includes(unavailableSymbols[i])) {
                             loginText.innerHTML = "Nemôžete použiť symbol " + unavailableSymbols[i];
+                            loginText.style.color = "rgb(233, 36, 36)"
                             pass = false;
                             break;
                         };
