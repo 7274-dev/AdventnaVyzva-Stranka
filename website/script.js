@@ -114,6 +114,20 @@ function login() {
     };
 };
 
+function on_ball_click(ball_number, ball_color) {
+    console.log("Opened ball number " + ball_number);
+    var ballContainer = document.getElementById("treecontainer");
+    var nextColor;
+    var descriptionText = document.getElementById("description");
+    var descriptionContainer = document.getElementById("descriptionContainer");
+    descriptionText.innerHTML = "";
+    if (ball_color == "red") {
+        nextColor = "red_broken";
+    } else if (ball_color == "blue") {
+        nextColor = "blue_broken";
+    }
+};
+
 // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
 function getCookie(name) {
     var dc,
@@ -190,10 +204,12 @@ function on_load() {
         }
 
         currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + ")";
+        var ballColor = ballImages[ballImage].replace("_ball.png", "")
         currentBall.innerHTML = i + 1;
         
         currentBall.style.top = currentPosition.top + "%";
         currentBall.style.right = currentPosition.right + "%";
+        currentBall.id = "ball" + i;
 
         currentBall.classList.add("fluid-image");
         currentBall.classList.add("ball");
