@@ -44,6 +44,15 @@ function login() {
             var loginInput = document.createElement("input");
             var loginButton = document.createElement("button")
             var body = document.body;
+            var alertDiv = document.createElement("div");
+            var alertButton = document.createElement("button");
+            //alert parameters
+            alertDiv.id = "alertDiv";
+            alertButton.id = "alertButton";
+            alertButton.innerHTML = "Ok";
+            alertButton.onclick = function() {
+                body.removeChild(alertDiv);
+            }
             //login div parameters
             loginDiv.innerHTML = "Prosím zadajte svoje meno:";
             loginDiv.id = "loginDiv";
@@ -61,8 +70,10 @@ function login() {
                     console.log(name);
                     for (var i=0; i < unavailableSymbols.length; i++) {
                         if (name.includes(unavailableSymbols[i])) {
-                            alert("Nemôžete použiť symbol " + unavailableSymbols[i]);
-                            pass = false
+                            alertDiv.innerHTML = "Nemôžete použiť symbol " + unavailableSymbols[i];
+                            alertDiv.appendChild(alertButton);
+                            body.appendChild(alertDiv);
+                            pass = false;
                         };
                     };
                     if (pass) {
