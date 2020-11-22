@@ -50,7 +50,7 @@ var ballImages = [
     "yellow_ball.png"
 ];
 
-var unavailableSymbols = ["#", '"', "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "_", "?", ".", ":", "-", "=", "%", "(", ")", "[", "]", "{", "}"];
+var unavailableSymbols = ["#", '"', "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "_", "?", ":", "-", "=", "%", "(", ")", "[", "]", "{", "}"];
 
 function login() {
     var isLoggedIn = getCookie("isLoggedIn") == null;
