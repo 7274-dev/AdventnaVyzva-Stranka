@@ -63,6 +63,10 @@ function login() {
             loginButton.onclick = function() {
                 var name = document.getElementById("loginInput").value;
                 console.log(name);
+                var blurBackground = document.getElementById("blurbackground");
+                var blur = document.getElementById("blur");
+                blurBackground.style.backgroundColor = "white";
+                blur.style.filter = "blur(0px) brightness(100%)";
                 document.cookie += ";isLoggedIn=true";
                 loginDiv.removeChild(loginInput);
                 loginDiv.removeChild(loginButton);
