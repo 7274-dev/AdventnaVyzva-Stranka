@@ -2,6 +2,7 @@
     font-family: Cisla;
     src: url('JMH Cthulhumbus Arcade.otf');
 }
+
 #title {
     font-size: 70px;
     /* font-style: italic; */
@@ -56,3 +57,11 @@
     position: absolute;
     font-family: Cisla;
 }
+/* 
+loginDiv.style.textAlign = "center";
+loginDiv.style.position = "absolute";
+loginDiv.style.top = "40%";
+loginDiv.style.left = "40%";
+loginDiv.style.height = "100px";
+loginDiv.style.width = "200px";
+loginDiv.style.backgroundColor = "lightblue"; */

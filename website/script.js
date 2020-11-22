@@ -31,6 +31,22 @@ var ballImages = [
     "yellow_ball.png"
 ];
 
+function replaceColor(imageData, oldColor, newColor) {
+    // r, g, b, a
+    for (var i = 0; i < imageData; i += 4) {
+        const red = imageData.data[i];
+        const green = imageData.data[i + 1];
+        const blue = imageData.data[i + 2];
+        if (red == oldColor.red &&
+            green == oldColor.green &&
+            blue == oldColor.blue) {
+                imageData.data[i] = newColor.red;
+                imageData.data[i + 1] = newColor.green;
+                imageData.data[i + 2] = newColor.blue;
+            }
+    }
+}
+
 function login() {
     var isLoggedIn = getCookie("isLoggedIn") == null;
     if (isLoggedIn) {
@@ -41,15 +57,9 @@ function login() {
             var loginInput = document.createElement("input");
             var loginButton = document.createElement("button")
             var body = document.body;
-            //login div parameters
+
             loginDiv.innerHTML = "Prosím zadajte svoje meno:";
-            loginDiv.style.textAlign = "center";
-            loginDiv.style.position = "absolute";
-            loginDiv.style.top = "40%";
-            loginDiv.style.left = "40%";
-            loginDiv.style.height = "100px";
-            loginDiv.style.width = "200px";
-            loginDiv.style.backgroundColor = "lightblue";
+            loginDiv.classList.add("login-prompt");
             //login input parameters
             loginInput.placeholder = "Vaše meno";
             loginInput.type = "text";
