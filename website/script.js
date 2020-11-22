@@ -1,5 +1,23 @@
 var backendURL = "http://92.52.4.175:8080/";
 
+var state_hex = {
+    other:"#c3c3c3",
+    sea:"#5891c9",
+    norway:"#fffff1",
+    sweden:"#ffff11",
+    denmark:"#fff111",
+    denmarkIslandFyn:"#ff1111",
+    german:"#f11111",
+    checkRepublic:"#111111",
+    slovakia:"#ffff22",
+    austriaItaly:"#fff222",
+    venice:"#ff2222",
+    cma:"#f22222",
+    greece:"#222222",
+    turkey:"#e77eb2",
+    israel:"#d4af37"
+};
+
 var positions = [
     {top:"20", right:"48"},//right up 01
     {top:"60", right:"45"},//left middle_down 02
