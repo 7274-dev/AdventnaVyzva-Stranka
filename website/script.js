@@ -50,6 +50,8 @@ var ballImages = [
     "yellow_ball.png"
 ];
 
+var unavailableSymbols = ["#", '"', "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "_", "?", ":", "-", "=", "%", "(", ")", "[", "]", "{", "}"];
+
 function replaceColor(imageData, oldColor, newColor) {
     // r, g, b, a
     for (var i = 0; i < imageData; i += 4) {
@@ -62,11 +64,9 @@ function replaceColor(imageData, oldColor, newColor) {
                 imageData.data[i] = newColor.red;
                 imageData.data[i + 1] = newColor.green;
                 imageData.data[i + 2] = newColor.blue;
-            }
-    }
-}
-
-var unavailableSymbols = ["#", '"', "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "_", "?", ".", ":", "-", "=", "%", "(", ")", "[", "]", "{", "}"];
+            };
+    };
+};
 
 function login() {
     var isLoggedIn = getCookie("isLoggedIn") == null;
@@ -78,10 +78,6 @@ function login() {
             var loginInput = document.createElement("input");
             var loginButton = document.createElement("button")
             var body = document.body;
-
-            loginDiv.innerHTML = "Prosím zadajte svoje meno:";
-            loginDiv.classList.add("login-prompt");
-
             var alertDiv = document.createElement("div");
             var alertButton = document.createElement("button");
             //alert parameters
@@ -90,11 +86,11 @@ function login() {
             alertButton.innerHTML = "Ok";
             alertButton.onclick = function() {
                 body.removeChild(alertDiv);
-            }
+            };
             //login div parameters
             loginDiv.innerHTML = "Prosím zadajte svoje meno:";
+            loginDiv.classList.add("login-prompt");
             loginDiv.id = "loginDiv";
-
             //login input parameters
             loginInput.placeholder = "Vaše meno a preizvisko";
             loginInput.id = "loginInput";
@@ -107,6 +103,13 @@ function login() {
                 var pass = true;
                 if (name != "") {
                     console.log(name);
+                    for (var i=0; i < unavailableSymbols.length; i++) {
+                        if (name.includes(unavailableSymbols[i])) {
+                            alertDiv.innerHTML = "Nemôžete použiť symbol " + unavailableSymbols[i];
+                            alertDiv.appendChild(alertButton);
+                            body.appendChild(alertDiv);
+                            pass = false;
+                        };
                     };
                     if (pass) {
                         var blurBackground = document.getElementById("blurbackground");
