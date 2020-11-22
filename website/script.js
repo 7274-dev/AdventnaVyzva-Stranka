@@ -108,7 +108,11 @@ function login() {
                     console.log(name);
                     for (var i=0; i < unavailableSymbols.length; i++) {
                         if (name.includes(unavailableSymbols[i])) {
+                            alertDiv.innerHTML = "Nemôžete použiť symbol " + unavailableSymbols[i];
+                            alertDiv.appendChild(alertButton);
+                            body.appendChild(alertDiv);
                             pass = false;
+                            break;
                         };
                     };
                     if (pass) {
