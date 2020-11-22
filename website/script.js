@@ -72,7 +72,7 @@ function replaceColor(imageData, oldColor, newColor) {
                 imageData.data[i] = newColor.red;
                 imageData.data[i + 1] = newColor.green;
                 imageData.data[i + 2] = newColor.blue;
-            };
+        };
     };
 };
 
@@ -163,14 +163,14 @@ function getCookie(name) {
     } else {
         begin = dc.indexOf(prefix);
         if (begin === -1 || begin !== 0 ) return null;
-    } 
+    };
 
     if (dc.indexOf(";", begin) !== -1) {
         end = dc.indexOf(";", begin);
-    }
+    };
 
     return decodeURI(dc.substring(begin + prefix.length, end) ).replace(/\"/g, ''); 
-}
+};
 
 function on_click(event) {
     element = event.target; // rip IE 6-8
@@ -187,17 +187,17 @@ function on_click(event) {
             this.status == 200) { // response code is OK
             const textElement = document.getElementById("description");
             textElement.innerHTML = http.responseText;
-        }
+        };
         else {
             const textElement = document.getElementById("description");
             textElement.innerHTML = "Server error!";
-        }
-    }
+        };
+    };
 };
 
 function randomInt(bound) {
     return Math.floor(Math.random() * bound);
-}
+};
 
 function on_load() {
     login();
