@@ -76,7 +76,7 @@ function login() {
         } else {
             var loginDiv = document.createElement("div");
             var loginInput = document.createElement("input");
-            var loginButton = document.createElement("button")
+            var loginButton = document.createElement("button");
             var body = document.body;
             var alertDiv = document.createElement("div");
             var alertButton = document.createElement("button");
