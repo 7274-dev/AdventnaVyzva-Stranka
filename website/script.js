@@ -56,9 +56,17 @@ function login() {
             loginButton.id = "loginButton";
             loginButton.onclick = function() {
                 var name = document.getElementById("loginInput").value;
+                var pass = true;
                 if (name != "") {
                     console.log(name);
-                    var blurBackground = document.getElementById("blurbackground");
+                    for (var i=0; i < unavailableSymbols.length; i++) {
+                        if (name.includes(unavailableSymbols[i])) {
+                            alert("Nemôžete použiť symbol " + unavailableSymbols[i]);
+                            pass = false
+                        };
+                    };
+                    if (pass) {
+                        var blurBackground = document.getElementById("blurbackground");
                     var blur = document.getElementById("blur");
                     blurBackground.style.backgroundColor = "white";
                     blur.style.filter = "blur(0px) brightness(100%)";
@@ -66,6 +74,7 @@ function login() {
                     loginDiv.removeChild(loginInput);
                     loginDiv.removeChild(loginButton);
                     body.removeChild(loginDiv);
+                    };
                 };
             };
             //adding to webpage
