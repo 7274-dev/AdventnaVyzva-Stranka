@@ -83,7 +83,7 @@ function login() {
             //alert parameters
             alertDiv.id = "alertDiv";
             alertButton.id = "alertButton";
-            alertButton.innerHTML = "Ok";
+            alertButton.innerHTML = "Naspäť";
             alertButton.onclick = function() {
                 body.removeChild(alertDiv);
             };
