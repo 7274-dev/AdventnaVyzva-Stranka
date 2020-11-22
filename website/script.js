@@ -1,20 +1,39 @@
 var backendURL = "http://92.52.4.175:8080/";
 
+var state_hex = {
+    other:"#c3c3c3",
+    sea:"#5891c9",
+    norway:"#fffff1",
+    sweden:"#ffff11",
+    denmark:"#fff111",
+    denmarkIslandFyn:"#ff1111",
+    german:"#f11111",
+    checkRepublic:"#111111",
+    slovakia:"#ffff22",
+    austriaItaly:"#fff222",
+    venice:"#ff2222",
+    cma:"#f22222",
+    greece:"#222222",
+    turkey:"#e77eb2",
+    israel:"#d4af37"
+};
+
 var positions = [
-    {top:"20", right:"48"},//blue right up 01
-    {top:"60", right:"45"},//orange left middle_down 02
-    {top:"33", right:"43"},//orange_red left middle_up 03
-    {top:"46", right:"47"},//pink left middle 04
-    {top:"55", right:"18"},//purple right middle_down 05
-    {top:"40", right:"26"},//red midle_right midle 06
-    {top:"38", right:"59"},//white midle midle 07
-    {top:"30", right:"34"},//pink2 right up 08
-    {top:"54", right:"57"},//yellow midle midle_down 09
-    {top:"50", right:"71"},//blue right midle 10
-    {top:"65", right:"29"},//orange right down 11
-    {top:"70", right:"39"},//orange_red midle down 12
-    {top:"72", right:"60"},//pink left down 13
-    {top:"51", right:"32"},//purple left midle 14
+    {top:"20", right:"48"},//right up 01
+    {top:"60", right:"45"},//left middle_down 02
+    {top:"33", right:"43"},//left middle_up 03
+    {top:"46", right:"47"},//left middle 04
+    {top:"55", right:"18"},//right middle_down 05
+    {top:"40", right:"26"},//midle_right midle 06
+    {top:"38", right:"59"},//midle midle 07
+    {top:"30", right:"34"},//right up 08
+    {top:"54", right:"57"},//midle midle_down 09
+    {top:"50", right:"71"},//right midle 10
+    {top:"65", right:"29"},//right down 11
+    {top:"70", right:"39"},//midle down 12
+    {top:"72", right:"60"},//left down 13
+    {top:"51", right:"32"},//left midle 14
+    {top:"42", right:"35"},//right midle 15
 ];
 
 var ballResourcePath = "img/balls/";
@@ -47,6 +66,8 @@ function replaceColor(imageData, oldColor, newColor) {
     }
 }
 
+var unavailableSymbols = ["#", '"', "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "_", "?", ".", ":", "-", "=", "%", "(", ")", "[", "]", "{", "}"];
+
 function login() {
     var isLoggedIn = getCookie("isLoggedIn") == null;
     if (isLoggedIn) {
@@ -60,23 +81,44 @@ function login() {
 
             loginDiv.innerHTML = "Prosím zadajte svoje meno:";
             loginDiv.classList.add("login-prompt");
+
+            var alertDiv = document.createElement("div");
+            var alertButton = document.createElement("button");
+            //alert parameters
+            alertDiv.id = "alertDiv";
+            alertButton.id = "alertButton";
+            alertButton.innerHTML = "Ok";
+            alertButton.onclick = function() {
+                body.removeChild(alertDiv);
+            }
+            //login div parameters
+            loginDiv.innerHTML = "Prosím zadajte svoje meno:";
+            loginDiv.id = "loginDiv";
+
             //login input parameters
-            loginInput.placeholder = "Vaše meno";
+            loginInput.placeholder = "Vaše meno a preizvisko";
+            loginInput.id = "loginInput";
             loginInput.type = "text";
-            loginInput.id = "loginInput"
-            loginInput.style.margin = "8px";
-            loginInput.style.marginBottom = "0px";
             //login button config
             loginButton.innerHTML = "Potvrdiť";
-            loginButton.style.marginTop = "5px";
-            loginButton.style.marginLeft = "8px";
+            loginButton.id = "loginButton";
             loginButton.onclick = function() {
                 var name = document.getElementById("loginInput").value;
-                console.log(name);
-                document.cookie += ";isLoggedIn=true";
-                loginDiv.removeChild(loginInput);
-                loginDiv.removeChild(loginButton);
-                body.removeChild(loginDiv);
+                var pass = true;
+                if (name != "") {
+                    console.log(name);
+                    };
+                    if (pass) {
+                        var blurBackground = document.getElementById("blurbackground");
+                    var blur = document.getElementById("blur");
+                    blurBackground.style.backgroundColor = "white";
+                    blur.style.filter = "blur(0px) brightness(100%)";
+                    document.cookie += ";isLoggedIn=true";
+                    loginDiv.removeChild(loginInput);
+                    loginDiv.removeChild(loginButton);
+                    body.removeChild(loginDiv);
+                    };
+                };
             };
             //adding to webpage
             loginDiv.appendChild(loginInput);
@@ -84,6 +126,21 @@ function login() {
             body.appendChild(loginDiv);
         };
     };
+};
+
+function on_ball_click(ballNumber, ballColor, ballContainer) {
+    console.log("Opened ball number " + ballNumber);
+    var descriptionText = document.getElementById("description");
+    var descriptionContainer = document.getElementById("descriptionContainer");
+    descriptionText.innerHTML = "";
+    if (ballColor == "yellow") {
+        var nextColor = "white_broken";
+    } else if (ballColor == "orange_red") {
+        var nextColor = "red_broken";
+    } else {
+        var nextColor = ballColor + "_broken";
+    };
+    ballContainer.style.backgroundImage = "url(" + nextColor + "_ball.png)";
 };
 
 // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
@@ -162,10 +219,12 @@ function on_load() {
         }
 
         currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + ")";
+        var ballColor = ballImages[ballImage].replace("_ball.png", "")
         currentBall.innerHTML = i + 1;
         
         currentBall.style.top = currentPosition.top + "%";
         currentBall.style.right = currentPosition.right + "%";
+        currentBall.id = "ball" + i;
 
         currentBall.classList.add("fluid-image");
         currentBall.classList.add("ball");
@@ -178,7 +237,7 @@ function on_load() {
     };
     if (!cookieExists) {
         document.cookie += "balls=" + JSON.stringify(ballImageIndexes);
-    }
+    };
     
 };
 
