@@ -51,7 +51,6 @@
     right: 40%;
     transform: rotate(2deg);
 }
-
 .ball {
     background-repeat: no-repeat;
     background-size: contain;
@@ -65,4 +64,20 @@
     position: absolute;
     font-family: Cisla;
 }
-
+#loginDiv {
+    text-align: center;
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    height: 100px;
+    width: 200px;
+    background-color: lightblue;
+}
+#loginInput {
+    margin: 8px;
+    margin-bottom: 0px;
+}
+#loginButton {
+    margin-top: 5px;
+    margin-left: 8px;
+}
