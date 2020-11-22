@@ -96,7 +96,7 @@ loginDiv.style.backgroundColor = "lightblue"; */
     text-align: center;
     margin: 8px;
     margin-bottom: 0px;
-    margin-top: 10px;
+    margin-top: 8px;
     font-family: Textt;
     border-radius: 10px;
     background-color: #ececec;
@@ -108,6 +108,11 @@ loginDiv.style.backgroundColor = "lightblue"; */
     font-family: Textt;
     border-radius: 10px;
     border: 0
+}
+#loginText {
+    text-align: center;
+    margin: 0px;
+    margin-top: 5px;
 }
 #alertDiv {
     background-color: white;

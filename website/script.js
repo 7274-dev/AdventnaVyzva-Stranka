@@ -77,6 +77,7 @@ function login() {
             var loginDiv = document.createElement("div");
             var loginInput = document.createElement("input");
             var loginButton = document.createElement("button");
+            var loginText = document.createElement("p");
             var body = document.body;
             var alertDiv = document.createElement("div");
             var alertButton = document.createElement("button");
@@ -87,8 +88,10 @@ function login() {
             alertButton.onclick = function() {
                 body.removeChild(alertDiv);
             };
+            //login text parameters
+            loginText.innerHTML = "Prosím zadajte svoje meno:";
+            loginText.id = "loginText";
             //login div parameters
-            loginDiv.innerHTML = "Prosím zadajte svoje meno:";
             loginDiv.classList.add("login-prompt");
             loginDiv.id = "loginDiv";
             //login input parameters
@@ -117,13 +120,12 @@ function login() {
                     blurBackground.style.backgroundColor = "white";
                     blur.style.filter = "blur(0px) brightness(100%)";
                     document.cookie += ";isLoggedIn=true";
-                    loginDiv.removeChild(loginInput);
-                    loginDiv.removeChild(loginButton);
                     body.removeChild(loginDiv);
                     };
                 };
             };
             //adding to webpage
+            loginDiv.appendChild(loginText);
             loginDiv.appendChild(loginInput);
             loginDiv.appendChild(loginButton);
             body.appendChild(loginDiv);
