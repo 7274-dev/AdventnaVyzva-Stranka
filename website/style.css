@@ -2,6 +2,10 @@
     font-family: Cisla;
     src: url('JMH Cthulhumbus Arcade.otf');
 }
+@font-face {
+    font-family: Textt;
+    src: url('Spirax-Regular.ttf');
+}
 #blurbackground {
     background-color: rgba(0,0,0, 0.4);
     height: 100%;
@@ -17,6 +21,7 @@
     left: 10%;
     top: -1px;
     float: left;
+    font-family: Textt;
 }
 #description {
     padding-top: 100px;
@@ -24,6 +29,8 @@
     padding-left: 10px;
     padding-right: 10px;
     flex-wrap: wrap;
+    font-family: Textt;
+    font-size: 135%;
 }
 #background_image {
     height: 85%;
