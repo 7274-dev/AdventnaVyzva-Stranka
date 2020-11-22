@@ -20,20 +20,28 @@ var state_hex = {
 
 var positions = [
     {top:"20", right:"48"},//right up 01
-    {top:"60", right:"45"},//left middle_down 02
-    {top:"33", right:"43"},//left middle_up 03
+    {top:"58", right:"44"},//left middle_down 02
+    {top:"33", right:"46"},//left middle_up 03
     {top:"46", right:"47"},//left middle 04
     {top:"55", right:"18"},//right middle_down 05
     {top:"40", right:"26"},//midle_right midle 06
-    {top:"38", right:"59"},//midle midle 07
+    {top:"41", right:"59"},//midle midle 07
     {top:"30", right:"34"},//right up 08
     {top:"54", right:"57"},//midle midle_down 09
     {top:"50", right:"71"},//right midle 10
-    {top:"65", right:"29"},//right down 11
+    {top:"60", right:"29"},//right down 11
     {top:"70", right:"39"},//midle down 12
-    {top:"72", right:"60"},//left down 13
+    {top:"74", right:"62"},//left down 13
     {top:"51", right:"32"},//left midle 14
-    {top:"42", right:"35"},//right midle 15
+    {top:"42", right:"38"},//right midle 15
+    {top:"63", right:"68"},//left down 16
+    {top:"31", right:"56"},//left up 17
+    {top:"75", right:"17"},//right down 18
+    {top:"76", right:"78"},//left down 19
+    {top:"65", right:"82"},//left down 20
+    {top:"66", right:"52"},//midle down 21
+    {top:"34", right:"70"},//left midle_up 22
+    {top:"68", right:"22"},//rigth down 23
 ];
 
 var ballResourcePath = "img/balls/";
