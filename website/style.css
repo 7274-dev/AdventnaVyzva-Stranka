@@ -113,7 +113,7 @@ loginDiv.style.backgroundColor = "lightblue"; */
     background-color: white;
     position: absolute;
     z-index: 2;
-    height: 115;
+    height: 115px;
     width: 220px;
     top: 40%;
     left: 40%;
