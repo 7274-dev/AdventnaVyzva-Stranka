@@ -62,15 +62,17 @@ function login() {
             loginButton.style.marginLeft = "8px";
             loginButton.onclick = function() {
                 var name = document.getElementById("loginInput").value;
-                console.log(name);
-                var blurBackground = document.getElementById("blurbackground");
-                var blur = document.getElementById("blur");
-                blurBackground.style.backgroundColor = "white";
-                blur.style.filter = "blur(0px) brightness(100%)";
-                document.cookie += ";isLoggedIn=true";
-                loginDiv.removeChild(loginInput);
-                loginDiv.removeChild(loginButton);
-                body.removeChild(loginDiv);
+                if (name != "") {
+                    console.log(name);
+                    var blurBackground = document.getElementById("blurbackground");
+                    var blur = document.getElementById("blur");
+                    blurBackground.style.backgroundColor = "white";
+                    blur.style.filter = "blur(0px) brightness(100%)";
+                    document.cookie += ";isLoggedIn=true";
+                    loginDiv.removeChild(loginInput);
+                    loginDiv.removeChild(loginButton);
+                    body.removeChild(loginDiv);
+                };
             };
             //adding to webpage
             loginDiv.appendChild(loginInput);
@@ -172,7 +174,7 @@ function on_load() {
     };
     if (!cookieExists) {
         document.cookie += "balls=" + JSON.stringify(ballImageIndexes);
-    }
+    };
     
 };
 
