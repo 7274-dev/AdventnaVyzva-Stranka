@@ -4,7 +4,7 @@
 }
 #blurbackground {
     background-color: rgba(0,0,0, 0.4);
-    height: 1080px;
+    height: 970px;
 }
 #blur {
     filter: blur(10px) brightness(70%);
