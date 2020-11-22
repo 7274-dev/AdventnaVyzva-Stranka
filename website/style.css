@@ -98,7 +98,7 @@
     border: 0
 }
 #alertDiv {
-    background-color: lightgreen;
+    background-color: white;
     position: absolute;
     z-index: 2;
     height: 100px;
