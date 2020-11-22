@@ -75,7 +75,7 @@ function login() {
             loginDiv.innerHTML = "Prosím zadajte svoje meno:";
             loginDiv.id = "loginDiv";
             //login input parameters
-            loginInput.placeholder = "Vaše meno";
+            loginInput.placeholder = "Vaše meno a preizvisko";
             loginInput.id = "loginInput";
             loginInput.type = "text";
             //login button config
