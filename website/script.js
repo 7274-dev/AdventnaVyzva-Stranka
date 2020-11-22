@@ -187,7 +187,7 @@ function on_click(event) {
             this.status == 200) { // response code is OK
             const textElement = document.getElementById("description");
             textElement.innerHTML = http.responseText;
-        };
+        }
         else {
             const textElement = document.getElementById("description");
             textElement.innerHTML = "Server error!";
