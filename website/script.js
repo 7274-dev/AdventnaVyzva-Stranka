@@ -200,22 +200,8 @@ function randomInt(bound) {
     return Math.floor(Math.random() * bound);
 };
 
-function starNumberWrite() {
-    var body = document.body;
-    var starText = document.createElement("p");
-    starText.style.fontFamily = "Cisla";
-    starText.style.fontSize = "25px";
-    starText.innerHTML = "24";
-    starText.style.position = "absolute";
-    starText.style.zIndex = "2";
-    starText.style.top = "5.5%";
-    starText.style.right = "18.2%";
-    body.appendChild(starText);
-};
-
 function on_load() {
     login();
-    starNumberWrite();
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
     var cookieExists = document.cookie.indexOf("balls=") != -1;
@@ -238,7 +224,7 @@ function on_load() {
 
         currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + ")";
         var ballColor = ballImages[ballImage].replace("_ball.png", "")
-        currentBall.innerHTML = i + 1;
+        currentBall.innerHTML = i + 1;//add number to that ball
         
         currentBall.style.top = currentPosition.top + "%";
         currentBall.style.right = currentPosition.right + "%";
