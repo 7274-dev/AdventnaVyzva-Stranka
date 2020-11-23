@@ -133,10 +133,12 @@ function login() {
 };
 
 function on_ball_click(ballNumber, ballColor, ballContainer) {
+    //startup info
     console.log("Opened ball number " + ballNumber);
     var descriptionText = document.getElementById("description");
     var descriptionContainer = document.getElementById("descriptionContainer");
     descriptionText.innerHTML = "";
+    //replace that file with broken file
     if (ballColor == "yellow") {
         var nextColor = "white_broken";
     } else if (ballColor == "orange_red") {
