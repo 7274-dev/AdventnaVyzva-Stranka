@@ -49,16 +49,16 @@ function getDataCookie() {
         end = dc.indexOf(";", begin);
     };
 
-    return decodeURI(dc.substring(begin + prefix.length, end) ); 
+    return dc.substring(begin + prefix.length, end).replace("\\"); 
 }
 
 function getCookie(name) {
-    var dataCookie = decodeURIComponent(getDataCookie());
-    console.log(dataCookie);
+    var dataCookie = getDataCookie();
     if (dataCookie == null) {
         return null;
     }
-    dataCookie = JSON.parse(dataCookie); // probably unsafe but whatever
+    dataCookie = decodeURIComponent(dataCookie.replace("\\", ""));
+    dataCookie = JSON.parse(dataCookie);
 
     if (dataCookie == null) {
         return null;
@@ -72,18 +72,14 @@ if (getDataCookie() == null) {
     cookie = {};
 }
 else {
-    cookie = getDataCookie();
+    cookie = JSON.parse(decodeURIComponent(getDataCookie()));
 }
-
-console.log(cookie);
 
 function writeCookie(key, value) {
     cookie[key] = value;
-    var jsonData = JSON.stringify(cookie);
+    var jsonData = decodeURIComponent(JSON.stringify(cookie)).replace("\\", "");
     document.cookie = "data=" + encodeURIComponent(jsonData);
 };
-
-console.log(JSON.parse('{"balls":[0,3,6,3,0,5,4,2,6,2,5,2,5,3,3,6,1,0,4,5,3,5,0],"loginName":"Ivan"}'));
 
 
 var state_hex = {
@@ -199,9 +195,9 @@ function on_click(event) {
 
 function createUser(name) {
     var createUserRequest = new XMLHttpRequest();
-    const url = backendURL + "add" + name;
+    const url = backendURL + "add";
 
-    var jsonRequestData = {"userName": name};
+    var jsonRequestData = JSON.stringify({"userName": name});
     
     createUserRequest.open("POST", url);
     createUserRequest.send(jsonRequestData);
@@ -215,7 +211,7 @@ function openWindow(window, userName) {
     var openWindowRequest = XMLHttpRequest();
     const url = backendURL + "openwindow";
 
-    var jsonRequestData = {"day": window, "userName": userName};
+    var jsonRequestData = JSON.stringify({"day": window, "userName": userName});
 
     openWindowRequest.onreadystatechange = function() {
         if (this.readyState == XMLHttpRequest.DONE) {
@@ -254,6 +250,7 @@ function setWindowData(name) {
     userExistsRequest.open("GET", url);
 
     userExistsRequest.onreadystatechange = function() {
+        console.log(this.responseText);
         if (wasRequestSuccessful(this)) {
             createUser(name);
         }
@@ -269,14 +266,12 @@ function setWindowData(name) {
 
 function login() { 
     var isLoggedIn = getCookie("loginName") != null;
-    console.log(isLoggedIn);
     if (!isLoggedIn) {
         document.getElementById("loginButton").onclick = function() {
             var name = document.getElementById("loginInput").value;
             if (name != "") {
                 unBlur();
                 writeCookie("loginName", name);
-                console.log(document.cookie);
             };  
         };
     } else {
