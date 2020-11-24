@@ -223,6 +223,7 @@ function setWindowData(name) {
     userExistsRequest.open("GET", url);
 
     userExistsRequest.onreadystatechange = function() {
+        console.log(this.responseText);
         if (wasRequestSuccessful(this)) {
             createUser(name);
         }
