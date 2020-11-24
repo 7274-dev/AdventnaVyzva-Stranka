@@ -185,47 +185,59 @@ function getCookie(name) {
 
     return decodeURI(dc.substring(begin + prefix.length, end) ).replace(/\"/g, ''); 
 };
-//not working //////////////////////////////////////////////////////////////
-function sendHttpRequest(method, url, sendData) {
-    var xml = new XMLHttpRequest();
-    xml.open(method, url);
-  
-    xml.responseType = 'json';
-  
-    xml.onload = () => {
-      if (xml.status >= 400) {
-        console.log("[print] xml response + error status:" + "error status:" + xml.status + "\\" + xml.response);
-        return "error status:" + xml.status + "\\" + xml.response;
-      } else {
-        console.log("[print] xml response:" + xml.responseText);
-        return xml.response;
-      };
-    };
-  
-    xml.onerror = () => {
-      console.log("[print] Something went wrong!");
-      return 'Something went wrong!';
-    };
-  
-    if (sendData) {
-      xml.setRequestHeader('Content-Type', 'application/json');
-      xml.send(JSON.stringify(sendData));
-    } else {
-      xml.send();
-    };
-  };
-  
-function getData(url) {
-    var revieveData = sendHttpRequest("GET", url);
-    console.log(revieveData);
-    return revieveData;
-};
 
-function postData(url, sendDataPostFunction) {
-    var revieveData = sendHttpRequest("POST", url, sendDataPostFunction);
-    console.log(revieveData);
-    return revieveData;
-};
+/* the next 3 functions are useless, because they           *
+ * don't have a callback, so they do absolutely nothing     *
+ * what if there's an error and no response is sended back? *
+ * we should not have a function for making any types of    *
+ * requests, and we should make all of them with the        *
+ * build-in javascript api.                                 */
+
+/* useless */
+//not working //////////////////////////////////////////////////////////////
+// function sendHttpRequest(method, url, sendData) {
+//     var xml = new XMLHttpRequest();
+//     xml.open(method, url);
+  
+//     xml.responseType = 'json';
+  
+//     xml.onload = () => {
+//       if (xml.status >= 400) {
+//         console.log("[print] xml response + error status:" + "error status:" + xml.status + "\\" + xml.response);
+//         return "error status:" + xml.status + "\\" + xml.response;
+//       } else {
+//         console.log("[print] xml response:" + xml.responseText);
+//         return xml.response;
+//       };
+//     };
+  
+//     xml.onerror = () => {
+//       console.log("[print] Something went wrong!");
+//       return 'Something went wrong!';
+//     };
+  
+//     if (sendData) {
+//       xml.setRequestHeader('Content-Type', 'application/json');
+//       xml.send(JSON.stringify(sendData));
+//     } else {
+//       xml.send();
+//     };
+//   };
+  
+/* useless */
+// function getData(url) {
+//     var revieveData = sendHttpRequest("GET", url);
+//     console.log(revieveData);
+//     return revieveData;
+// };
+
+
+/* useless */
+// function postData(url, sendDataPostFunction) {
+//     var revieveData = sendHttpRequest("POST", url, sendDataPostFunction);
+//     console.log(revieveData);
+//     return revieveData;
+// };
 //till now //////////////////////////////////////////////////////////////////////////
 
 function on_click(event) {
