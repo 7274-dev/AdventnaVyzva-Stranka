@@ -172,17 +172,17 @@ function getCookie(name) {
     return decodeURI(dc.substring(begin + prefix.length, end) ).replace(/\"/g, ''); 
 };
 
-function getRequest(url) {
+function sendXMLRequest(methon, url, sendData) {
     const xml = new XMLHttpRequest();
-    xml.open("GET", url);
+    xml.open(methon, url);
     xml.setRequestHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8887");
     xml.responseType = "json";
     xml.onload = () => {
         var data = xml.response;
         console.log(data);
         return data;
-    }
-    xml.send();
+    };
+    xml.send(JSON.stringify(sendData));
 };
 
 function on_click(event) {
