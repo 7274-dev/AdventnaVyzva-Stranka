@@ -172,52 +172,43 @@ function getCookie(name) {
     return decodeURI(dc.substring(begin + prefix.length, end) ).replace(/\"/g, ''); 
 };
 
-//NOT WORKING
-function sendXMLRequest(methon, url, sendData) {
-    var xmlPromise = new Promise((resolve, reject) => {
-        const xml = new XMLHttpRequest();
-
-        xml.open(methon, url);
-        xml.setRequestHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8887");
-        xml.responseType = "json";
-        xml.onerror = () => {
-            reject("Niečo sa pokazilo... Skúste skontrolovať svoje pripoj");
-        };
-
-        if (sendData) {
-            xml.setRequestHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8887");
-        };
-
-        xml.onload = () => {
-            if (xml.status >= 400) {
-                console.log(xml.response);
-                reject(xml.response);
-            } else {
-                console.log(xml.response);
-                resolve(xml.response);
-            };
-        };
-
-        xml.send(JSON.stringify(sendData));
-    });
+function sendHttpRequest(method, url, data) {
+    var xml = new XMLHttpRequest();
+    xml.open(method, url);
+  
+    xml.responseType = 'json';
+  
+    xml.onload = () => {
+      if (xml.status >= 400) {
+        return "error status:" + xml.status + "\\" + xml.response;
+      } else {
+        return xml.response;
+      };
+    };
+  
+    xml.onerror = () => {
+      return 'Something went wrong!';
+    };
+  
+    if (data) {
+      xml.setRequestHeader('Content-Type', 'application/json');
+      xml.send(JSON.stringify(data));
+    } else {
+      xml.send();
+    };
+};
+  
+function getData(url) {
+    var data = sendHttpRequest("GET", url);
+    console.log(data);
+    return data;
 };
 
-function getRequest(url) {
-    sendXMLRequest("GET", url).then(responseData => {
-        console.log(responseData);
-        return responseData;
-    });
+function postData(url, data) {
+    var data = sendHttpRequest("POST", url, data);
+    console.log(data);
+    return data;
 };
-
-function postRequest(url, sendData) {
-    sendXMLRequest("POST", url, sendData).then(responseData => {
-        console.log(responseData);
-        return responseData;
-    }).catch(err => {
-        console.log("Something went wrong! " + err);
-    })
-};
-//TILL HERE
 
 function on_click(event) {
     element = event.target; // rip IE 6-8
@@ -225,7 +216,7 @@ function on_click(event) {
     const http = new XMLHttpRequest();
     const url = backendURL + "text?day=" + dayNumber;
     http.open("GET", url);
-    http.setRequestHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8887");
+    http.setRequestHeader("Access-Control-Allow-Origin", "aplication/json");
     http.send();
 
     http.onreadystatechange= (e)=> {
