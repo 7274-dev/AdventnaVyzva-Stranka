@@ -76,8 +76,10 @@ function replaceColor(imageData, oldColor, newColor) {
     };
 };
 
+// also handle user "account" creation
 function setWindowData(name) {
-    console.log(name);
+    var userExistsRequest = new XMLHttpRequest();
+    userExistsRequest.
 }
 
 function writeCookie(key, value) {
@@ -139,6 +141,7 @@ function login() {
         loginDiv.appendChild(loginInput);
         loginDiv.appendChild(loginButton);
         body.appendChild(loginDiv);
+        setWindowData(name);
     }
     else {
         var name = getCookie("login");
@@ -191,10 +194,10 @@ function getCookie(name) {
  * what if there's an error and no response is sended back? *
  * we should not have a function for making any types of    *
  * requests, and we should make all of them with the        *
- * build-in javascript api.                                 */
+ * build-in javascript api. if we make a function, it       *
+ * should use some kind of a callback                       */
 
 /* useless */
-//not working //////////////////////////////////////////////////////////////
 // function sendHttpRequest(method, url, sendData) {
 //     var xml = new XMLHttpRequest();
 //     xml.open(method, url);
@@ -238,7 +241,6 @@ function getCookie(name) {
 //     console.log(revieveData);
 //     return revieveData;
 // };
-//till now //////////////////////////////////////////////////////////////////////////
 
 function on_click(event) {
     element = event.target; // rip IE 6-8
