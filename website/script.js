@@ -172,7 +172,7 @@ function getCookie(name) {
     return decodeURI(dc.substring(begin + prefix.length, end) ).replace(/\"/g, ''); 
 };
 
-function sendHttpRequest(method, url, data) {
+function sendHttpRequest(method, url, sendData) {
     var xml = new XMLHttpRequest();
     xml.open(method, url);
   
@@ -180,34 +180,37 @@ function sendHttpRequest(method, url, data) {
   
     xml.onload = () => {
       if (xml.status >= 400) {
+        console.log("[print] xml response + error status:" + "error status:" + xml.status + "\\" + xml.response);
         return "error status:" + xml.status + "\\" + xml.response;
       } else {
+        console.log("[print] xml response:" + xml.responseText);
         return xml.response;
       };
     };
   
     xml.onerror = () => {
+      console.log("[print] Something went wrong!");
       return 'Something went wrong!';
     };
   
-    if (data) {
+    if (sendData) {
       xml.setRequestHeader('Content-Type', 'application/json');
-      xml.send(JSON.stringify(data));
+      xml.send(JSON.stringify(sendData));
     } else {
       xml.send();
     };
-};
+  };
   
 function getData(url) {
-    var data = sendHttpRequest("GET", url);
-    console.log(data);
-    return data;
+    var revieveData = sendHttpRequest("GET", url);
+    console.log(revieveData);
+    return revieveData;
 };
 
-function postData(url, data) {
-    var data = sendHttpRequest("POST", url, data);
-    console.log(data);
-    return data;
+function postData(url, sendDataPostFunction) {
+    var revieveData = sendHttpRequest("POST", url, sendDataPostFunction);
+    console.log(revieveData);
+    return revieveData;
 };
 
 function on_click(event) {
