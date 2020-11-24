@@ -74,15 +74,10 @@ function replaceColor(imageData, oldColor, newColor) {
     };
 };
 
-<<<<<<< HEAD
-// also handle user "account" creation
-=======
 //needed in future, dont remove
->>>>>>> 9fb6bd0b4fe2a199bf863aa15bc36b4a452a6790
 function setWindowData(name) {
     var userExistsRequest = new XMLHttpRequest();
-    userExistsRequest.
-}
+};
 
 function writeCookie(key, value) {
     document.cookie += "; " + encodeURIComponent(name) + '=' + encodeURIComponent(value);
@@ -94,7 +89,7 @@ function login() {
         document.getElementById("loginButton").onclick = function() {
             var name = document.getElementById("loginInput").value;
             if (name != "") {
-                unBlur(name);
+                unBlur();
                 console.log(name);
                 writeCookie("login", name);
             };  
