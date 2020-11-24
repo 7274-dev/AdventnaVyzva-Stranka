@@ -1,4 +1,31 @@
 var backendURL = "http://localhost:8080/";
+var mapClicked = false;
+
+function mapClick(width, height, left) {
+    if (!mapClicked) {
+        /*var width = document.getElementById("map_container").style.width;
+        var height = document.getElementById("map_container").style.height;
+        var left = document.getElementById("map_container").style.left;*/
+        var mapCover = document.createElement("img");
+        mapCover.id = "bigMap";
+        mapCover.src = "img/europe_map_done.png";
+        mapCover.style.width = "100%";
+        mapCover.style.height = "100%";
+        mapCover.style.position = "absolute";
+        mapCover.style.zIndex = "2";
+        mapCover.style.left = "0%";
+        mapCover.style.top = "0%";
+        mapCover.onclick = function() {
+            mapClick(document.getElementById("map_container").style.width, document.getElementById("map_container").style.height, document.getElementById("map_container").style.left);
+        };
+        document.body.appendChild(mapCover);
+        mapClicked = true;
+        console.log("done");
+    } else {
+        document.body.removeChild(document.getElementById("bigMap"));
+        mapClicked = false;
+    };
+};
 
 function getDataCookie() {
     var dc,
