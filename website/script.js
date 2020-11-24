@@ -8,19 +8,23 @@ const buttonMain = document.getElementById("mapButtonMain");
 
 function mapClick() {
     var body = document.body;
-    
+    var treeContainer = document.getElementById("treecontainer");
+
     if (!mapClicked) {
+        treeContainer.removeChild(buttonMain);
         body.appendChild(bigMap);
+        body.appendChild(mapCloser);
         mapClicked = true;
     } else {
+        treeContainer.appendChild(buttonMain);
+        body.removeChild(mapCloser);
         body.removeChild(bigMap);
         mapClicked = false;
     };
 };
 
 //add to startup
-document.body.removeChild(document.getElementById("bigMap"));
-document.body.removeChild(document.getElementById("mapCloser"));
+
 
 function getDataCookie() {
     var dc,
@@ -349,6 +353,9 @@ function on_load() {
         writeCookie("balls", ballImageIndexes);
 
     };
+
+    document.body.removeChild(document.getElementById("bigMap"));
+    document.body.removeChild(document.getElementById("mapCloser"));
     
 };
 
