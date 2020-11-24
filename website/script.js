@@ -186,26 +186,18 @@ function writeCookie(key, value) {
 function login() { 
     var isLoggedIn = getCookie("login") != null;
     if (!isLoggedIn) {
-        //from this
-        var loginDiv = document.createElement("div");
-        var loginInput = document.createElement("input");
-        var loginButton = document.createElement("button");
-        //login button config
-        loginButton.innerHTML = "Potvrdiť";
-        loginButton.id = "loginButton";
-        //to here
-        loginButton.onclick = function() {
+        document.getElementById("loginButton").onclick = function() {
             var name = document.getElementById("loginInput").value;
             if (name != "") {
-                unBlur(name);
+                unBlur();
                 console.log(name);
                 writeCookie("login", name);
             };  
         };
     } else {
         var name = getCookie("login");
-        setWindowData(name);//why display name?
-        unBlur();//if none just background will change
+        setWindowData(name);
+        unBlur();
     };
 };
 
