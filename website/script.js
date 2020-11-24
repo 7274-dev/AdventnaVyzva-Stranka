@@ -1,25 +1,26 @@
 var backendURL = "http://localhost:8080/";
+
+//map click vars, needed
 var mapClicked = false;
+const bigMap = document.getElementById("bigMap");
+const mapCloser = document.getElementById("mapCloser");
+const buttonMain = document.getElementById("mapButtonMain");
 
 function mapClick() {
-    var buttonMain = document.getElementById("mapButtonMain");
-    var mapCloser = document.getElementById("mapCloser");
-    var bigMap = document.getElementById("bigMap");
+    var body = document.body;
+    
     if (!mapClicked) {
-        var mapCover = document.createElement("img");
-        mapCover.id = "bigMap";
-        mapCover.src = "img/europe_map_done.png";
-        mapCover.style.width = "100%";
-        mapCover.style.height = "100%";
-        mapCover.style.position = "absolute";
-        document.body.appendChild(mapCover);
+        body.appendChild(bigMap);
         mapClicked = true;
-        console.log("done");
     } else {
-        document.body.removeChild(document.getElementById("bigMap"));
+        body.removeChild(bigMap);
         mapClicked = false;
     };
 };
+
+//add to startup
+document.body.removeChild(document.getElementById("bigMap"));
+document.body.removeChild(document.getElementById("mapCloser"));
 
 function getDataCookie() {
     var dc,
