@@ -11,6 +11,7 @@ function mapClick() {
     var treeContainer = document.getElementById("treecontainer");
 
     if (!mapClicked) {
+        window.scrollTo(0, 0);
         treeContainer.removeChild(buttonMain);
         body.appendChild(bigMap);
         body.appendChild(mapCloser);
