@@ -3,28 +3,15 @@ var mapClicked = false;
 
 function mapClick() {
     var buttonMain = document.getElementById("mapButtonMain");
-    var buttonSecond = document.getElementById("mapButtonSecond");
+    var mapCloser = document.getElementById("mapCloser");
+    var bigMap = document.getElementById("bigMap");
     if (!mapClicked) {
-        /*var width = document.getElementById("map_container").style.width;
-        var height = document.getElementById("map_container").style.height;
-        var left = document.getElementById("map_container").style.left;*/
         var mapCover = document.createElement("img");
         mapCover.id = "bigMap";
         mapCover.src = "img/europe_map_done.png";
         mapCover.style.width = "100%";
         mapCover.style.height = "100%";
         mapCover.style.position = "absolute";
-        mapCover.style.zIndex = "2";
-        mapCover.style.left = "0%";
-        mapCover.style.top = "0%";
-        var mapClose = document.createElement("div");
-        mapClose.style.width = "100px";
-        mapClose.style.height = "100px";
-        mapClose.style.backgroundColor = "lightblue";
-        mapClose.onclick = function() {
-            mapClick();
-        };
-        document.body.appendChild(mapClose);
         document.body.appendChild(mapCover);
         mapClicked = true;
         console.log("done");

@@ -144,9 +144,31 @@ html, body, #blurbackground {
     right: 48.5%;
 }
 #mapButtonMain {
-    width: 100px;
-    height: 50px;
+    text-align: center;
+    width: 120px;
+    height: 40px;
     position: absolute;
     right: 5%;
-    bottom: -22%;
+    bottom: -21%;
+    background-color: lightblue;
+}
+#mapButtonMainText {
+    padding-top: 8px;
+}
+#mapCloser {
+    width: 100px;
+    height: 100px;
+    background-color: lightblue;
+    position: absolute;
+    z-index: 2;
+    top: 5px;
+    right: 5px;
+}
+#bigMap {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    z-index: 1;
 }
