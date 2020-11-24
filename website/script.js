@@ -74,9 +74,14 @@ function replaceColor(imageData, oldColor, newColor) {
     };
 };
 
+<<<<<<< HEAD
+// also handle user "account" creation
+=======
 //needed in future, dont remove
+>>>>>>> 9fb6bd0b4fe2a199bf863aa15bc36b4a452a6790
 function setWindowData(name) {
-    console.log(name);
+    var userExistsRequest = new XMLHttpRequest();
+    userExistsRequest.
 }
 
 function writeCookie(key, value) {
@@ -94,7 +99,18 @@ function login() {
                 writeCookie("login", name);
             };  
         };
+<<<<<<< HEAD
+        //adding to webpage
+        loginDiv.appendChild(loginText);
+        loginDiv.appendChild(loginInput);
+        loginDiv.appendChild(loginButton);
+        body.appendChild(loginDiv);
+        setWindowData(name);
+    }
+    else {
+=======
     } else {
+>>>>>>> 9fb6bd0b4fe2a199bf863aa15bc36b4a452a6790
         var name = getCookie("login");
         setWindowData(name);
         unBlur();
@@ -149,7 +165,7 @@ function getCookie(name) {
 
     return decodeURI(dc.substring(begin + prefix.length, end) ).replace(/\"/g, ''); 
 };
-////////////////////CHECK IF WORKS
+
 function on_click(event) {
     element = event.target; // rip IE 6-8
     var dayNumber = element.innerHTML;
