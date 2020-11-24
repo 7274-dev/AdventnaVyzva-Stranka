@@ -132,12 +132,9 @@ function login() {
     };
 };
 
-function on_ball_click(ballNumber, ballColor, ballContainer) {
+function changeBallColor(ballColor, ballContainerID) {
     //startup info
-    console.log("Opened ball number " + ballNumber);
-    var descriptionText = document.getElementById("description");
-    var descriptionContainer = document.getElementById("descriptionContainer");
-    descriptionText.innerHTML = "";
+    ballContainer = document.getElementById(ballContainerID);
     //replace that file with broken file
     if (ballColor == "yellow") {
         var nextColor = "white_broken";
@@ -146,7 +143,7 @@ function on_ball_click(ballNumber, ballColor, ballContainer) {
     } else {
         var nextColor = ballColor + "_broken";
     };
-    ballContainer.style.backgroundImage = "url(" + nextColor + "_ball.png)";
+    ballContainer.style.backgroundImage = "url(" + ballResourcePath + nextColor + "_ball.png)";
 };
 
 // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
