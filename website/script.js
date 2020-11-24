@@ -1,7 +1,7 @@
 var backendURL = "http://localhost:8080/";
 var mapClicked = false;
 
-function mapClick(width, height, left) {
+function mapClick() {
     if (!mapClicked) {
         /*var width = document.getElementById("map_container").style.width;
         var height = document.getElementById("map_container").style.height;
@@ -16,7 +16,7 @@ function mapClick(width, height, left) {
         mapCover.style.left = "0%";
         mapCover.style.top = "0%";
         mapCover.onclick = function() {
-            mapClick(document.getElementById("map_container").style.width, document.getElementById("map_container").style.height, document.getElementById("map_container").style.left);
+            mapClick();
         };
         document.body.appendChild(mapCover);
         mapClicked = true;
