@@ -78,7 +78,7 @@ function replaceColor(imageData, oldColor, newColor) {
 
 function writeCookie(key, value) {
     document.cookie = document.cookie + "; " + encodeURIComponent(name) + '=' + encodeURIComponent(value);
-}
+};
 
 function login() { 
     var isLoggedIn = getCookie("login") != null;
@@ -139,7 +139,7 @@ function login() {
     else {
         var name = getCookie("login");
         console.log(name);
-    }
+    };
 };
 
 function changeBallColor(ballColor, ballContainerID) {
