@@ -24,9 +24,6 @@ function mapClick() {
     };
 };
 
-//add to startup
-
-
 function getDataCookie() {
     var dc,
     prefix,
