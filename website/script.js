@@ -20,10 +20,11 @@ var state_hex = {
 
 var positions = [
     {top:"20", right:"48"},//right up 01
-    {top:"60", right:"45"},//left middle_down 02
-    {top:"33", right:"43"},//left middle_up 03
+    {top:"58", right:"44"},//left middle_down 02
+    {top:"33", right:"46"},//left middle_up 03
     {top:"46", right:"47"},//left middle 04
     {top:"55", right:"18"},//right middle_down 05
+<<<<<<< HEAD
     {top:"40", right:"26"},//middle_right middle 06
     {top:"38", right:"59"},//middle middle 07
     {top:"30", right:"34"},//right up 08
@@ -34,6 +35,26 @@ var positions = [
     {top:"72", right:"60"},//left down 13
     {top:"51", right:"32"},//left middle 14
     {top:"42", right:"35"},//right middle 15
+=======
+    {top:"40", right:"26"},//midle_right midle 06
+    {top:"41", right:"59"},//midle midle 07
+    {top:"30", right:"34"},//right up 08
+    {top:"54", right:"57"},//midle midle_down 09
+    {top:"50", right:"71"},//right midle 10
+    {top:"60", right:"29"},//right down 11
+    {top:"70", right:"39"},//midle down 12
+    {top:"74", right:"62"},//left down 13
+    {top:"51", right:"32"},//left midle 14
+    {top:"42", right:"38"},//right midle 15
+    {top:"63", right:"68"},//left down 16
+    {top:"31", right:"56"},//left up 17
+    {top:"75", right:"17"},//right down 18
+    {top:"76", right:"78"},//left down 19
+    {top:"65", right:"82"},//left down 20
+    {top:"66", right:"52"},//midle down 21
+    {top:"34", right:"70"},//left midle_up 22
+    {top:"68", right:"22"},//rigth down 23
+>>>>>>> e744f02f8d1c220586876ceb6a91234ec4430b27
 ];
 
 var ballResourcePath = "img/balls/";
@@ -64,7 +85,7 @@ function replaceColor(imageData, oldColor, newColor) {
                 imageData.data[i] = newColor.red;
                 imageData.data[i + 1] = newColor.green;
                 imageData.data[i + 2] = newColor.blue;
-            };
+        };
     };
 };
 
@@ -152,12 +173,10 @@ function login() {
     }
 };
 
-function on_ball_click(ballNumber, ballColor, ballContainer) {
-    console.log("Opened ball number " + ballNumber);
-    var descriptionText = document.getElementById("description");
-    var descriptionContainer = document.getElementById("descriptionContainer"); // unused variable
-    descriptionText.innerHTML = "";
-    var nextColor;
+function changeBallColor(ballColor, ballContainerID) {
+    //startup info
+    ballContainer = document.getElementById(ballContainerID);
+    //replace that file with broken file
     if (ballColor == "yellow") {
         var nextColor = "white";
     } else if (ballColor == "orange_red") {
@@ -165,10 +184,7 @@ function on_ball_click(ballNumber, ballColor, ballContainer) {
     } else {
         var nextColor = ballColor;
     };
-
-    nextColor += "_ball_broken.png"
-
-    ballContainer.style.backgroundImage = "url(" + nextColor + ")";
+    ballContainer.style.backgroundImage = "url(" + ballResourcePath + nextColor + "_ball.png)";
 };
 
 // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
@@ -188,14 +204,56 @@ function getCookie(name) {
     } else {
         begin = dc.indexOf(prefix);
         if (begin === -1 || begin !== 0 ) return null;
-    } 
+    };
 
     if (dc.indexOf(";", begin) !== -1) {
         end = dc.indexOf(";", begin);
-    }
+    };
 
     return decodeURI(dc.substring(begin + prefix.length, end) ).replace(/\"/g, ''); 
-}
+};
+//not working //////////////////////////////////////////////////////////////
+function sendHttpRequest(method, url, sendData) {
+    var xml = new XMLHttpRequest();
+    xml.open(method, url);
+  
+    xml.responseType = 'json';
+  
+    xml.onload = () => {
+      if (xml.status >= 400) {
+        console.log("[print] xml response + error status:" + "error status:" + xml.status + "\\" + xml.response);
+        return "error status:" + xml.status + "\\" + xml.response;
+      } else {
+        console.log("[print] xml response:" + xml.responseText);
+        return xml.response;
+      };
+    };
+  
+    xml.onerror = () => {
+      console.log("[print] Something went wrong!");
+      return 'Something went wrong!';
+    };
+  
+    if (sendData) {
+      xml.setRequestHeader('Content-Type', 'application/json');
+      xml.send(JSON.stringify(sendData));
+    } else {
+      xml.send();
+    };
+  };
+  
+function getData(url) {
+    var revieveData = sendHttpRequest("GET", url);
+    console.log(revieveData);
+    return revieveData;
+};
+
+function postData(url, sendDataPostFunction) {
+    var revieveData = sendHttpRequest("POST", url, sendDataPostFunction);
+    console.log(revieveData);
+    return revieveData;
+};
+//till now //////////////////////////////////////////////////////////////////////////
 
 function on_click(event) {
     element = event.target; // rip IE 6-8
@@ -225,7 +283,7 @@ function on_click(event) {
 
 function randomInt(bound) {
     return Math.floor(Math.random() * bound);
-}
+};
 
 function on_load() {
     login();
@@ -249,8 +307,9 @@ function on_load() {
             ballImage = ballImageIndexes[i];
         }
 
-        currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + ".png)";
-        currentBall.innerHTML = i + 1;
+        currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + ")";
+        var ballColor = ballImages[ballImage].replace("_ball.png", "")
+        currentBall.innerHTML = i + 1;//add number to that ball
         
         currentBall.style.top = currentPosition.top + "%";
         currentBall.style.right = currentPosition.right + "%";
