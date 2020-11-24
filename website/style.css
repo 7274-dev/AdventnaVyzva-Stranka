@@ -143,3 +143,10 @@ html, body, #blurbackground {
     top: 6.5%;
     right: 48.5%;
 }
+#mapButtonMain {
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    right: 5%;
+    bottom: -22%;
+}
