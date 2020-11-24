@@ -2,8 +2,8 @@ var backendURL = "http://localhost:8080/";
 var mapClicked = false;
 
 function mapClick() {
-    var buttonRight = document.getElementById("mapButtonMain");
-    var buttonRight = document.getElementById("mapButtonSecond");
+    var buttonMain = document.getElementById("mapButtonMain");
+    var buttonSecond = document.getElementById("mapButtonSecond");
     if (!mapClicked) {
         /*var width = document.getElementById("map_container").style.width;
         var height = document.getElementById("map_container").style.height;
