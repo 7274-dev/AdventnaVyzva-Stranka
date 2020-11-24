@@ -1,4 +1,63 @@
-var backendURL = "http://92.52.4.175:8080/";
+var backendURL = "http://localhost:8080/";
+
+function getDataCookie() {
+    var dc,
+    prefix,
+    begin,
+    end;
+
+    dc = document.cookie;
+    prefix = "data" + "=";
+    begin = dc.indexOf("; " + prefix);
+    end = dc.length;
+
+    if (begin !== -1) {
+        begin += 2;
+    } else {
+        begin = dc.indexOf(prefix);
+        if (begin === -1 || begin !== 0 ) return null;
+    };
+
+    if (dc.indexOf(";", begin) !== -1) {
+        end = dc.indexOf(";", begin);
+    };
+
+    return decodeURI(dc.substring(begin + prefix.length, end) ); 
+}
+
+function getCookie(name) {
+    var dataCookie = decodeURIComponent(getDataCookie());
+    console.log(dataCookie);
+    if (dataCookie == null) {
+        return null;
+    }
+    dataCookie = JSON.parse(dataCookie); // probably unsafe but whatever
+
+    if (dataCookie == null) {
+        return null;
+    }
+
+    return dataCookie[name];
+};
+
+var cookie;
+if (getDataCookie() == null) {
+    cookie = {};
+}
+else {
+    cookie = getDataCookie();
+}
+
+console.log(cookie);
+
+function writeCookie(key, value) {
+    cookie[key] = value;
+    var jsonData = JSON.stringify(cookie);
+    document.cookie = "data=" + encodeURIComponent(jsonData);
+};
+
+console.log(JSON.parse('{"balls":[0,3,6,3,0,5,4,2,6,2,5,2,5,3,3,6,1,0,4,5,3,5,0],"loginName":"Ivan"}'));
+
 
 var state_hex = {
     other:"#c3c3c3",
@@ -47,15 +106,14 @@ var positions = [
 var ballResourcePath = "img/balls/";
 
 var ballImages = [
-    "blue_ball.png",
-    "orange_ball.png",
-    "orange_red_ball.png",
-    "pink_ball.png",
-    "purple_ball.png",
-    "red_ball.png",
-    "white_ball.png",
-    "pink_ball.png",
-    "yellow_ball.png"
+    "blue",
+    "orange",
+    "orange_red",
+    "pink",
+    "purple",
+    "red",
+    "white",
+    "yellow"
 ];
 
 function replaceColor(imageData, oldColor, newColor) {
@@ -80,6 +138,10 @@ function wasRequestSuccessful(request) {
             request.status >= 200 && request.status < 400;
 }
 
+function isBroken(ballNumber) {
+    document.getElementById()
+} 
+
 function breakBall(ballNumber) {
 
 }
@@ -90,15 +152,17 @@ function on_click(event) {
     const http = new XMLHttpRequest();
     
     const url = backendURL + "text?day=" + dayNumber;
-    console.log(url);
     http.open("GET", url);
 
     var description = document.getElementById("description");
 
     http.onreadystatechange = function() {
-        if (wasRequestSuccessful(this)) {
-                description.innerHTML = JSON.parse(this.responseText).response;
-            }
+        if (wasRequestSuccessful(this) && this.responseText != "") {
+            description.innerHTML = JSON.parse(this.responseText).response;
+        }
+        else if (this.responseText == "") {
+            description.innerHTML = "Server down";
+        }
         else if (this.readyState == XMLHttpRequest.DONE) {
             description.innerHTML = JSON.parse(this.responseText).response;
         } 
@@ -177,25 +241,22 @@ function setWindowData(name) {
     }
 
     userExistsRequest.send();    
-}
-
-function writeCookie(key, value) {
-    document.cookie += "; " + encodeURIComponent(key) + '=' + encodeURIComponent(value);
 };
 
 function login() { 
-    var isLoggedIn = getCookie("login") != null;
+    var isLoggedIn = getCookie("loginName") != null;
+    console.log(isLoggedIn);
     if (!isLoggedIn) {
         document.getElementById("loginButton").onclick = function() {
             var name = document.getElementById("loginInput").value;
             if (name != "") {
                 unBlur();
-                console.log(name);
-                writeCookie("login", name);
+                writeCookie("loginName", name);
+                console.log(document.cookie);
             };  
         };
     } else {
-        var name = getCookie("login");
+        var name = getCookie("loginName");
         setWindowData(name);
         unBlur();
     };
@@ -222,33 +283,11 @@ function changeBallColor(ballColor, ballContainerID) {
         var nextColor = ballColor;
     };
     ballContainer.style.backgroundImage = "url(" + ballResourcePath + nextColor + "_ball.png)";
+
 };
 
-// https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
-function getCookie(name) {
-    var dc,
-        prefix,
-        begin,
-        end;
 
-    dc = document.cookie;
-    prefix = name + "=";
-    begin = dc.indexOf("; " + prefix);
-    end = dc.length;
 
-    if (begin !== -1) {
-        begin += 2;
-    } else {
-        begin = dc.indexOf(prefix);
-        if (begin === -1 || begin !== 0 ) return null;
-    };
-
-    if (dc.indexOf(";", begin) !== -1) {
-        end = dc.indexOf(";", begin);
-    };
-
-    return decodeURI(dc.substring(begin + prefix.length, end) ).replace(/\"/g, ''); 
-};
 
 function randomInt(bound) {
     return Math.floor(Math.random() * bound);
@@ -276,10 +315,10 @@ function on_load() {
             ballImage = ballImageIndexes[i];
         }
 
-        currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + ")";
-        var ballColor = ballImages[ballImage].replace("_ball.png", "")
-        currentBall.innerHTML = i + 1;//add number to that ball
-        
+        currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + "_ball.png)";
+        var ballColor = ballImages[ballImage]//.replace("_ball.png", "")
+        currentBall.innerHTML = i + 1;
+
         currentBall.style.top = currentPosition.top + "%";
         currentBall.style.right = currentPosition.right + "%";
         currentBall.id = "ball" + i;
@@ -294,7 +333,8 @@ function on_load() {
         ballContainer.appendChild(currentBall);
     };
     if (!cookieExists) {
-        document.cookie += "balls=" + JSON.stringify(ballImageIndexes);
+        writeCookie("balls", ballImageIndexes);
+
     };
     
 };
