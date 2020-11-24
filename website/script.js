@@ -172,6 +172,19 @@ function getCookie(name) {
     return decodeURI(dc.substring(begin + prefix.length, end) ).replace(/\"/g, ''); 
 };
 
+function getRequest(url) {
+    const xml = new XMLHttpRequest();
+    xml.open("GET", url);
+    xml.setRequestHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8887");
+    xml.responseType = "json";
+    xml.onload = () => {
+        var data = xml.response;
+        console.log(data);
+        return data;
+    }
+    xml.send();
+};
+
 function on_click(event) {
     element = event.target; // rip IE 6-8
     var dayNumber = element.innerHTML;
@@ -180,7 +193,7 @@ function on_click(event) {
     http.open("GET", url);
     http.setRequestHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8887");
     http.send();
-    
+
     http.onreadystatechange= (e)=> {
         console.log(this.readyState);
         if (this.readyState == 4 && // request is done 
