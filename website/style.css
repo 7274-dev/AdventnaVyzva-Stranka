@@ -83,54 +83,47 @@ html, body, #blurbackground {
     position: absolute;
     top: 40%;
     left: 40%;
-    height: 115px;
-    width: 220px;
+    height: 180px;
+    width: 300px;
     background-color: white;
     font-family: Textt;
     border-radius: 10px;
     border: 1px solid #dddddd;
 }
 #loginInput {
+    position: absolute;
     text-align: center;
-    margin: 8px;
-    margin-bottom: 0px;
-    margin-top: 8px;
+    font-size: 18px;
+    /*margin: 8px;
+    margin-top: 20px;*/
+    left: 17%;
+    top: 28%;
     font-family: Textt;
     border-radius: 10px;
     background-color: #ececec;
     border: 1px solid #c9c9c9
 }
 #loginButton {
-    margin-top: 12px;
-    margin-left: 8px;
+    position: absolute;
+    bottom: 25%;
+    left: 36%;
     font-family: Textt;
+    font-size: 20px;
     border-radius: 10px;
-    border: 0
+    border: none;
 }
 #loginText {
-    text-align: center;
-    margin: 0px;
-    margin-top: 5px;
-}
-#alertDiv {
-    background-color: white;
     position: absolute;
-    z-index: 2;
-    height: 115px;
-    width: 220px;
-    top: 40%;
-    left: 40%;
+    font-size: 18px;
     text-align: center;
-    font-family: Textt;
-    border-radius: 10px;
-    border: 1px solid #c9c9c9;
+    top: 8%;
+    left: 15%;
 }
-#alertButton {
-    margin-top: 22px;
-    margin-left: 8px;
-    font-family: Textt;
-    border-radius: 10px;
-    border: 0;
+#loginCookieWarning {
+    font-size: 14px;
+    position: absolute;
+    bottom: -5%;
+    left: 8%;
 }
 #map {
     width: 300px;
