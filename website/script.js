@@ -99,18 +99,7 @@ function login() {
                 writeCookie("login", name);
             };  
         };
-<<<<<<< HEAD
-        //adding to webpage
-        loginDiv.appendChild(loginText);
-        loginDiv.appendChild(loginInput);
-        loginDiv.appendChild(loginButton);
-        body.appendChild(loginDiv);
-        setWindowData(name);
-    }
-    else {
-=======
     } else {
->>>>>>> 9fb6bd0b4fe2a199bf863aa15bc36b4a452a6790
         var name = getCookie("login");
         setWindowData(name);
         unBlur();
