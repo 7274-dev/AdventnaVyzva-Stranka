@@ -47,15 +47,15 @@ var positions = [
 var ballResourcePath = "img/balls/";
 
 var ballImages = [
-    "blue_ball",
-    "orange_ball",
-    "orange_red_ball",
-    "pink_ball",
-    "purple_ball",
-    "red_ball",
-    "white_ball",
-    "pink_ball",
-    "yellow_ball"
+    "blue_ball.png",
+    "orange_ball.png",
+    "orange_red_ball.png",
+    "pink_ball.png",
+    "purple_ball.png",
+    "red_ball.png",
+    "white_ball.png",
+    "pink_ball.png",
+    "yellow_ball.png"
 ];
 
 var unavailableSymbols = ["#", '"', "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "_", "?", ":", "-", "=", "%", "(", ")", "[", "]", "{", "}"];
