@@ -24,18 +24,6 @@ var positions = [
     {top:"33", right:"46"},//left middle_up 03
     {top:"46", right:"47"},//left middle 04
     {top:"55", right:"18"},//right middle_down 05
-<<<<<<< HEAD
-    {top:"40", right:"26"},//middle_right middle 06
-    {top:"38", right:"59"},//middle middle 07
-    {top:"30", right:"34"},//right up 08
-    {top:"54", right:"57"},//middle middle_down 09
-    {top:"50", right:"71"},//right middle 10
-    {top:"65", right:"29"},//right down 11
-    {top:"70", right:"39"},//middle down 12
-    {top:"72", right:"60"},//left down 13
-    {top:"51", right:"32"},//left middle 14
-    {top:"42", right:"35"},//right middle 15
-=======
     {top:"40", right:"26"},//midle_right midle 06
     {top:"41", right:"59"},//midle midle 07
     {top:"30", right:"34"},//right up 08
@@ -54,7 +42,6 @@ var positions = [
     {top:"66", right:"52"},//midle down 21
     {top:"34", right:"70"},//left midle_up 22
     {top:"68", right:"22"},//rigth down 23
->>>>>>> e744f02f8d1c220586876ceb6a91234ec4430b27
 ];
 
 var ballResourcePath = "img/balls/";
@@ -89,30 +76,18 @@ function replaceColor(imageData, oldColor, newColor) {
     };
 };
 
-function setWindowData(name) {
-    console.log(name);
-}
-
 function writeCookie(key, value) {
     document.cookie = document.cookie + "; " + encodeURIComponent(name) + '=' + encodeURIComponent(value);
 }
 
 function login() { 
-    // what the fuck is this
-    // useless comments, unreadable code, creating static elements in js, even though they can
-    // be created right when the page loads, in HTML
-    // this should be moved to index.html
-
     var isLoggedIn = getCookie("login") != null;
     if (!isLoggedIn) {
         var loginDiv = document.createElement("div");
         var loginInput = document.createElement("input");
         var loginButton = document.createElement("button");
         var loginText = document.createElement("p");
-
-        /* there were 2 fucking calls that used this variable, WHY?  *
-         * it just makes the code more unreadable and even more shit */
-        var body = document.body; // wtf why just why why why why why why why why why why why why why why why why why why why why why 
+        var body = document.body;
         
         //login text parameters
         loginText.innerHTML = "Prosím zadajte svoje meno:";
@@ -128,39 +103,33 @@ function login() {
         loginButton.innerHTML = "Potvrdiť";
         loginButton.id = "loginButton";
 
-
-        // everything was wrong here, bad indentation,
-        // too much code for things that can be done with
-        // one line of code useless variables and more nightmares
         loginButton.onclick = function() {
+            var pass = true;
             var name = document.getElementById("loginInput").value;
-            // this check is totally correct and it's very good that it's here
             if (name != "") {
-                setWindowData(name);
-                /* totally useless, if we are worried about DOS or DDOS, everything that *
-                 * has to be done is the requests have to be rate-limited                */
+                console.log(name);
 
-                // for (var i=0; i < unavailableSymbols.length; i++) {
-                //     if (name.includes(unavailableSymbols[i])) {
-                //         loginText.innerHTML = "Nemôžete použiť symbol " + unavailableSymbols[i];
-                //         pass = false;
-                //         break;
-                //     };
-                // };
-
-                var blurBackground = document.getElementById("blurbackground");
-                var blur = document.getElementById("blur");
+                for (var i=0; i < unavailableSymbols.length; i++) {
+                    if (name.includes(unavailableSymbols[i])) {
+                        loginText.innerHTML = "Nemôžete použiť symbol " + unavailableSymbols[i];
+                        loginText.style.color = "red";
+                        pass = false;
+                        break;
+                    };
+                };
                 
-                blurBackground.style.backgroundColor = "white";
-                blur.style.filter = "blur(0px) brightness(100%)";
-                body.removeChild(loginDiv);
+                if (pass) {
+                    var blurBackground = document.getElementById("blurbackground");
+                    var blur = document.getElementById("blur");
+                    
+                    blurBackground.style.backgroundColor = "white";
+                    blur.style.filter = "blur(0px) brightness(100%)";
+                    body.removeChild(loginDiv);
 
-
-                writeCookie("login", name);
-                
+                    writeCookie("login", name);
+                };
             };  
         };
-        /* another useless comment */
         //adding to webpage
         loginDiv.appendChild(loginText);
         loginDiv.appendChild(loginInput);
@@ -169,7 +138,7 @@ function login() {
     }
     else {
         var name = getCookie("login");
-        setWindowData(name);
+        console.log(name);
     }
 };
 
