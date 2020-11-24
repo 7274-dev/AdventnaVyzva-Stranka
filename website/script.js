@@ -172,6 +172,7 @@ function getCookie(name) {
     return decodeURI(dc.substring(begin + prefix.length, end) ).replace(/\"/g, ''); 
 };
 
+//NOT WORKING
 function sendXMLRequest(methon, url, sendData) {
     var xmlPromise = new Promise((resolve, reject) => {
         const xml = new XMLHttpRequest();
@@ -216,6 +217,7 @@ function postRequest(url, sendData) {
         console.log("Something went wrong! " + err);
     })
 };
+//TILL HERE
 
 function on_click(event) {
     element = event.target; // rip IE 6-8
