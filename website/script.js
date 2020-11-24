@@ -173,16 +173,48 @@ function getCookie(name) {
 };
 
 function sendXMLRequest(methon, url, sendData) {
-    const xml = new XMLHttpRequest();
-    xml.open(methon, url);
-    xml.setRequestHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8887");
-    xml.responseType = "json";
-    xml.onload = () => {
-        var data = xml.response;
-        console.log(data);
-        return data;
-    };
-    xml.send(JSON.stringify(sendData));
+    var xmlPromise = new Promise((resolve, reject) => {
+        const xml = new XMLHttpRequest();
+
+        xml.open(methon, url);
+        xml.setRequestHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8887");
+        xml.responseType = "json";
+        xml.onerror = () => {
+            reject("Niečo sa pokazilo... Skúste skontrolovať svoje pripoj");
+        };
+
+        if (sendData) {
+            xml.setRequestHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8887");
+        };
+
+        xml.onload = () => {
+            if (xml.status >= 400) {
+                console.log(xml.response);
+                reject(xml.response);
+            } else {
+                console.log(xml.response);
+                resolve(xml.response);
+            };
+        };
+
+        xml.send(JSON.stringify(sendData));
+    });
+};
+
+function getRequest(url) {
+    sendXMLRequest("GET", url).then(responseData => {
+        console.log(responseData);
+        return responseData;
+    });
+};
+
+function postRequest(url, sendData) {
+    sendXMLRequest("POST", url, sendData).then(responseData => {
+        console.log(responseData);
+        return responseData;
+    }).catch(err => {
+        console.log("Something went wrong! " + err);
+    })
 };
 
 function on_click(event) {
