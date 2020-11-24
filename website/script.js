@@ -24,30 +24,30 @@ var positions = [
     {top:"33", right:"43"},//left middle_up 03
     {top:"46", right:"47"},//left middle 04
     {top:"55", right:"18"},//right middle_down 05
-    {top:"40", right:"26"},//midle_right midle 06
-    {top:"38", right:"59"},//midle midle 07
+    {top:"40", right:"26"},//middle_right middle 06
+    {top:"38", right:"59"},//middle middle 07
     {top:"30", right:"34"},//right up 08
-    {top:"54", right:"57"},//midle midle_down 09
-    {top:"50", right:"71"},//right midle 10
+    {top:"54", right:"57"},//middle middle_down 09
+    {top:"50", right:"71"},//right middle 10
     {top:"65", right:"29"},//right down 11
-    {top:"70", right:"39"},//midle down 12
+    {top:"70", right:"39"},//middle down 12
     {top:"72", right:"60"},//left down 13
-    {top:"51", right:"32"},//left midle 14
-    {top:"42", right:"35"},//right midle 15
+    {top:"51", right:"32"},//left middle 14
+    {top:"42", right:"35"},//right middle 15
 ];
 
 var ballResourcePath = "img/balls/";
 
 var ballImages = [
-    "blue_ball.png",
-    "orange_ball.png",
-    "orange_red_ball.png",
-    "pink_ball.png",
-    "purple_ball.png",
-    "red_ball.png",
-    "white_ball.png",
-    "pink_ball.png",
-    "yellow_ball.png"
+    "blue_ball",
+    "orange_ball",
+    "orange_red_ball",
+    "pink_ball",
+    "purple_ball",
+    "red_ball",
+    "white_ball",
+    "pink_ball",
+    "yellow_ball"
 ];
 
 var unavailableSymbols = ["#", '"', "1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "_", "?", ":", "-", "=", "%", "(", ")", "[", "]", "{", "}"];
@@ -68,74 +68,107 @@ function replaceColor(imageData, oldColor, newColor) {
     };
 };
 
-function login() {
-    var isLoggedIn = getCookie("isLoggedIn") == null;
-    if (isLoggedIn) {
-        var isLoggedInCookie = getCookie("isLoggedIn");
-        if (isLoggedInCookie == "true") {
-        } else {
-            var loginDiv = document.createElement("div");
-            var loginInput = document.createElement("input");
-            var loginButton = document.createElement("button");
-            var loginText = document.createElement("p");
-            var body = document.body;
-            //login text parameters
-            loginText.innerHTML = "Prosím zadajte svoje meno:";
-            loginText.id = "loginText";
-            //login div parameters
-            loginDiv.classList.add("login-prompt");
-            loginDiv.id = "loginDiv";
-            //login input parameters
-            loginInput.placeholder = "Vaše meno a preizvisko";
-            loginInput.id = "loginInput";
-            loginInput.type = "text";
-            //login button config
-            loginButton.innerHTML = "Potvrdiť";
-            loginButton.id = "loginButton";
-            loginButton.onclick = function() {
-                var name = document.getElementById("loginInput").value;
-                var pass = true;
-                if (name != "") {
-                    console.log(name);
-                    for (var i=0; i < unavailableSymbols.length; i++) {
-                        if (name.includes(unavailableSymbols[i])) {
-                            loginText.innerHTML = "Nemôžete použiť symbol " + unavailableSymbols[i];
-                            pass = false;
-                            break;
-                        };
-                    };
-                    if (pass) {
-                        var blurBackground = document.getElementById("blurbackground");
-                    var blur = document.getElementById("blur");
-                    blurBackground.style.backgroundColor = "white";
-                    blur.style.filter = "blur(0px) brightness(100%)";
-                    document.cookie += ";isLoggedIn=true";
-                    body.removeChild(loginDiv);
-                    };
-                };
-            };
-            //adding to webpage
-            loginDiv.appendChild(loginText);
-            loginDiv.appendChild(loginInput);
-            loginDiv.appendChild(loginButton);
-            body.appendChild(loginDiv);
+function setWindowData(name) {
+    console.log(name);
+}
+
+function writeCookie(key, value) {
+    document.cookie = document.cookie + "; " + encodeURIComponent(name) + '=' + encodeURIComponent(value);
+}
+
+function login() { 
+    // what the fuck is this
+    // useless comments, unreadable code, creating static elements in js, even though they can
+    // be created right when the page loads, in HTML
+    // this should be moved to index.html
+
+    var isLoggedIn = getCookie("login") != null;
+    if (!isLoggedIn) {
+        var loginDiv = document.createElement("div");
+        var loginInput = document.createElement("input");
+        var loginButton = document.createElement("button");
+        var loginText = document.createElement("p");
+
+        /* there were 2 fucking calls that used this variable, WHY?  *
+         * it just makes the code more unreadable and even more shit */
+        var body = document.body; // wtf why just why why why why why why why why why why why why why why why why why why why why why 
+        
+        //login text parameters
+        loginText.innerHTML = "Prosím zadajte svoje meno:";
+        loginText.id = "loginText";
+        //login div parameters
+        loginDiv.classList.add("login-prompt");
+        loginDiv.id = "loginDiv";
+        //login input parameters
+        loginInput.placeholder = "Vaše meno a preizvisko";
+        loginInput.id = "loginInput";
+        loginInput.type = "text";
+        //login button config
+        loginButton.innerHTML = "Potvrdiť";
+        loginButton.id = "loginButton";
+
+
+        // everything was wrong here, bad indentation,
+        // too much code for things that can be done with
+        // one line of code useless variables and more nightmares
+        loginButton.onclick = function() {
+            var name = document.getElementById("loginInput").value;
+            // this check is totally correct and it's very good that it's here
+            if (name != "") {
+                setWindowData(name);
+                /* totally useless, if we are worried about DOS or DDOS, everything that *
+                 * has to be done is the requests have to be rate-limited                */
+
+                // for (var i=0; i < unavailableSymbols.length; i++) {
+                //     if (name.includes(unavailableSymbols[i])) {
+                //         loginText.innerHTML = "Nemôžete použiť symbol " + unavailableSymbols[i];
+                //         pass = false;
+                //         break;
+                //     };
+                // };
+
+                var blurBackground = document.getElementById("blurbackground");
+                var blur = document.getElementById("blur");
+                
+                blurBackground.style.backgroundColor = "white";
+                blur.style.filter = "blur(0px) brightness(100%)";
+                body.removeChild(loginDiv);
+
+
+                writeCookie("login", name);
+                
+            };  
         };
-    };
+        /* another useless comment */
+        //adding to webpage
+        loginDiv.appendChild(loginText);
+        loginDiv.appendChild(loginInput);
+        loginDiv.appendChild(loginButton);
+        body.appendChild(loginDiv);
+    }
+    else {
+        var name = getCookie("login");
+        setWindowData(name);
+    }
 };
 
 function on_ball_click(ballNumber, ballColor, ballContainer) {
     console.log("Opened ball number " + ballNumber);
     var descriptionText = document.getElementById("description");
-    var descriptionContainer = document.getElementById("descriptionContainer");
+    var descriptionContainer = document.getElementById("descriptionContainer"); // unused variable
     descriptionText.innerHTML = "";
+    var nextColor;
     if (ballColor == "yellow") {
-        var nextColor = "white_broken";
+        var nextColor = "white";
     } else if (ballColor == "orange_red") {
-        var nextColor = "red_broken";
+        var nextColor = "red";
     } else {
-        var nextColor = ballColor + "_broken";
+        var nextColor = ballColor;
     };
-    ballContainer.style.backgroundImage = "url(" + nextColor + "_ball.png)";
+
+    nextColor += "_ball_broken.png"
+
+    ballContainer.style.backgroundImage = "url(" + nextColor + ")";
 };
 
 // https://stackoverflow.com/questions/5968196/how-do-i-check-if-a-cookie-exists
@@ -168,23 +201,26 @@ function on_click(event) {
     element = event.target; // rip IE 6-8
     var dayNumber = element.innerHTML;
     const http = new XMLHttpRequest();
-    const url = backendURL + "text?day=" + dayNumber;
-    http.open("GET", url);
-    http.setRequestHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8887");
-    http.send();
     
-    http.onreadystatechange= (e)=> {
-        console.log(this.readyState);
-        if (this.readyState == 4 && // request is done 
-            this.status == 200) { // response code is OK
-            const textElement = document.getElementById("description");
-            textElement.innerHTML = http.responseText;
-        }
+    const url = backendURL + "text?day=" + dayNumber;
+    console.log(url);
+    http.open("GET", url);
+
+    var description = document.getElementById("description");
+
+    http.onreadystatechange = function() {
+        if (this.readyState == XMLHttpRequest.DONE &&
+            status === 0 | status >= 200 && status < 400) {
+                description.innerHTML = JSON.parse(this.responseText).response;
+            }
+        else if (this.readyState == XMLHttpRequest.DONE) {
+            description.innerHTML = JSON.parse(this.responseText).response;
+        } 
         else {
-            const textElement = document.getElementById("description");
-            textElement.innerHTML = "Server error!";
+            description.innerHTML = "Error!";
         }
     }
+    http.send();
 };
 
 function randomInt(bound) {
@@ -213,8 +249,7 @@ function on_load() {
             ballImage = ballImageIndexes[i];
         }
 
-        currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + ")";
-        var ballColor = ballImages[ballImage].replace("_ball.png", "")
+        currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + ".png)";
         currentBall.innerHTML = i + 1;
         
         currentBall.style.top = currentPosition.top + "%";
