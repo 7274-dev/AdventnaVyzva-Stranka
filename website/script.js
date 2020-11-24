@@ -2,6 +2,8 @@ var backendURL = "http://localhost:8080/";
 var mapClicked = false;
 
 function mapClick() {
+    var buttonRight = document.getElementById("mapButtonMain");
+    var buttonRight = document.getElementById("mapButtonSecond");
     if (!mapClicked) {
         /*var width = document.getElementById("map_container").style.width;
         var height = document.getElementById("map_container").style.height;
@@ -15,9 +17,14 @@ function mapClick() {
         mapCover.style.zIndex = "2";
         mapCover.style.left = "0%";
         mapCover.style.top = "0%";
-        mapCover.onclick = function() {
+        var mapClose = document.createElement("div");
+        mapClose.style.width = "100px";
+        mapClose.style.height = "100px";
+        mapClose.style.backgroundColor = "lightblue";
+        mapClose.onclick = function() {
             mapClick();
         };
+        document.body.appendChild(mapClose);
         document.body.appendChild(mapCover);
         mapClicked = true;
         console.log("done");
