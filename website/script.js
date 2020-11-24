@@ -76,6 +76,10 @@ function replaceColor(imageData, oldColor, newColor) {
     };
 };
 
+function setWindowData(name) {
+    console.log(name);
+}
+
 function writeCookie(key, value) {
     document.cookie = document.cookie + "; " + encodeURIComponent(name) + '=' + encodeURIComponent(value);
 };
@@ -138,7 +142,7 @@ function login() {
     }
     else {
         var name = getCookie("login");
-        console.log(name);
+        setWindowData(name);
     };
 };
 
