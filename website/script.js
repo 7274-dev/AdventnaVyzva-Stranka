@@ -142,9 +142,6 @@ function isBroken(ballNumber) {
     document.getElementById()
 } 
 
-function breakBall(ballNumber) {
-
-}
 
 function on_click(event) {
     element = event.target; // rip IE 6-8
@@ -271,7 +268,7 @@ function unBlur() {
 };
 
 //needed in future, dont delete
-function changeBallColor(ballColor, ballContainerID) {
+function breakeBall(ballColor, ballContainerID) {
     //startup info
     ballContainer = document.getElementById(ballContainerID);
     //replace that file with broken file
@@ -283,7 +280,6 @@ function changeBallColor(ballColor, ballContainerID) {
         var nextColor = ballColor;
     };
     ballContainer.style.backgroundImage = "url(" + ballResourcePath + nextColor + "_ball.png)";
-
 };
 
 
