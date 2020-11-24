@@ -74,18 +74,113 @@ function replaceColor(imageData, oldColor, newColor) {
     };
 };
 
-<<<<<<< HEAD
+function wasRequestSuccessful(request) {
+    return request.readyState == XMLHttpRequest.DONE &&
+            request.status === 0 || 
+            request.status >= 200 && request.status < 400;
+}
+
+function breakBall(ballNumber) {
+
+}
+
+function on_click(event) {
+    element = event.target; // rip IE 6-8
+    var dayNumber = element.innerHTML;
+    const http = new XMLHttpRequest();
+    
+    const url = backendURL + "text?day=" + dayNumber;
+    console.log(url);
+    http.open("GET", url);
+
+    var description = document.getElementById("description");
+
+    http.onreadystatechange = function() {
+        if (wasRequestSuccessful(this)) {
+                description.innerHTML = JSON.parse(this.responseText).response;
+            }
+        else if (this.readyState == XMLHttpRequest.DONE) {
+            description.innerHTML = JSON.parse(this.responseText).response;
+        } 
+        else {
+            description.innerHTML = "Error!";
+        }
+    }
+    http.send();
+};
+
+function createUser(name) {
+    var createUserRequest = new XMLHttpRequest();
+    const url = backendURL + "add" + name;
+
+    var jsonRequestData = {"userName": name};
+    
+    createUserRequest.open("POST", url);
+    createUserRequest.send(jsonRequestData);
+
+    // we don't have to handle any errors, if the user doesn't exist,
+    // it's created, else, it already exists.
+    // if the server is down, we shouldn't even get here
+}
+
+function openWindow(window, userName) {
+    var openWindowRequest = XMLHttpRequest();
+    const url = backendURL + "openwindow";
+
+    var jsonRequestData = {"day": window, "userName": userName};
+
+    openWindowRequest.onreadystatechange = function() {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            if (wasRequestSuccessful(this)) {
+                return;
+            }
+            else if (this.status == 500) {
+                // server error :o
+                // we probably want to display an error here.
+                return;
+            }
+        }
+        else {
+            // server is down
+        }
+    }
+
+    openWindowRequest.open("POST", url);
+    openWindowRequest.send(jsonRequestData);
+}
+
+function getOpenedWindows(name) {
+    var openedWindowsRequest = new XMLHttpRequest();
+    const url = backendURL + "windows?userName=" + name;
+
+    openedWindowsRequest.open("GET", url);
+    openedWindowsRequest.send();
+}
+
 // also handle user "account" creation
-=======
-//needed in future, dont remove
->>>>>>> 9fb6bd0b4fe2a199bf863aa15bc36b4a452a6790
 function setWindowData(name) {
     var userExistsRequest = new XMLHttpRequest();
-    userExistsRequest.
+    const url = backendURL + "exists?userName=" + name;
+    
+    
+    userExistsRequest.open("GET", url);
+
+    userExistsRequest.onreadystatechange = function() {
+        if (wasRequestSuccessful(this)) {
+            createUser(name);
+        }
+        else {
+            // TODO: add some kind of error, warning for users, that the server is down
+            // panic
+        }
+        getOpenedWindows(name);
+    }
+
+    userExistsRequest.send();    
 }
 
 function writeCookie(key, value) {
-    document.cookie += "; " + encodeURIComponent(name) + '=' + encodeURIComponent(value);
+    document.cookie += "; " + encodeURIComponent(key) + '=' + encodeURIComponent(value);
 };
 
 function login() { 
@@ -107,18 +202,7 @@ function login() {
                 writeCookie("login", name);
             };  
         };
-<<<<<<< HEAD
-        //adding to webpage
-        loginDiv.appendChild(loginText);
-        loginDiv.appendChild(loginInput);
-        loginDiv.appendChild(loginButton);
-        body.appendChild(loginDiv);
-        setWindowData(name);
-    }
-    else {
-=======
     } else {
->>>>>>> 9fb6bd0b4fe2a199bf863aa15bc36b4a452a6790
         var name = getCookie("login");
         setWindowData(name);//why display name?
         unBlur();//if none just background will change
@@ -172,32 +256,6 @@ function getCookie(name) {
     };
 
     return decodeURI(dc.substring(begin + prefix.length, end) ).replace(/\"/g, ''); 
-};
-
-function on_click(event) {
-    element = event.target; // rip IE 6-8
-    var dayNumber = element.innerHTML;
-    const http = new XMLHttpRequest();
-    
-    const url = backendURL + "text?day=" + dayNumber;
-    console.log(url);
-    http.open("GET", url);
-
-    var description = document.getElementById("description");
-
-    http.onreadystatechange = function() {
-        if (this.readyState == XMLHttpRequest.DONE &&
-            status === 0 | status >= 200 && status < 400) {
-                description.innerHTML = JSON.parse(this.responseText).response;
-            }
-        else if (this.readyState == XMLHttpRequest.DONE) {
-            description.innerHTML = JSON.parse(this.responseText).response;
-        } 
-        else {
-            description.innerHTML = "Error!";
-        }
-    }
-    http.send();
 };
 
 function randomInt(bound) {
