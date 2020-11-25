@@ -146,16 +146,17 @@ html, body, #blurbackground {
 }
 #mapButtonMain {
     text-align: center;
-    width: 120px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     position: absolute;
-    right: 5%;
-    bottom: -21%;
+    right: 27.4%;
+    bottom: -6.8%;
     background-color: lightblue;
     cursor: pointer;
 }
-#mapButtonMainText {
-    padding-top: 8px;
+#mapButtonMainImage {
+    width: 100%;
+    height: 100%;
 }
 #mapCloser {
     width: 100px;
