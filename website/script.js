@@ -13,7 +13,6 @@ function mapClick() {
     var blurDiv = document.getElementById("blur");
 
     if (!mapClicked) {
-        window.scrollTo(0, 0);
         blurDiv.removeChild(description);
         blurDiv.removeChild(treeContainer);
         body.appendChild(bigMap);
