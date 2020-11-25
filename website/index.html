@@ -10,12 +10,17 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
     <body>
+        <img id="bigMap" src="img/europe_map_done.png">
+        <div id="mapCloser" onclick=mapClick()><img src="img/close.png" id="mapCloserImage"></div>
         <div class="blurbackground Blurdiv" id="blurbackground">
             <div class="blur Blurdiv" id="blur">
                 <div class="position-relative" id="treecontainer">
                     <img class="img-fluid" id="tree" src="img/stromcek.png">
                     <img class="img-fluid" id="star" src="img/star.png">
                     <div id="map_container"><img id="map" src="img/europe_map_done.png"></div>
+                    <div id="mapButtonMain" onclick=mapClick()>
+                        <p id="mapButtonMainText">Zvätšiť Mapu</p>
+                    </div>
                     <p id="starNumber">24</p>
                 </div>
                 <h1 class="float-left position-relative" id="title">Adventná Výzva</h1>
