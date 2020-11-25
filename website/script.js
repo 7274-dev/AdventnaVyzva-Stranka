@@ -10,18 +10,13 @@ const description = document.getElementById("descriptionContainer");
 
 function mapClick() {
     var body = document.body;
-    var blurDiv = document.getElementById("blur");
 
     if (!mapClicked) {
-        blurDiv.removeChild(description);
-        blurDiv.removeChild(treeContainer);
         body.appendChild(bigMap);
         body.appendChild(mapCloser);
         mapClicked = true;
     } else {
         treeContainer.appendChild(buttonMain);
-        blurDiv.appendChild(treeContainer);
-        blurDiv.appendChild(description);
         body.removeChild(mapCloser);
         body.removeChild(bigMap);
         mapClicked = false;
