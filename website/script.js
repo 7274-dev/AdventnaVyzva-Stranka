@@ -1,35 +1,25 @@
 var backendURL = "http://localhost:8080/";
+
+//map click vars, needed
 var mapClicked = false;
+const bigMap = document.getElementById("bigMap");
+const mapCloser = document.getElementById("mapCloser");
+const buttonMain = document.getElementById("mapButtonMain");
 
 function mapClick() {
-    var buttonMain = document.getElementById("mapButtonMain");
-    var buttonSecond = document.getElementById("mapButtonSecond");
+    var body = document.body;
+    var treeContainer = document.getElementById("treecontainer");
+
     if (!mapClicked) {
-        /*var width = document.getElementById("map_container").style.width;
-        var height = document.getElementById("map_container").style.height;
-        var left = document.getElementById("map_container").style.left;*/
-        var mapCover = document.createElement("img");
-        mapCover.id = "bigMap";
-        mapCover.src = "img/europe_map_done.png";
-        mapCover.style.width = "100%";
-        mapCover.style.height = "100%";
-        mapCover.style.position = "absolute";
-        mapCover.style.zIndex = "2";
-        mapCover.style.left = "0%";
-        mapCover.style.top = "0%";
-        var mapClose = document.createElement("div");
-        mapClose.style.width = "100px";
-        mapClose.style.height = "100px";
-        mapClose.style.backgroundColor = "lightblue";
-        mapClose.onclick = function() {
-            mapClick();
-        };
-        document.body.appendChild(mapClose);
-        document.body.appendChild(mapCover);
+        window.scrollTo(0, 0);
+        treeContainer.removeChild(buttonMain);
+        body.appendChild(bigMap);
+        body.appendChild(mapCloser);
         mapClicked = true;
-        console.log("done");
     } else {
-        document.body.removeChild(document.getElementById("bigMap"));
+        treeContainer.appendChild(buttonMain);
+        body.removeChild(mapCloser);
+        body.removeChild(bigMap);
         mapClicked = false;
     };
 };
@@ -363,7 +353,10 @@ function on_load() {
         writeCookie("balls", ballImageIndexes);
 
     };
-    
+
+    document.body.removeChild(document.getElementById("bigMap"));
+    document.body.removeChild(document.getElementById("mapCloser"));
+    window.scrollTo(0, 0);
 };
 
 on_load();
