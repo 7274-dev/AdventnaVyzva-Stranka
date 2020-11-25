@@ -255,7 +255,7 @@ function setWindowData(name) {
             // panic
         }
         getOpenedWindows(name);
-    }
+    };
 
     userExistsRequest.send();    
 };
