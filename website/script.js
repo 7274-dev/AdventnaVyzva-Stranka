@@ -77,7 +77,6 @@ function writeCookie(key, value) {
     document.cookie = "data=" + encodeURIComponent(jsonData);
 };
 
-
 var state_hex = {
     other:"#c3c3c3",
     sea:"#5891c9",
@@ -155,12 +154,11 @@ function wasRequestSuccessful(request) {
     return request.readyState == XMLHttpRequest.DONE &&
             request.status === 0 || 
             request.status >= 200 && request.status < 400;
-}
+};
 
 function isBroken(ballNumber) {
     document.getElementById()
-} 
-
+};
 
 function on_click(event) {
     element = event.target; // rip IE 6-8
@@ -184,8 +182,8 @@ function on_click(event) {
         } 
         else {
             description.innerHTML = "Error!";
-        }
-    }
+        };
+    };
     http.send();
 };
 
@@ -201,7 +199,7 @@ function createUser(name) {
     // we don't have to handle any errors, if the user doesn't exist,
     // it's created, else, it already exists.
     // if the server is down, we shouldn't even get here
-}
+};
 
 function openWindow(window, userName) {
     var openWindowRequest = XMLHttpRequest();
@@ -222,12 +220,12 @@ function openWindow(window, userName) {
         }
         else {
             // server is down
-        }
-    }
+        };
+    };
 
     openWindowRequest.open("POST", url);
     openWindowRequest.send(jsonRequestData);
-}
+};
 
 function getOpenedWindows(name) {
     var openedWindowsRequest = new XMLHttpRequest();
@@ -235,7 +233,7 @@ function getOpenedWindows(name) {
 
     openedWindowsRequest.open("GET", url);
     openedWindowsRequest.send();
-}
+};
 
 // also handle user "account" creation
 function setWindowData(name) {
