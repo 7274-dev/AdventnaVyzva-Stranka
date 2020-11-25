@@ -287,6 +287,16 @@ function login() {
     };
 };
 
+function mobileDeviceDetection() {
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        // true for mobile device
+        console.log("mobile device");
+    } else{
+        // false for not mobile device
+        console.log("not mobile device");
+    };
+};
+
 function unBlur() {
     var blurBackground = document.getElementById("blurbackground");
     var blur = document.getElementById("blur");
@@ -318,6 +328,7 @@ function randomInt(bound) {
 };
 
 function on_load() {
+    mobileDeviceDetection();
     login();
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
