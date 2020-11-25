@@ -5,19 +5,24 @@ var mapClicked = false;
 const bigMap = document.getElementById("bigMap");
 const mapCloser = document.getElementById("mapCloser");
 const buttonMain = document.getElementById("mapButtonMain");
+const treeContainer = document.getElementById("treecontainer");
+const description = document.getElementById("descriptionContainer");
 
 function mapClick() {
     var body = document.body;
-    var treeContainer = document.getElementById("treecontainer");
+    var blurDiv = document.getElementById("blur");
 
     if (!mapClicked) {
         window.scrollTo(0, 0);
-        treeContainer.removeChild(buttonMain);
+        blurDiv.removeChild(description);
+        blurDiv.removeChild(treeContainer);
         body.appendChild(bigMap);
         body.appendChild(mapCloser);
         mapClicked = true;
     } else {
         treeContainer.appendChild(buttonMain);
+        blurDiv.appendChild(treeContainer);
+        blurDiv.appendChild(description);
         body.removeChild(mapCloser);
         body.removeChild(bigMap);
         mapClicked = false;
