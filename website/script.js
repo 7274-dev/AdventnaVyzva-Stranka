@@ -17,6 +17,7 @@ function mapClick() {
         body.appendChild(mapCloser);
         mapClicked = true;
     } else {
+        window.scrollTo(0, 110);
         treeContainer.appendChild(buttonMain);
         body.removeChild(mapCloser);
         body.removeChild(bigMap);
@@ -159,7 +160,7 @@ function wasRequestSuccessful(request) {
 }
 
 function isBroken(ballNumber) {
-    document.getElementById()
+    document.getElementById(); //what is this for @ivicek??
 } 
 
 
@@ -300,9 +301,6 @@ function breakeBall(ballColor, ballContainerID) {
     };
     ballContainer.style.backgroundImage = "url(" + ballResourcePath + nextColor + "_ball.png)";
 };
-
-
-
 
 function randomInt(bound) {
     return Math.floor(Math.random() * bound);
