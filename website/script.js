@@ -287,16 +287,6 @@ function login() {
     };
 };
 
-function mobileDeviceDetection() {
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-        // true for mobile device
-        console.log("mobile device");
-    } else{
-        // false for not mobile device
-        console.log("not mobile device");
-    };
-};
-
 function unBlur() {
     var blurBackground = document.getElementById("blurbackground");
     var blur = document.getElementById("blur");
@@ -320,11 +310,18 @@ function breakeBall(ballColor, ballContainerID) {
     ballContainer.style.backgroundImage = "url(" + ballResourcePath + nextColor + "_ball.png)";
 };
 
-
-
-
 function randomInt(bound) {
     return Math.floor(Math.random() * bound);
+};
+
+function mobileDeviceDetection() {
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        // true for mobile device
+        console.log("mobile device");
+    } else{
+        // false for not mobile device
+        console.log("not mobile device");
+    };
 };
 
 function on_load() {
