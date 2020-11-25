@@ -1,5 +1,29 @@
 var backendURL = "http://localhost:8080/";
 
+//map click vars, needed
+var mapClicked = false;
+const bigMap = document.getElementById("bigMap");
+const mapCloser = document.getElementById("mapCloser");
+const buttonMain = document.getElementById("mapButtonMain");
+
+function mapClick() {
+    var body = document.body;
+    var treeContainer = document.getElementById("treecontainer");
+
+    if (!mapClicked) {
+        window.scrollTo(0, 0);
+        treeContainer.removeChild(buttonMain);
+        body.appendChild(bigMap);
+        body.appendChild(mapCloser);
+        mapClicked = true;
+    } else {
+        treeContainer.appendChild(buttonMain);
+        body.removeChild(mapCloser);
+        body.removeChild(bigMap);
+        mapClicked = false;
+    };
+};
+
 function getDataCookie() {
     var dc,
     prefix,
@@ -139,11 +163,11 @@ function isBroken(ballNumber) {
 } 
 
 
-function on_click(event, userName) {
+function on_click(event) {
     element = event.target; // rip IE 6-8
     var dayNumber = element.innerHTML;
     const http = new XMLHttpRequest();
-    openWindow(dayNumber, userName);
+    
     const url = backendURL + "text?day=" + dayNumber;
     http.open("GET", url);
 
@@ -170,7 +194,7 @@ function createUser(name) {
     var createUserRequest = new XMLHttpRequest();
     const url = backendURL + "add";
 
-    var jsonRequestData = name;
+    var jsonRequestData = JSON.stringify({"userName": name});
     
     createUserRequest.open("POST", url);
     createUserRequest.send(jsonRequestData);
@@ -181,7 +205,7 @@ function createUser(name) {
 }
 
 function openWindow(window, userName) {
-    var openWindowRequest = new XMLHttpRequest();
+    var openWindowRequest = XMLHttpRequest();
     const url = backendURL + "openwindow";
 
     var jsonRequestData = JSON.stringify({"day": window, "userName": userName});
@@ -203,7 +227,6 @@ function openWindow(window, userName) {
     }
 
     openWindowRequest.open("POST", url);
-    openWindowRequest.setRequestHeader("Content-Type", "application/json");
     openWindowRequest.send(jsonRequestData);
 }
 
@@ -224,6 +247,7 @@ function setWindowData(name) {
     userExistsRequest.open("GET", url);
 
     userExistsRequest.onreadystatechange = function() {
+        console.log(this.responseText);
         if (wasRequestSuccessful(this)) {
             createUser(name);
         }
@@ -242,7 +266,6 @@ function login() {
     if (!isLoggedIn) {
         document.getElementById("loginButton").onclick = function() {
             var name = document.getElementById("loginInput").value;
-            userName = name;
             if (name != "") {
                 unBlur();
                 writeCookie("loginName", name);
@@ -253,7 +276,6 @@ function login() {
         setWindowData(name);
         unBlur();
     };
-    return name;
 };
 
 function unBlur() {
@@ -287,7 +309,7 @@ function randomInt(bound) {
 };
 
 function on_load() {
-    var userName = login();
+    login();
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
     var cookieExists = document.cookie.indexOf("balls=") != -1;
@@ -320,7 +342,7 @@ function on_load() {
         currentBall.classList.add("ball");
 
         currentBall.onclick = function(e) {
-            on_click(e, userName);
+            on_click(e);
         };
 
         ballContainer.appendChild(currentBall);
@@ -329,6 +351,9 @@ function on_load() {
         writeCookie("balls", ballImageIndexes);
 
     };
+
+    document.body.removeChild(document.getElementById("bigMap"));
+    document.body.removeChild(document.getElementById("mapCloser"));
     
 };
 
