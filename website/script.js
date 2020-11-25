@@ -5,14 +5,13 @@ var mapClicked = false;
 const bigMap = document.getElementById("bigMap");
 const mapCloser = document.getElementById("mapCloser");
 const buttonMain = document.getElementById("mapButtonMain");
+const treeContainer = document.getElementById("treecontainer");
+const description = document.getElementById("descriptionContainer");
 
 function mapClick() {
     var body = document.body;
-    var treeContainer = document.getElementById("treecontainer");
 
     if (!mapClicked) {
-        window.scrollTo(0, 0);
-        treeContainer.removeChild(buttonMain);
         body.appendChild(bigMap);
         body.appendChild(mapCloser);
         mapClicked = true;
@@ -77,7 +76,6 @@ function writeCookie(key, value) {
     var jsonData = decodeURIComponent(JSON.stringify(cookie)).replace("\\", "");
     document.cookie = "data=" + encodeURIComponent(jsonData);
 };
-
 
 var state_hex = {
     other:"#c3c3c3",
@@ -156,12 +154,11 @@ function wasRequestSuccessful(request) {
     return request.readyState == XMLHttpRequest.DONE &&
             request.status === 0 || 
             request.status >= 200 && request.status < 400;
-}
+};
 
 function isBroken(ballNumber) {
     document.getElementById()
-} 
-
+};
 
 function on_click(event, userName) {
     element = event.target; // rip IE 6-8
@@ -185,8 +182,8 @@ function on_click(event, userName) {
         } 
         else {
             description.innerHTML = "Error!";
-        }
-    }
+        };
+    };
     http.send();
 };
 
@@ -202,7 +199,7 @@ function createUser(name) {
     // we don't have to handle any errors, if the user doesn't exist,
     // it's created, else, it already exists.
     // if the server is down, we shouldn't even get here
-}
+};
 
 function openWindow(window, userName) {
     var openWindowRequest = new XMLHttpRequest();
@@ -223,13 +220,13 @@ function openWindow(window, userName) {
         }
         else {
             // server is down
-        }
-    }
+        };
+    };
 
     openWindowRequest.open("POST", url);
     openWindowRequest.setRequestHeader("Content-Type", "application/json");
     openWindowRequest.send(jsonRequestData);
-}
+};
 
 function getOpenedWindows(name) {
     var openedWindowsRequest = new XMLHttpRequest();
@@ -237,7 +234,7 @@ function getOpenedWindows(name) {
 
     openedWindowsRequest.open("GET", url);
     openedWindowsRequest.send();
-}
+};
 
 // also handle user "account" creation
 function setWindowData(name) {
@@ -256,7 +253,7 @@ function setWindowData(name) {
             // panic
         }
         getOpenedWindows(name);
-    }
+    };
 
     userExistsRequest.send();    
 };
@@ -272,6 +269,16 @@ function login() {
                 writeCookie("loginName", name);
             };  
         };
+        // Execute a function when the user releases a key on the keyboard
+        document.getElementById("loginInput").addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+                event.preventDefault();
+        // Trigger the button element with a click
+                document.getElementById("loginButton").click();
+            };
+        });
     } else {
         var name = getCookie("loginName");
         setWindowData(name);
@@ -303,15 +310,24 @@ function breakeBall(ballColor, ballContainerID) {
     ballContainer.style.backgroundImage = "url(" + ballResourcePath + nextColor + "_ball.png)";
 };
 
-
-
-
 function randomInt(bound) {
     return Math.floor(Math.random() * bound);
 };
 
+function mobileDeviceDetection() {
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        // true for mobile device
+        console.log("mobile device");
+    } else{
+        // false for not mobile device
+        console.log("not mobile device");
+    };
+};
+
 function on_load() {
     var userName = login();
+    mobileDeviceDetection();
+    login();
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
     var cookieExists = document.cookie.indexOf("balls=") != -1;
