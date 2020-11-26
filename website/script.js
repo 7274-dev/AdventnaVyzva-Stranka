@@ -336,8 +336,6 @@ function on_load() {
 
     };
 
-    document.body.removeChild(document.getElementById("bigMap"));
-    document.body.removeChild(document.getElementById("mapCloser"));
     window.scrollTo(0, 0);
 };
 
