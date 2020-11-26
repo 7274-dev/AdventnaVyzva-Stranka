@@ -203,8 +203,22 @@ html, body, #blurbackground {
 #inputFile {
     margin: 5px;
     display: inline-block;
+    font-family: Textt;
+    font-size: 20px;
+    border-radius: 10px;
+    border: none;
 }
 #buttonFile {
     display: inline-block;
     margin: 5px;
+    font-family: Textt;
+    font-size: 20px;
+    border-radius: 10px;
+    border: none;
+}
+#alertButton {
+    font-family: Textt;
+    font-size: 20px;
+    border-radius: 10px;
+    border: none;
 }
