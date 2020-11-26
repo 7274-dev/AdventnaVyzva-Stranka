@@ -183,6 +183,17 @@ function createUser(name) {
     // if the server is down, we shouldn't even get here
 };
 
+function alertUser(text) {
+    var div = document.createElement("div");
+};
+
+function blur() {
+    var blurBackground = document.getElementById("blurbackground");
+    var blur = document.getElementById("blur");
+    blurBackground.style.backgroundColor = "rgba(0,0,0, 0.4)";
+    blur.style.filter = "blur(10px) brightness(70%)";
+};
+
 function openWindow(window, userName) {
     var openWindowRequest = XMLHttpRequest();
     const url = backendURL + "openwindow";
@@ -249,12 +260,14 @@ function login() {
             if (name != "") {
                 unBlur();
                 writeCookie("loginName", name);
+                document.body.removeChild(document.getElementById("loginDiv"));
             };  
         };
     } else {
         var name = getCookie("loginName");
         setWindowData(name);
         unBlur();
+        document.body.removeChild(document.getElementById("loginDiv"));
     };
 };
 
@@ -263,7 +276,6 @@ function unBlur() {
     var blur = document.getElementById("blur");
     blurBackground.style.backgroundColor = "white";
     blur.style.filter = "blur(0px) brightness(100%)";
-    document.body.removeChild(document.getElementById("loginDiv"));
 };
 
 //needed in future, dont delete
