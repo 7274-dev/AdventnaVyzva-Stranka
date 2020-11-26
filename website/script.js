@@ -291,13 +291,13 @@ function sendHomework() {
     if (!homeworkSent) {
         var homework = inputFile.value;
         if (homework) {
-            console.log("Sending homework... " + homework);
+            console.log("Úloha úspešne odovzdaná! " + homework);
             homeworkSent = true;
         } else {
-            console.log("No files attached!")
+            console.log("Niesú pridané žiadne súbory!");
         };
     } else {
-        console.log("Homework already sent!")
+        console.log("Úloha je už odovzdaná!")
     };
 };
 
