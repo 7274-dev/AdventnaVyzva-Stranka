@@ -203,12 +203,14 @@ function on_click(event) {
     http.onreadystatechange = function() {
         if (wasRequestSuccessful(this) && this.responseText != "") {
             description.innerHTML = JSON.parse(this.responseText).response;
+            displayAudioImage(JSON.parse(this.responseText).response);
         }
         else if (this.responseText == "") {
             description.innerHTML = "Server down";
         }
         else if (this.readyState == XMLHttpRequest.DONE) {
             description.innerHTML = JSON.parse(this.responseText).response;
+            displayAudioImage(JSON.parse(this.responseText).response);
         }
         else {
             description.innerHTML = "Error!";
