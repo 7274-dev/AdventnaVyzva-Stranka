@@ -187,8 +187,9 @@ function isBroken(ballNumber) {
 function on_click(event) {
     element = event.target; // rip IE 6-8
     var dayNumber = element.innerHTML;
-    if (getDate() > dayNumber) {
-        alertUser("Tento deň neni k dispozícií, počkaj si :)");
+    if (getDate() < dayNumber) {
+        console.log(getDate());
+        alertUser("Tento deň nieje k dispozícií, počkaj si :)");
     }
     else {
         dayOpened = dayNumber;
@@ -374,6 +375,8 @@ function uploadFileShow() {
 function sendHomework() {
     var sendHomeworkRequest = new XMLHttpRequest();
     var homework = inputFile.files;
+    var ballColor = document.getElementById("ball" + dayOpened).style.backgroundImage.replace("_ball.png");
+    breakeBall(ballColor, dayOpened);
 
     if (homework) {
         openWindow(dayOpened, getCookie("loginName"));
