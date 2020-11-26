@@ -145,6 +145,12 @@ const dayState = [
     "israel",
 ];
 
+function getDate() {
+    var date = new Date();
+    var day = date.getDate();
+    return day;
+};
+
 function replaceColor(imageData, oldColor, newColor) {
     // r, g, b, a
     for (var i = 0; i < imageData; i += 4) {
@@ -162,7 +168,7 @@ function replaceColor(imageData, oldColor, newColor) {
 };
 
 function mapColorCountries() {
-    var image = document.getElementById("map")
+    var image = document.getElementById("map");
 };
 
 function wasRequestSuccessful(request) {
@@ -181,7 +187,12 @@ function isBroken(ballNumber) {
 function on_click(event) {
     element = event.target; // rip IE 6-8
     var dayNumber = element.innerHTML;
-    dayOpened = dayNumber;
+    if (getDate() < dayNumber) {
+        console.log(getDate());
+        alertUser("Tento deň nieje k dispozícií, počkaj si :)");
+    }
+    else {
+        dayOpened = dayNumber;
     const http = new XMLHttpRequest();
     
     const url = backendURL + "text?day=" + dayNumber;
@@ -192,22 +203,54 @@ function on_click(event) {
     http.onreadystatechange = function() {
         if (wasRequestSuccessful(this) && this.responseText != "") {
             description.innerHTML = JSON.parse(this.responseText).response;
+            displayAudioImage(JSON.parse(this.responseText).response);
         }
         else if (this.responseText == "") {
             description.innerHTML = "Server down";
         }
         else if (this.readyState == XMLHttpRequest.DONE) {
             description.innerHTML = JSON.parse(this.responseText).response;
-        } 
+            displayAudioImage(JSON.parse(this.responseText).response);
+        }
         else {
             description.innerHTML = "Error!";
         };
     };
     http.send();
     if (!getHomeworkStatus(dayNumber)) {
-        uploadFileShow()
+        uploadFileShow();
     } else {
         alertUser("Táto úloha je už hotová!");
+    };
+    };
+};
+
+// [audio:<url>] [image:<url>] [hyperlink:<url>]
+function displayAudioImage(response) {
+    if (response.includes("[audio:") || response.includes("[image:") || response.includes("[hyperlink:")) {
+        if (text.includes("[audio:")) {
+            var text = response.split("[audio:");
+            var url = text[1].replace("]", "");
+            var audio = document.createElement("audio");
+            audio.controls = true;
+            audio.id = "audio";
+            audio.src = url;
+            descriptionContainer.appendChild(audio);
+        } else if (response.includes("[image:")) {
+            var text = response.split("[image:");
+            var url = text[1].replace("]", "");
+            var image = document.createElement("img");
+            image.id = "image";
+            image.src = url;
+            descriptionContainer.appendChild(image);
+        } else if (response.includes("[hyperlink:")) {
+            var text = response.split("[hyperlink:");
+            var url = text[1].replace("]", "");
+            var txt = document.createElement("a");
+            txt.id = "text";
+            txt.href = url;
+            descriptionContainer.appendChild(txt);
+        };
     };
 };
 
@@ -256,6 +299,7 @@ function blur() {
     var blur = document.getElementById("blur");
     blurBackground.style.backgroundColor = "rgba(0,0,0, 0.4)";
     blur.style.filter = "blur(10px) brightness(70%)";
+    document.body.style.overflow = "hidden";
 };
 
 function openWindow(window, userName) {
@@ -361,21 +405,24 @@ function unBlur() {
     var blur = document.getElementById("blur");
     blurBackground.style.backgroundColor = "white";
     blur.style.filter = "blur(0px) brightness(100%)";
+    document.body.style.overflow = "scroll";
 };
 
 //needed in future, dont delete
 function breakeBall(ballColor, ballContainerID) {
     //startup info
-    ballContainer = document.getElementById(ballContainerID);
+    ballContainer = document.getElementById("ball" + ballContainerID);
     //replace that file with broken file
     if (ballColor == "yellow") {
-        var nextColor = "white";
+        var nextColor = ballColor.replace("yellow", "white");
     } else if (ballColor == "orange_red") {
         var nextColor = "red";
     } else {
         var nextColor = ballColor;
     };
-    ballContainer.style.backgroundImage = "url(" + ballResourcePath + nextColor + "_ball.png)";
+    nextColor = nextColor.replace('")', '_broken_ball.png)');
+    nextColor = nextColor.replace('"', "");
+    ballContainer.style.backgroundImage = nextColor;
 };
 
 function uploadFileShow() {
@@ -387,6 +434,8 @@ function uploadFileShow() {
 function sendHomework() {
     var sendHomeworkRequest = new XMLHttpRequest();
     var homework = inputFile.files;
+    var ballColor = document.getElementById("ball" + dayOpened).style.backgroundImage.replace("_ball.png", "");
+    breakeBall(ballColor, dayOpened - 1);
 
     if (homework) {
         openWindow(dayOpened, getCookie("loginName"));
