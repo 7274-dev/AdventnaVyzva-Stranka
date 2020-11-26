@@ -234,7 +234,21 @@ function displayAudioImage(response) {
             audio.id = "audio";
             audio.src = url;
             descriptionContainer.appendChild(audio);
-        }
+        } else if (response.includes("[image:")) {
+            var text = response.split("[image:");
+            var url = text[1].replace("]", "");
+            var image = document.createElement("img");
+            image.id = "image";
+            image.src = url;
+            descriptionContainer.appendChild(image);
+        } else if (response.includes("[hyperlink:")) {
+            var text = response.split("[hyperlink:");
+            var url = text[1].replace("]", "");
+            var txt = document.createElement("a");
+            txt.id = "text";
+            txt.href = url;
+            descriptionContainer.appendChild(txt);
+        };
     };
 };
 
