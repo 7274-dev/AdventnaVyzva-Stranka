@@ -104,6 +104,7 @@ var ballResourcePath = "img/balls/";
 const inputFile = document.getElementById("inputFile");
 const buttonFile = document.getElementById("buttonFile");
 const descriptionContainer = document.getElementById("descriptionContainer")
+const loginInput = document.getElementById("loginInput");
 
 
 var homeworkSent = false;
@@ -275,7 +276,7 @@ function login() {
     var isLoggedIn = getCookie("loginName") != null;
     if (!isLoggedIn) {
         document.getElementById("loginButton").onclick = function() {
-            var name = document.getElementById("loginInput").value;
+            var name = loginInput.value;
             if (name != "") {
                 unBlur();
                 writeCookie("loginName", name);
@@ -338,7 +339,7 @@ function randomInt(bound) {
 };
 
 function loginInputEnterClickTriggerButton() {
-    document.getElementById("loginInput").addEventListener("keyup", function(event) {
+    loginInput.addEventListener("keyup", function(event) {
         // Number 13 is the "Enter" key on the keyboard
         if (event.keyCode === 13) {
           // Trigger the button element with a click
