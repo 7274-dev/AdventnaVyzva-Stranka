@@ -243,6 +243,7 @@ function openWindow(window, userName) {
             else if (this.status == 500) {
                 // server error :o
                 // we probably want to display an error here.
+                alertUser("Niečo sa pokazilo...");
                 return;
             }
         }
@@ -332,13 +333,35 @@ function uploadFileShow() {
     descriptionContainer.appendChild(buttonFile);
 };
 
+//finish this shit
 function sendHomework() {
+    var sendHomeworkRequest = new XMLHttpRequest();
     var homework = inputFile.value;
     if (homework) {
         alertUser("Úloha úspešne odovzdaná! " + homework);
         descriptionContainer.removeChild(inputFile);
         descriptionContainer.removeChild(buttonFile);
         writeCookie("day" + dayOpened, "true");
+        var fileToSend = undefined; // homework image (multifile)
+        var url = backendURL + "openwindow";
+        sendHomeworkRequest.onreadystatechange = function() {
+            if (this.readyState == XMLHttpRequest.DONE) {
+                if (wasRequestSuccessful(this)) {
+                    return;
+                }
+                else if (this.status == 500) {
+                    // server error :o , we probably want to display an error here.
+                    alertUser("Niečo sa pokazilo... Skontrolujte pripojenie k internetu");
+                    return;
+                }
+            }
+            else {
+                // server is down
+                alertUser("Problém je na našej strane... Poruchu sa pokúsime odstrániť čo najsôr");
+            };
+        };
+        sendHomeworkRequest.open("POST", url);
+        sendHomeworkRequest.send(fileToSend);
     } else {
         alertUser("Niesú pridané žiadne súbory!");
     };
