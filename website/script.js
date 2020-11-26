@@ -107,6 +107,7 @@ const loginInput = document.getElementById("loginInput");
 
 
 var dayOpened = undefined;
+var alertDisplayed = false;
 
 const ballImages = [
     "blue",
@@ -276,22 +277,26 @@ function createUser(name) {
 };
 
 function alertUser(text) {
-    blur();
-    var div = document.createElement("div");
-    var p = document.createElement("p");
-    var button = document.createElement("button");
-    div.id = "alertDiv";
-    p.innerHTML = text;
-    p.id = "alertP";
-    button.innerHTML = "Ok";
-    button.id = "alertButton";
-    button.onclick = function () {
-        document.body.removeChild(div);
-        unBlur();
+    if (!alertDisplayed) {
+        blur();
+        var div = document.createElement("div");
+        var p = document.createElement("p");
+        var button = document.createElement("button");
+        div.id = "alertDiv";
+        p.innerHTML = text;
+        p.id = "alertP";
+        button.innerHTML = "Ok";
+        button.id = "alertButton";
+        button.onclick = function () {
+            document.body.removeChild(div);
+            unBlur();
+            alertDisplayed = false;
+        };
+        div.appendChild(p);
+        div.appendChild(button);
+        document.body.appendChild(div);
+        alertDisplayed = true;
     };
-    div.appendChild(p);
-    div.appendChild(button);
-    document.body.appendChild(div);
 };
 
 function blur() {
@@ -460,7 +465,7 @@ function sendHomework() {
                     alertUser("Úloha úspešne odovzdaná! " + homework);
                 }
                 else if (this.status == 500) {
-                    // server error :o , we probably want to display an error here.
+                    // server error :o , we probably want to display an error here
                     alertUser("Niečo sa pokazilo... Skontrolujte pripojenie k internetu");
                 }
             }
