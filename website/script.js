@@ -161,6 +161,10 @@ function replaceColor(imageData, oldColor, newColor) {
     };
 };
 
+function mapColorCountries() {
+    var image = document.getElementById("map")
+};
+
 function wasRequestSuccessful(request) {
     return request.readyState == XMLHttpRequest.DONE &&
             request.status === 0 || 
