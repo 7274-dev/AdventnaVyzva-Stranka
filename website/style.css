@@ -104,12 +104,13 @@ html, body, #blurbackground {
     border: 1px solid #dddddd;
 }
 #alertButton {
+    position: absolute;
     font-family: Textt;
     font-size: 20px;
     border-radius: 10px;
+    bottom: 5%;
+    right: 40%;
     border: none;
-    margin-right: 76px;
-    margin-bottom: 8px;
 }
 #alertP {
     margin-top: 5px;
