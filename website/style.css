@@ -96,8 +96,8 @@ html, body, #blurbackground {
     position: absolute;
     top: 45%;
     left: 45%;
-    height: 100px;
-    width: 150px;
+    height: 120px;
+    width: 200px;
     background-color: white;
     font-family: Textt;
     border-radius: 10px;
@@ -105,8 +105,8 @@ html, body, #blurbackground {
 }
 #alertButton {
     position: absolute;
-    bottom: 5%;
-    right: 5%;
+    bottom: 2%;
+    right: 2%;
 }
 #alertP {
     margin-top: 5px;
