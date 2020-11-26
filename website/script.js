@@ -143,7 +143,10 @@ function wasRequestSuccessful(request) {
 };
 
 function isBroken(ballNumber) {
-    document.getElementById(); //what is this for @ivicek??
+    var div = document.getElementById("ball" + ballNumber);
+    var src = div.style.backgroundColor.replace("_ball.png", "");
+    if (src.includes("_broken")) return true
+    else return false;
 };
 
 function on_click(event) {
