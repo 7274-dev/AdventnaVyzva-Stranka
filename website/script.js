@@ -318,13 +318,13 @@ function sendHomework() {
     if (!homeworkSent) {
         var homework = inputFile.value;
         if (homework) {
-            console.log("Úloha úspešne odovzdaná! " + homework);
+            alertUser("Úloha úspešne odovzdaná! " + homework);
             homeworkSent = true;
         } else {
-            console.log("Niesú pridané žiadne súbory!");
+            alertUser("Niesú pridané žiadne súbory!");
         };
     } else {
-        console.log("Úloha je už odovzdaná!")
+        alertUser("Úloha je už odovzdaná!");
     };
 };
 
