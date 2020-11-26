@@ -1,4 +1,4 @@
-var backendURL = "http://92.52.4.175:8080/";
+var backendURL = "http://localhost:8080/";
 
 function getDataCookie() {
     var dc,
@@ -212,6 +212,9 @@ function on_click(event) {
 };
 
 function getHomeworkStatus(day) {
+    if (typeof day == "string") {
+        day = parseInt(day);
+    }
     return getOpenedWindows(getCookie("loginName")).includes(day);
 };
 
@@ -256,10 +259,14 @@ function blur() {
 };
 
 function openWindow(window, userName) {
-    var openWindowRequest = XMLHttpRequest();
+    if (typeof window == "string") {
+        window = parseInt(window); // unsafe?
+    }
+    var openWindowRequest = new XMLHttpRequest();
     const url = backendURL + "openwindow";
 
     var jsonRequestData = JSON.stringify({"day": window, "userName": userName});
+
 
     openWindowRequest.onreadystatechange = function() {
         if (this.readyState == XMLHttpRequest.DONE) {
@@ -279,6 +286,7 @@ function openWindow(window, userName) {
     };
 
     openWindowRequest.open("POST", url);
+    openWindowRequest.setRequestHeader("Content-Type", "application/json");
     openWindowRequest.send(jsonRequestData);
 };
 
@@ -286,8 +294,24 @@ function getOpenedWindows(name) {
     var openedWindowsRequest = new XMLHttpRequest();
     const url = backendURL + "windows?userName=" + name;
 
-    openedWindowsRequest.open("GET", url);
+    openedWindowsRequest.open("GET", url, false);
+
+    var response;
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
+    openedWindowsRequest.onreadystatechange = function() {
+        console.log(this.responseText);
+        if (wasRequestSuccessful(this)) {
+            console.log(JSON.parse(this.responseText));
+            response = JSON.parse(this.responseText).response;
+        }
+        else {
+            response = null;
+        };
+    };
     openedWindowsRequest.send();
+
+    return response;
+   
 };
 
 // also handle user "account" creation
@@ -372,9 +396,10 @@ function sendHomework() {
         var formData = new FormData();
         var url = backendURL + "upload";
         
-        for (const file of homework) {
-            formData.append("homeworkFiles[]", file);
-        };
+        console.log(homework[0]);
+    
+        formData.append("File", homework[0], homework[0].name);
+
 
         formData.append("name", getCookie("loginName"));
         formData.append("day", dayOpened);
@@ -384,12 +409,10 @@ function sendHomework() {
             if (this.readyState == XMLHttpRequest.DONE) {
                 if (wasRequestSuccessful(this)) {
                     alertUser("Úloha úspešne odovzdaná! " + homework);
-                    return;
                 }
                 else if (this.status == 500) {
                     // server error :o , we probably want to display an error here.
                     alertUser("Niečo sa pokazilo... Skontrolujte pripojenie k internetu");
-                    return;
                 }
             }
             else {
@@ -465,5 +488,4 @@ function on_load() {
     descriptionContainer.removeChild(buttonFile);
     window.scrollTo(0, 0);
 };
-
 on_load();
