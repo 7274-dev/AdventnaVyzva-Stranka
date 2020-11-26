@@ -126,7 +126,7 @@ html, body, #blurbackground {
     font-family: Textt;
     border-radius: 10px;
     background-color: #ececec;
-    border: 1px solid #c9c9c9
+    border: 1px solid #c9c9c9;
 }
 #loginButton {
     position: absolute;
