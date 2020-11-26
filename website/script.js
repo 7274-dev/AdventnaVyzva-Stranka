@@ -246,16 +246,17 @@ function displayAudioImage(response) {
         } else if (response.includes("[hyperlink:")) {
             var text = response.split("[hyperlink:");
             var url = text[1].replace("]", "");
-            var txt = document.createElement("a");
-            txt.id = "text";
-            txt.href = url;
-            descriptionContainer.appendChild(txt);
+            var hl = document.createElement("a");
+            hl.id = "hyperlink";
+            hl.href = url;
+            descriptionContainer.appendChild(hl);
         };
     };
 };
 
 function getHomeworkStatus(day) {
-    return getOpenedWindows(getCookie("loginName")).includes(day);
+    var toReturn = getOpenedWindows(getCookie("day" + day)).includes(day);
+    return toReturn;
 };
 
 function createUser(name) {
