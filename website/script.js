@@ -224,9 +224,14 @@ function on_click(event) {
 };
 
 // [audio:<url>] [image:<url>] [hyperlink:<url>]
-function displayAudioImage(text) {
-    if (text.includes("[audio:") || text.includes("[image:") || text.includes("[hyperlink:")) {
-        if (text.includes("[audio:"))
+function displayAudioImage(response) {
+    if (response.includes("[audio:") || response.includes("[image:") || response.includes("[hyperlink:")) {
+        if (text.includes("[audio:")) {
+            var text = response.split("[audio:");
+            var url = text[1].replace("]", "");
+            var audio = document.createElement("audio");
+            audio.src = url;
+        }
     };
 };
 
@@ -272,6 +277,7 @@ function blur() {
     var blur = document.getElementById("blur");
     blurBackground.style.backgroundColor = "rgba(0,0,0, 0.4)";
     blur.style.filter = "blur(10px) brightness(70%)";
+    document.body.style.overflow = "hidden";
 };
 
 function openWindow(window, userName) {
@@ -356,6 +362,7 @@ function unBlur() {
     var blur = document.getElementById("blur");
     blurBackground.style.backgroundColor = "white";
     blur.style.filter = "blur(0px) brightness(100%)";
+    document.body.style.overflow = "scroll";
 };
 
 //needed in future, dont delete
