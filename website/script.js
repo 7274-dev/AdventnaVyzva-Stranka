@@ -313,8 +313,8 @@ function breakeBall(ballColor, ballContainerID) {
 };
 
 function uploadFileShow() {
-    container.appendChild(inputFile);
-    container.appendChild(buttonFile);
+    descriptionContainer.appendChild(inputFile);
+    descriptionContainer.appendChild(buttonFile);
 };
 
 function sendHomework() {
