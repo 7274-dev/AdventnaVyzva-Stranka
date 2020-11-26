@@ -354,7 +354,7 @@ function unBlur() {
 //needed in future, dont delete
 function breakeBall(ballColor, ballContainerID) {
     //startup info
-    ballContainer = document.getElementById(ballContainerID);
+    ballContainer = document.getElementById("ball" + ballContainerID);
     //replace that file with broken file
     if (ballColor == "yellow") {
         var nextColor = ballColor.replace("yellow", "white");
@@ -365,8 +365,7 @@ function breakeBall(ballColor, ballContainerID) {
     };
     nextColor = nextColor.replace('")', '_broken_ball.png)');
     nextColor = nextColor.replace('"', "");
-    console.log(nextColor);
-    ballContainer.style.backgroundImage = "url(img/balls/blue_broken_ball.png)";//nextColor
+    ballContainer.style.backgroundImage = nextColor;
 };
 
 function uploadFileShow() {
