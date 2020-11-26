@@ -333,7 +333,6 @@ function uploadFileShow() {
 };
 
 function sendHomework() {
-    //not work when you try to send 2 works in 1 site load, please fix
     var homework = inputFile.value;
     if (homework) {
         alertUser("Úloha úspešne odovzdaná! " + homework);
