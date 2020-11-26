@@ -168,7 +168,7 @@ function replaceColor(imageData, oldColor, newColor) {
 };
 
 function mapColorCountries() {
-    var image = document.getElementById("map")
+    var image = document.getElementById("map");
 };
 
 function wasRequestSuccessful(request) {
@@ -209,17 +209,24 @@ function on_click(event) {
         }
         else if (this.readyState == XMLHttpRequest.DONE) {
             description.innerHTML = JSON.parse(this.responseText).response;
-        } 
+        }
         else {
             description.innerHTML = "Error!";
         };
     };
     http.send();
-    if (true) { //!getHomeworkStatus(dayNumber)
+    if (!getHomeworkStatus(dayNumber)) {
         uploadFileShow();
     } else {
         alertUser("Táto úloha je už hotová!");
     };
+    };
+};
+
+// [audio:<url>] [image:<url>] [hyperlink:<url>]
+function displayAudioImage(text) {
+    if (text.includes("[audio:") || text.includes("[image:") || text.includes("[hyperlink:")) {
+        if (text.includes("[audio:"))
     };
 };
 
