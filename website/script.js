@@ -342,7 +342,7 @@ function sendHomework() {
         descriptionContainer.removeChild(inputFile);
         descriptionContainer.removeChild(buttonFile);
         writeCookie("day" + dayOpened, "true");
-        var fileToSend = undefined; // homework image (multifile)
+        var fileToSend = undefined; // homework image (multipart file)
         var url = backendURL + "openwindow";
         sendHomeworkRequest.onreadystatechange = function() {
             if (this.readyState == XMLHttpRequest.DONE) {
