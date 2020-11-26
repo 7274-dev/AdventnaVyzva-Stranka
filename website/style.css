@@ -104,6 +104,14 @@ html, body, #blurbackground {
     border: 1px solid #dddddd;
 }
 #alertButton {
+    font-family: Textt;
+    font-size: 20px;
+    border-radius: 10px;
+    border: none;
+    margin-right: 76px;
+    margin-bottom: 8px;
+}
+#alertButton {
     position: absolute;
     bottom: 2%;
     right: 2%;
@@ -215,12 +223,4 @@ html, body, #blurbackground {
     font-size: 20px;
     border-radius: 10px;
     border: none;
-}
-#alertButton {
-    font-family: Textt;
-    font-size: 20px;
-    border-radius: 10px;
-    border: none;
-    margin-right: 76px;
-    margin-bottom: 8px;
 }
