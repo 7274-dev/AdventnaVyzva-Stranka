@@ -237,3 +237,14 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(100, 100, 100);
 }
+#image {
+    position: relative;
+}
+#audio {
+    position: absolute;
+    right: 10%;
+    bottom: 10%;
+}
+#hyperLink {
+    position: relative;
+}
