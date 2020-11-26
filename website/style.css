@@ -1,3 +1,4 @@
+
 @font-face {
     font-family: Cisla;
     src: url('JMH Cthulhumbus Arcade.otf');
@@ -6,217 +7,119 @@
     font-family: Textt;
     src: url('Spirax-Regular.ttf');
 }
-html, body, #blurbackground {
-    min-height: 100%;
-    height: 100%;
+
+
+@media (max-width: 1000px) {
+      .ball {
+        background-repeat: no-repeat;
+        background-size: contain;
+        text-align: center;
+        display: flex;
+        font-size: 12px;
+        color: black;
+        flex-direction: column;
+        justify-content: center;
+        background-position: center center;
+        width: 8%;
+        height: 5%;
+        position: absolute;
+        font-family: Cisla;
+        cursor: pointer;
+    }
 }
-#blurbackground {
-    background-color: rgba(0,0,0, 0.4);
-    min-height: 100%;
-}
-#blur {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    filter: blur(10px) brightness(70%);
-    width: 100%;
-    min-height: 100%;
-}
-#title {
-    font-size: 70px;
-    /* font-style: italic; */
-    left: 10%;
-    top: -1px;
-    float: left;
-    font-family: Textt;
-}
-#description {
-    padding-top: 100px;
-    font-size: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    flex-wrap: wrap;
-    font-family: Textt;
-    font-size: 135%;
-}
-#background_image {
-    height: 85%;
-    left: 15%;
-    top: 10%;
-    position: absolute;
-    z-index: -1;
-}
-#treecontainer {
-    width: 700px;
-    height: 850px;
-    padding-top: 80px;
-    float: right;
-}
-#tree {
-    width: 100%;
-    height: 100%;
-}
-#star {
-    width: 150px;
-    height: 150px;
-    position: absolute;
-    z-index: 1;
-    top: 1%; /* when this is removed, everything is fucked up? */
-    right: 40%;
-    transform: rotate(2deg);
-}
-.ball {
+
+@media (min-width: 1000px) {
+  .ball {
     background-repeat: no-repeat;
     background-size: contain;
     text-align: center;
     display: flex;
+    font-size: 12px;
+    color: black;
     flex-direction: column;
     justify-content: center;
     background-position: center center;
-    width: 40px;
-    height: 40px;
+    width: 3.3%;
+    height: 5%;
     position: absolute;
     font-family: Cisla;
     cursor: pointer;
 }
-#loginDiv {
-    text-align: center;
+}
+
+
+.snowflake {
+  color: lig;
     position: absolute;
-    top: 40%;
-    left: 40%;
-    height: 180px;
-    width: 300px;
-    background-color: white;
-    font-family: Textt;
-    border-radius: 10px;
-    border: 1px solid #dddddd;
-}
-#alertDiv {
-    text-align: center;
+    display: block;
     position: absolute;
-    top: 45%;
-    left: 45%;
-    height: 120px;
-    width: 200px;
-    background-color: white;
-    font-family: Textt;
-    border-radius: 10px;
-    border: 1px solid #dddddd;
-}
-#alertButton {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-image: -webkit-radial-gradient(
+      center,
+      circle farthest-corner,
+      rgba(130, 224, 255) 40%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-image: -moz-radial-gradient(
+      center,
+      circle farthest-corner,
+      rgba(130, 224, 255) 40%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-image: -ms-radial-gradient(
+      center,
+      circle farthest-corner,
+      rgba(130, 224, 255) 40%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-image: radial-gradient(
+      center,
+      circle farthest-corner,
+      rgba(130, 224, 255) 40%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
+  body {
+    margin: 0;
+    /* color: #5691c9; */
+    /* background-color:  #5691c9;; */
+    /* background-image: -webkit-gradient(linear, left top, left bottom, from(#6af), to(#bdf));
+    background-image: -webkit-linear-gradient(#6af, #bdf);
+    background-image: -moz-linear-gradient(#6af, #bdf);
+    background-image: linear-gradient(#6af, #bdf); */
+  }
+
+  #snow {
     position: absolute;
-    font-family: Textt;
-    font-size: 20px;
-    border-radius: 10px;
-    bottom: 5%;
-    right: 40%;
-    border: none;
-}
-#alertP {
-    margin-top: 5px;
-}
-#loginInput {
-    position: absolute;
-    text-align: center;
-    font-size: 18px;
-    /*margin: 8px;
-    margin-top: 20px;*/
-    left: 17%;
-    top: 28%;
-    font-family: Textt;
-    border-radius: 10px;
-    background-color: #ececec;
-    border: 1px solid #c9c9c9
-}
-#loginButton {
-    position: absolute;
-    bottom: 25%;
-    left: 36%;
-    font-family: Textt;
-    font-size: 20px;
-    border-radius: 10px;
-    border: none;
-}
-#loginText {
-    position: absolute;
-    font-size: 18px;
-    text-align: center;
-    top: 8%;
-    left: 15%;
-}
-#loginCookieWarning {
-    font-size: 14px;
-    position: absolute;
-    bottom: -5%;
-    left: 8%;
-}
-#map {
-    width: 100%;
     height: 100%;
-}
-#map_container {
-    width: 300px;
-    height: 180px;
-    margin-top: 5px;
-    margin-left: 30%;
-}
-#starNumber {
-    font-family: Cisla;
-    font-size: 25px;
-    position: absolute;
-    z-index: 1;
-    top: 6.5%;
-    right: 48.5%;
-}
-#mapButtonMain {
-    text-align: center;
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    right: 28%;
-    bottom: -7%;
-    background-color: lightblue;
-    cursor: pointer;
-}
-#mapButtonMainImage {
-    width: 100%;
     height: 100%;
+  }
+
+  .navbar {
+    opacity: 1;
+    transition: opacity 0.5s ease;
 }
-#mapCloser {
-    width: 100px;
-    height: 100px;
-    background-color: lightblue;
-    position: absolute;
-    z-index: 2;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
+
+.navbar-hide {
+    pointer-events: none;
+    opacity: 0;
 }
-#bigMap {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0%;
-    top: 0%;
-    z-index: 1;
+
+.title {
+  color: black;
 }
-#mapCloserImage {
-    width: 100%;
-    height: 100%;
-}
-#inputFile {
-    margin: 5px;
-    display: inline-block;
-    font-family: Textt;
-    font-size: 20px;
-    border-radius: 10px;
-    border: none;
-}
-#buttonFile {
-    display: inline-block;
-    margin: 5px;
-    font-family: Textt;
-    font-size: 20px;
-    border-radius: 10px;
-    border: none;
+
+.text-black {
+  color: black;
 }

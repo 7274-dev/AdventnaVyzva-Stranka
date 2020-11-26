@@ -1,45 +1,91 @@
 <!doctype html>
-<html>
-    <head>
-        <title>Adventná Výzva</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <div class="blurbackground Blurdiv" id="blurbackground">
-            <div class="blur Blurdiv" id="blur">
-                <div class="position-relative" id="treecontainer">
-                    <img class="img-fluid" id="tree" src="img/stromcek.png">
-                    <img class="img-fluid" id="star" src="img/star.png">
-                    <div id="map_container"><img id="map" src="img/europe_map_done.png"></div>
-                    <p id="starNumber">24</p>
-                </div>
-                <h1 class="float-left position-relative" id="title">Adventná Výzva</h1>
-                <div id="descriptionContainer">
-                    <p id="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas arcu neque, ullamcorper sit amet convallis ut, pellentesque ut leo. In vehicula est urna, mattis congue nulla aliquet in. Ut quis massa non elit euismod mattis nec efficitur eros. Duis gravida dolor a condimentum cursus. Cras ipsum est, scelerisque ac lobortis at, ultricies ut ipsum. Proin facilisis metus id est ornare aliquam. Ut pellentesque fermentum fringilla.
-        
-                    Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin a euismod est, et finibus ipsum. Etiam molestie felis non sagittis vehicula. Ut aliquam eros massa, et feugiat nisl condimentum et. Mauris consectetur velit erat, vitae mattis leo dictum a. Nulla ut lorem vitae mi rutrum semper. Fusce sem nunc, tristique id neque a, vehicula auctor massa. Donec sit amet consequat ante. Etiam vel metus at lectus posuere interdum. Aliquam facilisis fringilla arcu feugiat mattis. Cras semper magna ac convallis dapibus.
-                
-                    Etiam mi odio, porttitor et finibus sed, lacinia nec ipsum. Vivamus vulputate eros non augue consequat consectetur. Proin et augue sed sapien suscipit volutpat. Nullam sed egestas nisl, nec volutpat magna. Fusce in nunc vitae nisl hendrerit imperdiet vel eget elit. Vivamus a lacus tristique, ornare orci quis, lacinia ante. Proin consequat facilisis libero a laoreet. Nullam augue quam, luctus ut massa quis, euismod rhoncus diam.
-                
-                    Vivamus non ligula tincidunt, sodales neque et, vestibulum quam. Maecenas consectetur diam augue. Phasellus ullamcorper tempus purus, vel ultricies nunc rutrum in. Nunc varius ligula eu risus porttitor, a tincidunt mauris tincidunt. Etiam nec ante ultricies, vehicula justo quis, tempor nunc. Aliquam a risus pulvinar nisi tristique vehicula. Fusce mollis ex id dui faucibus, vitae dignissim lorem ornare. Morbi massa mauris, tincidunt a rhoncus sed, posuere eget velit. Integer commodo tortor urna. In ac felis est. Praesent sagittis ultricies nisi, eget dignissim nisl iaculis vitae. Praesent nec velit dui. Vivamus nibh orci, bibendum in augue quis, tincidunt volutpat eros. Maecenas id ipsum congue, vehicula quam non, dapibus magna.
-                
-                    Sed neque felis, vestibulum eleifend mi ac, cursus placerat nunc. Vestibulum maximus velit eu ex tempor sodales. Aenean convallis tempus dapibus. Donec sed dui in nisl commodo ultrices. Aenean lacus dolor, aliquam non lacinia sed, aliquet ut libero. Sed fermentum dui ac lacinia iaculis. Ut vitae tristique massa, non facilisis neque. Morbi ac lorem non odio blandit hendrerit. Vivamus aliquet malesuada ligula, eget congue arcu commodo vitae. Proin commodo nibh id ornare euismod. Quisque congue velit quis massa fermentum, in commodo eros ullamcorper. Suspendisse dictum fermentum neque, tempus rutrum erat dictum dapibus. Quisque nec pretium libero. Etiam nec nulla vitae augue sodales posuere. Sed pulvinar sollicitudin ultricies.</p>
-                <input id="inputFile" type="file" accept="image/*" multiple>
-                <button id="buttonFile" onclick=sendHomework()>Odovzdať úlohu</button>
-                </div>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>Starter Template · Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/starter-template/">
+
+    <!-- Bootstrap core CSS -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <!-- jQuery and JS bundle w/ Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" 
+        integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" 
+        crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <!-- <script src="jquery.snow.js"></script> -->
+
+    
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="starter-template.css" rel="stylesheet">
+  </head>
+  <body>
+      <!-- https://stackoverflow.com/questions/54164397/bootstrap-4-how-to-make-fixed-top-navbar-disappear-on-scroll -->
+    <nav class="navbar navbar-expand-md fixed-top smart-scroll">
+            <div class="mx-auto">
+                <a class="mx-auto title" style="font-size: x-large;" href="#">Adventná výzva</a>
             </div>
+</nav>
+
+<div id=snow class="fixed-top"></div>
+
+<main role="main" class="container"></main>
+    
+    <div class="row">
+        <div class="col"></div>
+        <div class="container">
+          <div class="col">
+              
+              <!-- <h1 style="color: red; position: absolute;">.</h1>
+              <h1 style="color: red; position: absolute; top: 45%; right: 62%;">.</h1>
+              <h1 style="color: red; position: absolute; top: 45%; right: 38%;">.</h1>  
+              <h1 style="color: red; position: absolute; top: 35%; right: 42%;">.</h1>
+              <h1 style="color: red; position: absolute; top: 35%; right: 58%;">.</h1>   -->
+              <img src="img/balls/blue_ball.png" class="ball img-fluid" style="position: absolute; top: 35%; right: 42%;">
+              <img class="img-fluid mx-auto d-block" style="height: 8vh;"  src="img/star.png">
+              <img class="img-fluid mx-auto d-block" style="height: 57vh;"  src="img/stromcek.png">
+              <img class="img-fluid mx-auto d-block" style="height: 25vh;padding-top: 0.5vh;" src="img/europe_map_done.png">
+          </div>
         </div>
-        <div id="loginDiv" class="login-prompt">
-            <p id="loginText">Prosím zadajte svoje meno:</p>
-            <input type="text" placeholder="Vaše meno a preizvisko" id="loginInput"><br>
-            <p id="loginCookieWarning">Súhlasím so spracovaním osobných údajov</p><br>
-            <button id="loginButton">Potvrdiť</button>
-        </div>
-    <script src="script.js"></script>
-    </body>
+        <div class="col"></div>
+    </div>
+    <div class = "row">
+  <div class="starter-template col text-black">
+    <h1>Inštrukcie</h1>
+    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean facilisis finibus imperdiet. Sed varius diam eget viverra consequat. Praesent eu enim mattis, scelerisque diam sit amet, auctor ligula. Curabitur massa eros, dictum quis ipsum in, vulputate blandit est. In hac habitasse platea dictumst. Maecenas vulputate orci massa, ut semper est congue ut. Sed luctus massa magna, eu luctus erat fermentum ut. Aenean mi mauris, malesuada vitae lobortis nec, placerat ac sapien. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla facilisi. Sed tincidunt placerat auctor. Proin mattis malesuada leo, ut vehicula lectus interdum eu. Morbi semper congue dolor, imperdiet pellentesque nisi volutpat et. Donec tristique tincidunt quam eu interdum.
+
+        Vivamus mollis tellus placerat finibus ultricies. Cras vitae nisl mollis, placerat ante ut, posuere erat. Donec erat ipsum, convallis ac feugiat vitae, laoreet quis erat. Sed pharetra sem vitae mattis molestie. Vestibulum volutpat ut urna at malesuada. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin eget erat et mi efficitur gravida quis id justo. Maecenas nulla sapien, ornare a justo at, ultrices ultrices ante. Donec quis rhoncus elit, tempor ornare ante. Sed gravida dictum est quis condimentum. Suspendisse eget mi dui. Aenean sodales eros vel dignissim lacinia. Vivamus accumsan mauris in orci pellentesque, non tempus urna feugiat.</p>
+  </div>
+    </div>
+
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="script.js"></script>
 </html>
