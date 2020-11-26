@@ -1,30 +1,5 @@
 var backendURL = "http://92.52.4.175:8080/";
 
-//map click vars, needed
-var mapClicked = false;
-const bigMap = document.getElementById("bigMap");
-const mapCloser = document.getElementById("mapCloser");
-const buttonMain = document.getElementById("mapButtonMain");
-
-function mapClick() {
-    var body = document.body;
-    var treeContainer = document.getElementById("treecontainer");
-
-    if (!mapClicked) {
-        window.scrollTo(0, 0);
-        treeContainer.removeChild(buttonMain);
-        body.appendChild(bigMap);
-        body.appendChild(mapCloser);
-        mapClicked = true;
-    } else {
-        window.scrollTo(0, 110);
-        treeContainer.appendChild(buttonMain);
-        body.removeChild(mapCloser);
-        body.removeChild(bigMap);
-        mapClicked = false;
-    };
-};
-
 function getDataCookie() {
     var dc,
     prefix,
@@ -306,7 +281,18 @@ function randomInt(bound) {
     return Math.floor(Math.random() * bound);
 };
 
+function loginInputEnterClickTriggerButton() {
+    document.getElementById("loginInput").addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+          // Trigger the button element with a click
+          document.getElementById("loginButton").click();
+        };
+    });
+};
+
 function on_load() {
+    loginInputEnterClickTriggerButton();
     login();
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
