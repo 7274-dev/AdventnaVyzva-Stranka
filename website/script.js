@@ -336,17 +336,23 @@ function uploadFileShow() {
 //finish this shit
 function sendHomework() {
     var sendHomeworkRequest = new XMLHttpRequest();
-    var homework = inputFile.value;
+    var homework = inputFile.files;
+    console.log(homework);
     if (homework) {
-        alertUser("Úloha úspešne odovzdaná! " + homework);
         descriptionContainer.removeChild(inputFile);
         descriptionContainer.removeChild(buttonFile);
         writeCookie("day" + dayOpened, "true");
-        var fileToSend = undefined; // homework image (multipart file)
-        var url = backendURL + "openwindow";
+        var formData = new FormData();
+        var url = backendURL + "upload";
+        
+        for (const file of homework) {
+            formData.append("homeworkFiles[]", file);
+        };
+
         sendHomeworkRequest.onreadystatechange = function() {
             if (this.readyState == XMLHttpRequest.DONE) {
                 if (wasRequestSuccessful(this)) {
+                    alertUser("Úloha úspešne odovzdaná! " + homework);
                     return;
                 }
                 else if (this.status == 500) {
@@ -360,8 +366,9 @@ function sendHomework() {
                 alertUser("Problém je na našej strane... Poruchu sa pokúsime odstrániť čo najsôr");
             };
         };
+
         sendHomeworkRequest.open("POST", url);
-        sendHomeworkRequest.send(fileToSend);
+        sendHomeworkRequest.send(formData);
     } else {
         alertUser("Niesú pridané žiadne súbory!");
     };
