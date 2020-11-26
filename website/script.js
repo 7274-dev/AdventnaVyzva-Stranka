@@ -364,13 +364,11 @@ function on_load() {
 
         var ballImage;
         if (!cookieExists) {
-            console.log("cookie not exits");
             ballImage = randomInt(ballImages.length - 1);
             ballImageIndexes.push(ballImage);
         }
         else {
             ballImage = ballImageIndexes[i]; //fix to display same color
-            console.log(ballImage);
         };
 
         currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + "_ball.png)";
@@ -391,7 +389,6 @@ function on_load() {
     };
     if (!cookieExists) {
         writeCookie("balls", ballImageIndexes);
-
     };
 
     descriptionContainer.removeChild(inputFile);
