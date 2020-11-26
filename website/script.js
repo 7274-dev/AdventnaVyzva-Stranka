@@ -23,19 +23,19 @@ function getDataCookie() {
     };
 
     return dc.substring(begin + prefix.length, end).replace("\\"); 
-}
+};
 
 function getCookie(name) {
     var dataCookie = getDataCookie();
     if (dataCookie == null) {
         return null;
-    }
+    };
     dataCookie = decodeURIComponent(dataCookie.replace("\\", ""));
     dataCookie = JSON.parse(dataCookie);
 
     if (dataCookie == null) {
         return null;
-    }
+    };
 
     return dataCookie[name];
 };
@@ -46,7 +46,7 @@ if (getDataCookie() == null) {
 }
 else {
     cookie = JSON.parse(decodeURIComponent(getDataCookie()));
-}
+};
 
 function writeCookie(key, value) {
     cookie[key] = value;
@@ -132,11 +132,11 @@ function wasRequestSuccessful(request) {
     return request.readyState == XMLHttpRequest.DONE &&
             request.status === 0 || 
             request.status >= 200 && request.status < 400;
-}
+};
 
 function isBroken(ballNumber) {
     document.getElementById(); //what is this for @ivicek??
-} 
+};
 
 
 function on_click(event) {
@@ -161,8 +161,8 @@ function on_click(event) {
         } 
         else {
             description.innerHTML = "Error!";
-        }
-    }
+        };
+    };
     http.send();
 };
 
@@ -178,7 +178,7 @@ function createUser(name) {
     // we don't have to handle any errors, if the user doesn't exist,
     // it's created, else, it already exists.
     // if the server is down, we shouldn't even get here
-}
+};
 
 function openWindow(window, userName) {
     var openWindowRequest = XMLHttpRequest();
@@ -199,12 +199,12 @@ function openWindow(window, userName) {
         }
         else {
             // server is down
-        }
-    }
+        };
+    };
 
     openWindowRequest.open("POST", url);
     openWindowRequest.send(jsonRequestData);
-}
+};
 
 function getOpenedWindows(name) {
     var openedWindowsRequest = new XMLHttpRequest();
@@ -212,7 +212,7 @@ function getOpenedWindows(name) {
 
     openedWindowsRequest.open("GET", url);
     openedWindowsRequest.send();
-}
+};
 
 // also handle user "account" creation
 function setWindowData(name) {
@@ -230,9 +230,9 @@ function setWindowData(name) {
         else {
             // TODO: add some kind of error, warning for users, that the server is down
             // panic
-        }
+        };
         getOpenedWindows(name);
-    }
+    };
 
     userExistsRequest.send();    
 };
@@ -299,7 +299,7 @@ function on_load() {
     var cookieExists = document.cookie.indexOf("balls=") != -1;
     if (cookieExists) {
         ballImageIndexes = JSON.parse(getCookie("balls"));
-    }
+    };
 
     for (var i = 0; i < positions.length; i++) {
         var currentPosition = positions[i];
@@ -312,7 +312,7 @@ function on_load() {
         }
         else {
             ballImage = ballImageIndexes[i];
-        }
+        };
 
         currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + "_ball.png)";
         var ballColor = ballImages[ballImage]//.replace("_ball.png", "")
