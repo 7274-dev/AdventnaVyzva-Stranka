@@ -353,9 +353,9 @@ function on_load() {
     login();
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
-    var cookieExists = document.cookie.indexOf("balls=") != -1;
+    var cookieExists = document.cookie.indexOf("balls") != -1; //what? it doesnt even work...
     if (cookieExists) {
-        ballImageIndexes = JSON.parse(getCookie("balls"));
+        ballImageIndexes = getCookie("balls");
     };
 
     for (var i = 0; i < positions.length; i++) {
@@ -364,15 +364,16 @@ function on_load() {
 
         var ballImage;
         if (!cookieExists) {
+            console.log("cookie not exits");
             ballImage = randomInt(ballImages.length - 1);
             ballImageIndexes.push(ballImage);
         }
         else {
-            ballImage = ballImageIndexes[i];
+            ballImage = ballImageIndexes[i]; //fix to display same color
+            console.log(ballImage);
         };
 
         currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + "_ball.png)";
-        var ballColor = ballImages[ballImage]//.replace("_ball.png", "")
         currentBall.innerHTML = i + 1;
 
         currentBall.style.top = currentPosition.top + "%";
