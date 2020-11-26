@@ -102,6 +102,7 @@ var positions = [
 var ballResourcePath = "img/balls/";
 const inputFile = document.getElementById("inputFile");
 const buttonFile = document.getElementById("buttonFile");
+var homeworkSent = false;
 
 var ballImages = [
     "blue",
@@ -287,8 +288,17 @@ function uploadFileShow() {
 };
 
 function sendHomework() {
-    var homework = inputFile.value;
-    console.log("Homework sent!" + homework);
+    if (!homeworkSent) {
+        var homework = inputFile.value;
+        if (homework) {
+            console.log("Sending homework... " + homework);
+            homeworkSent = true;
+        } else {
+            console.log("No files attached!")
+        };
+    } else {
+        console.log("Homework already sent!")
+    };
 };
 
 function randomInt(bound) {
