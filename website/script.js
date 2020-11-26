@@ -100,8 +100,12 @@ var positions = [
 ];
 
 var ballResourcePath = "img/balls/";
+//variables from html
 const inputFile = document.getElementById("inputFile");
 const buttonFile = document.getElementById("buttonFile");
+const descriptionContainer = document.getElementById("descriptionContainer")
+
+
 var homeworkSent = false;
 
 var ballImages = [
@@ -309,7 +313,6 @@ function breakeBall(ballColor, ballContainerID) {
 };
 
 function uploadFileShow() {
-    var container = document.getElementById("descriptionContainer");
     container.appendChild(inputFile);
     container.appendChild(buttonFile);
 };
@@ -320,8 +323,8 @@ function sendHomework() {
         if (homework) {
             alertUser("Úloha úspešne odovzdaná! " + homework);
             homeworkSent = true;
-            document.getElementById("descriptionContainer").removeChild(inputFile);
-            document.getElementById("descriptionContainer").removeChild(buttonFile);
+            descriptionContainer.removeChild(inputFile);
+            descriptionContainer.removeChild(buttonFile);
         } else {
             alertUser("Niesú pridané žiadne súbory!");
         };
@@ -388,8 +391,8 @@ function on_load() {
 
     };
 
-    document.getElementById("descriptionContainer").removeChild(inputFile);
-    document.getElementById("descriptionContainer").removeChild(buttonFile);
+    descriptionContainer.removeChild(inputFile);
+    descriptionContainer.removeChild(buttonFile);
     window.scrollTo(0, 0);
 };
 
