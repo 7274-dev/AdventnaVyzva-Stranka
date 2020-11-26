@@ -101,6 +101,7 @@ var positions = [
 
 var ballResourcePath = "img/balls/";
 const inputFile = document.getElementById("inputFile");
+const buttonFile = document.getElementById("buttonFile");
 
 var ballImages = [
     "blue",
@@ -164,6 +165,7 @@ function on_click(event) {
         };
     };
     http.send();
+    uploadFileShow();
 };
 
 function createUser(name) {
@@ -237,7 +239,8 @@ function setWindowData(name) {
     userExistsRequest.send();    
 };
 
-function login() { 
+function login() {
+    loginInputEnterClickTriggerButton(); 
     var isLoggedIn = getCookie("loginName") != null;
     if (!isLoggedIn) {
         document.getElementById("loginButton").onclick = function() {
@@ -277,9 +280,15 @@ function breakeBall(ballColor, ballContainerID) {
     ballContainer.style.backgroundImage = "url(" + ballResourcePath + nextColor + "_ball.png)";
 };
 
-function uploadFile() {
+function uploadFileShow() {
     var container = document.getElementById("descriptionContainer");
     container.appendChild(inputFile);
+    container.appendChild(buttonFile);
+};
+
+function sendHomework() {
+    var homework = inputFile.value;
+    console.log("Homework sent!" + homework);
 };
 
 function randomInt(bound) {
@@ -297,7 +306,6 @@ function loginInputEnterClickTriggerButton() {
 };
 
 function on_load() {
-    loginInputEnterClickTriggerButton();
     login();
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
@@ -342,6 +350,7 @@ function on_load() {
     };
 
     document.getElementById("descriptionContainer").removeChild(inputFile);
+    document.getElementById("descriptionContainer").removeChild(buttonFile);
     window.scrollTo(0, 0);
 };
 
