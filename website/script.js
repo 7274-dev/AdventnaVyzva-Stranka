@@ -341,6 +341,7 @@ function on_load() {
 
     };
 
+    document.getElementById("descriptionContainer").removeChild(inputFile);
     window.scrollTo(0, 0);
 };
 
