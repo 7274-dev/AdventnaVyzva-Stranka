@@ -320,6 +320,8 @@ function sendHomework() {
         if (homework) {
             alertUser("Úloha úspešne odovzdaná! " + homework);
             homeworkSent = true;
+            document.getElementById("descriptionContainer").removeChild(inputFile);
+            document.getElementById("descriptionContainer").removeChild(buttonFile);
         } else {
             alertUser("Niesú pridané žiadne súbory!");
         };
