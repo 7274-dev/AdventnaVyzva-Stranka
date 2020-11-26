@@ -54,7 +54,6 @@ function writeCookie(key, value) {
     document.cookie = "data=" + encodeURIComponent(jsonData);
 };
 
-
 var state_hex = {
     other:"#c3c3c3",
     sea:"#5891c9",
@@ -175,7 +174,11 @@ function on_click(event) {
         };
     };
     http.send();
-    uploadFileShow();
+    if (getCookie("day" + dayOpened) == "true") {
+        alertUser("Táto úloha je už dávno hotová!");
+    } else {
+        uploadFileShow();
+    };
 };
 
 function createUser(name) {
@@ -257,7 +260,6 @@ function setWindowData(name) {
     var userExistsRequest = new XMLHttpRequest();
     const url = backendURL + "exists?userName=" + name;
     
-    
     userExistsRequest.open("GET", url);
 
     userExistsRequest.onreadystatechange = function() {
@@ -329,7 +331,7 @@ function sendHomework() {
         alertUser("Úloha úspešne odovzdaná! " + homework);
         descriptionContainer.removeChild(inputFile);
         descriptionContainer.removeChild(buttonFile);
-        writeCookie("day" + dayOpened, "done");
+        writeCookie("day" + dayOpened, "true");
     } else {
         alertUser("Niesú pridané žiadne súbory!");
     };
