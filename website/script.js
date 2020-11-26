@@ -174,7 +174,7 @@ function on_click(event) {
         };
     };
     http.send();
-    if (getHomeworkStatus(dayNumber)) {
+    if (!getHomeworkStatus(dayNumber)) {
         uploadFileShow()
     } else {
     alertUser("Táto úloha je už hotová!");
