@@ -107,7 +107,7 @@ const descriptionContainer = document.getElementById("descriptionContainer")
 const loginInput = document.getElementById("loginInput");
 
 
-var homeworkSent = false;
+var dayOpened = undefined;
 
 var ballImages = [
     "blue",
@@ -149,6 +149,7 @@ function isBroken(ballNumber) {
 function on_click(event) {
     element = event.target; // rip IE 6-8
     var dayNumber = element.innerHTML;
+    dayOpened = dayNumber;
     const http = new XMLHttpRequest();
     
     const url = backendURL + "text?day=" + dayNumber;
@@ -320,18 +321,14 @@ function uploadFileShow() {
 
 function sendHomework() {
     //not work when you try to send 2 works in 1 site load, please fix
-    if (!homeworkSent) {
-        var homework = inputFile.value;
-        if (homework) {
-            alertUser("Úloha úspešne odovzdaná! " + homework);
-            homeworkSent = true;
-            descriptionContainer.removeChild(inputFile);
-            descriptionContainer.removeChild(buttonFile);
-        } else {
-            alertUser("Niesú pridané žiadne súbory!");
-        };
+    var homework = inputFile.value;
+    if (homework) {
+        alertUser("Úloha úspešne odovzdaná! " + homework);
+        descriptionContainer.removeChild(inputFile);
+        descriptionContainer.removeChild(buttonFile);
+        writeCookie("day" + dayOpened, "done");
     } else {
-        alertUser("Úloha je už odovzdaná!");
+        alertUser("Niesú pridané žiadne súbory!");
     };
 };
 
