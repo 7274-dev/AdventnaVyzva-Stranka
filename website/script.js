@@ -215,8 +215,8 @@ function on_click(event) {
         };
     };
     http.send();
-    if (!getHomeworkStatus(dayNumber)) {
-        uploadFileShow()
+    if (true) { //!getHomeworkStatus(dayNumber)
+        uploadFileShow();
     } else {
         alertUser("Táto úloha je už hotová!");
     };
@@ -357,13 +357,16 @@ function breakeBall(ballColor, ballContainerID) {
     ballContainer = document.getElementById(ballContainerID);
     //replace that file with broken file
     if (ballColor == "yellow") {
-        var nextColor = "white";
+        var nextColor = ballColor.replace("yellow", "white");
     } else if (ballColor == "orange_red") {
         var nextColor = "red";
     } else {
         var nextColor = ballColor;
     };
-    ballContainer.style.backgroundImage = "url(" + ballResourcePath + nextColor + "_ball.png)";
+    nextColor = nextColor.replace('")', '_broken_ball.png)');
+    nextColor = nextColor.replace('"', "");
+    console.log(nextColor);
+    ballContainer.style.backgroundImage = "url(img/balls/blue_broken_ball.png)";//nextColor
 };
 
 function uploadFileShow() {
@@ -375,7 +378,7 @@ function uploadFileShow() {
 function sendHomework() {
     var sendHomeworkRequest = new XMLHttpRequest();
     var homework = inputFile.files;
-    var ballColor = document.getElementById("ball" + dayOpened).style.backgroundImage.replace("_ball.png");
+    var ballColor = document.getElementById("ball" + dayOpened).style.backgroundImage.replace("_ball.png", "");
     breakeBall(ballColor, dayOpened);
 
     if (homework) {
