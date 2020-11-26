@@ -100,6 +100,7 @@ var positions = [
 ];
 
 var ballResourcePath = "img/balls/";
+const inputFile = document.getElementById("inputFile");
 
 var ballImages = [
     "blue",
@@ -137,7 +138,6 @@ function wasRequestSuccessful(request) {
 function isBroken(ballNumber) {
     document.getElementById(); //what is this for @ivicek??
 };
-
 
 function on_click(event) {
     element = event.target; // rip IE 6-8
@@ -275,6 +275,11 @@ function breakeBall(ballColor, ballContainerID) {
         var nextColor = ballColor;
     };
     ballContainer.style.backgroundImage = "url(" + ballResourcePath + nextColor + "_ball.png)";
+};
+
+function uploadFile() {
+    var container = document.getElementById("descriptionContainer");
+    container.appendChild(inputFile);
 };
 
 function randomInt(bound) {
