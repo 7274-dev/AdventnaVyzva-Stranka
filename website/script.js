@@ -230,7 +230,10 @@ function displayAudioImage(response) {
             var text = response.split("[audio:");
             var url = text[1].replace("]", "");
             var audio = document.createElement("audio");
+            audio.controls = true;
+            audio.id = "audio";
             audio.src = url;
+            descriptionContainer.appendChild(audio);
         }
     };
 };
