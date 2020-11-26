@@ -145,6 +145,12 @@ const dayState = [
     "israel",
 ];
 
+function returnDate() {
+    var date = new Date();
+    var day = date.getDate();
+    return day;
+};
+
 function replaceColor(imageData, oldColor, newColor) {
     // r, g, b, a
     for (var i = 0; i < imageData; i += 4) {
