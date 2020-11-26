@@ -1,28 +1,5 @@
 var backendURL = "http://localhost:8080/";
 
-//map click vars, needed
-var mapClicked = false;
-const bigMap = document.getElementById("bigMap");
-const mapCloser = document.getElementById("mapCloser");
-const buttonMain = document.getElementById("mapButtonMain");
-const treeContainer = document.getElementById("treecontainer");
-const description = document.getElementById("descriptionContainer");
-
-function mapClick() {
-    var body = document.body;
-
-    if (!mapClicked) {
-        body.appendChild(bigMap);
-        body.appendChild(mapCloser);
-        mapClicked = true;
-    } else {
-        treeContainer.appendChild(buttonMain);
-        body.removeChild(mapCloser);
-        body.removeChild(bigMap);
-        mapClicked = false;
-    };
-};
-
 function getDataCookie() {
     var dc,
     prefix,
@@ -273,8 +250,6 @@ function login() {
         document.getElementById("loginInput").addEventListener("keyup", function(event) {
         // Number 13 is the "Enter" key on the keyboard
             if (event.keyCode === 13) {
-        // Cancel the default action, if needed
-                event.preventDefault();
         // Trigger the button element with a click
                 document.getElementById("loginButton").click();
             };
@@ -314,19 +289,8 @@ function randomInt(bound) {
     return Math.floor(Math.random() * bound);
 };
 
-function mobileDeviceDetection() {
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-        // true for mobile device
-        console.log("mobile device");
-    } else{
-        // false for not mobile device
-        console.log("not mobile device");
-    };
-};
-
 function on_load() {
     var userName = login();
-    mobileDeviceDetection();
     login();
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
@@ -370,8 +334,6 @@ function on_load() {
 
     };
 
-    document.body.removeChild(document.getElementById("bigMap"));
-    document.body.removeChild(document.getElementById("mapCloser"));
     window.scrollTo(0, 0);
 };
 
