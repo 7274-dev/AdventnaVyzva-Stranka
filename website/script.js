@@ -207,16 +207,12 @@ function on_click(event) {
     if (!getHomeworkStatus(dayNumber)) {
         uploadFileShow()
     } else {
-    alertUser("Táto úloha je už hotová!");
+        alertUser("Táto úloha je už hotová!");
     };
 };
 
 function getHomeworkStatus(day) {
-    if (getCookie("day" + day) == "true") {
-        return true;
-    } else {
-        return false;
-    };
+    return getOpenedWindows(getCookie("loginName")).includes(day);
 };
 
 function createUser(name) {
@@ -367,8 +363,9 @@ function uploadFileShow() {
 function sendHomework() {
     var sendHomeworkRequest = new XMLHttpRequest();
     var homework = inputFile.files;
-    console.log(homework);
+
     if (homework) {
+        openWindow(dayOpened, getCookie("loginName"));
         descriptionContainer.removeChild(inputFile);
         descriptionContainer.removeChild(buttonFile);
         writeCookie("day" + dayOpened, "true");
@@ -378,6 +375,10 @@ function sendHomework() {
         for (const file of homework) {
             formData.append("homeworkFiles[]", file);
         };
+
+        formData.append("name", getCookie("loginName"));
+        formData.append("day", dayOpened);
+
 
         sendHomeworkRequest.onreadystatechange = function() {
             if (this.readyState == XMLHttpRequest.DONE) {
