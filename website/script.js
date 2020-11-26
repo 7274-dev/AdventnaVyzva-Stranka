@@ -378,7 +378,7 @@ function sendHomework() {
     var sendHomeworkRequest = new XMLHttpRequest();
     var homework = inputFile.files;
     var ballColor = document.getElementById("ball" + dayOpened).style.backgroundImage.replace("_ball.png", "");
-    breakeBall(ballColor, dayOpened);
+    breakeBall(ballColor, dayOpened - 1);
 
     if (homework) {
         openWindow(dayOpened, getCookie("loginName"));
