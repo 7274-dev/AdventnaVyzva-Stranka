@@ -145,7 +145,7 @@ const dayState = [
     "israel",
 ];
 
-function returnDate() {
+function getDate() {
     var date = new Date();
     var day = date.getDate();
     return day;
@@ -187,7 +187,11 @@ function isBroken(ballNumber) {
 function on_click(event) {
     element = event.target; // rip IE 6-8
     var dayNumber = element.innerHTML;
-    dayOpened = dayNumber;
+    if (getDate() > dayNumber) {
+        alertUser("Tento deň neni k dispozícií, počkaj si :)");
+    }
+    else {
+        dayOpened = dayNumber;
     const http = new XMLHttpRequest();
     
     const url = backendURL + "text?day=" + dayNumber;
@@ -214,6 +218,7 @@ function on_click(event) {
         uploadFileShow()
     } else {
         alertUser("Táto úloha je už hotová!");
+    };
     };
 };
 
