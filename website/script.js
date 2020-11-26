@@ -174,10 +174,18 @@ function on_click(event) {
         };
     };
     http.send();
-    if (getCookie("day" + dayOpened) == "true") {
-        alertUser("Táto úloha je už dávno hotová!");
+    if (getHomeworkStatus(dayNumber)) {
+        uploadFileShow()
     } else {
-        uploadFileShow();
+    alertUser("Táto úloha je už hotová!");
+    };
+};
+
+function getHomeworkStatus(day) {
+    if (getCookie("day" + day) == "true") {
+        return true;
+    } else {
+        return false;
     };
 };
 
