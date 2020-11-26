@@ -91,6 +91,26 @@ html, body, #blurbackground {
     border-radius: 10px;
     border: 1px solid #dddddd;
 }
+#alertDiv {
+    text-align: center;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    height: 100px;
+    width: 150px;
+    background-color: white;
+    font-family: Textt;
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+}
+#alertButton {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+}
+#alertP {
+    margin-top: 5px;
+}
 #loginInput {
     position: absolute;
     text-align: center;

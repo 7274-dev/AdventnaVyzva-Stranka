@@ -184,7 +184,22 @@ function createUser(name) {
 };
 
 function alertUser(text) {
+    blur();
     var div = document.createElement("div");
+    var p = document.createElement("p");
+    var button = document.createElement("button");
+    div.id = "alertDiv";
+    p.innerHTML = text;
+    p.id = "alertP";
+    button.innerHTML = "Ok";
+    button.id = "alertButton";
+    button.onclick = function () {
+        document.body.removeChild(div);
+        unBlur();
+    };
+    div.appendChild(p);
+    div.appendChild(button);
+    document.body.appendChild(div);
 };
 
 function blur() {
