@@ -353,7 +353,7 @@ function on_load() {
     login();
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
-    var cookieExists = document.cookie.indexOf("balls") != -1; //what? it doesnt even work...
+    var cookieExists = document.cookie.indexOf("balls") != -1;
     if (cookieExists) {
         ballImageIndexes = getCookie("balls");
     };
@@ -368,7 +368,7 @@ function on_load() {
             ballImageIndexes.push(ballImage);
         }
         else {
-            ballImage = ballImageIndexes[i]; //fix to display same color
+            ballImage = ballImageIndexes[i];
         };
 
         currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + "_ball.png)";
