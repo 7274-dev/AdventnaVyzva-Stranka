@@ -54,7 +54,7 @@ function writeCookie(key, value) {
     document.cookie = "data=" + encodeURIComponent(jsonData);
 };
 
-var state_hex = {
+const state_hex = {
     other:"#c3c3c3",
     sea:"#5891c9",
     norway:"#fffff1",
@@ -72,7 +72,7 @@ var state_hex = {
     israel:"#d4af37"
 };
 
-var positions = [
+const positions = [
     {top:"20", right:"48"},//right up 01
     {top:"58", right:"44"},//left middle_down 02
     {top:"33", right:"46"},//left middle_up 03
@@ -108,7 +108,7 @@ const loginInput = document.getElementById("loginInput");
 
 var dayOpened = undefined;
 
-var ballImages = [
+const ballImages = [
     "blue",
     "orange",
     "orange_red",
@@ -117,6 +117,32 @@ var ballImages = [
     "red",
     "white",
     "yellow"
+];
+
+const dayState = [
+    "norway",
+    "norway",
+    "sweden",
+    "sweden",
+    "denmark",
+    "denmark",
+    "denmarkIslandFyn",
+    "denmark",
+    "german",
+    "checkRepublic",
+    "slovakia",
+    "slovakia",
+    "hungary",
+    "austriaItaly",
+    "cma",
+    "greece",
+    "turkey",
+    "turkey",
+    "turkey",
+    "israel",
+    "israel",
+    "israel",
+    "israel",
 ];
 
 function replaceColor(imageData, oldColor, newColor) {

@@ -111,11 +111,6 @@ html, body, #blurbackground {
     margin-right: 76px;
     margin-bottom: 8px;
 }
-#alertButton {
-    position: absolute;
-    bottom: 2%;
-    right: 2%;
-}
 #alertP {
     margin-top: 5px;
 }
