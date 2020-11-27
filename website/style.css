@@ -8,7 +8,6 @@
     src: url('Spirax-Regular.ttf');
 }
 
-
 @media (max-width: 1000px) {
       .ball {
         background-repeat: no-repeat;
@@ -20,8 +19,9 @@
         flex-direction: column;
         justify-content: center;
         background-position: center center;
-        width: 8%;
+        width: 6vh;
         height: 5%;
+        font-size: smaller;
         position: absolute;
         font-family: Cisla;
         cursor: pointer;
@@ -39,7 +39,7 @@
     flex-direction: column;
     justify-content: center;
     background-position: center center;
-    width: 3.3%;
+    width: 6vh;
     height: 5%;
     position: absolute;
     font-family: Cisla;
@@ -107,6 +107,7 @@
   }
 
   .navbar {
+    z-index: 5;
     opacity: 1;
     transition: opacity 0.5s ease;
 }
@@ -122,4 +123,111 @@
 
 .text-black {
   color: black;
+}
+
+
+#loginDiv {
+  text-align: center;
+  position: absolute;
+  top: 50vh;
+  
+  background-color: white;
+  font-family: Textt;
+  border-radius: 10px;
+  border: 1px solid #dddddd;
+  z-index: 6;
+}
+
+@media (max-width: 1000px) {
+  #loginDiv {
+    left: 10%;
+    height: 35vh;
+    width: 80vw;
+  }
+}
+
+@media (min-width: 1000px) {
+  #loginDiv {
+    left: 42%;
+    height: 25vh;
+    width: 15vw;
+  }
+}
+
+#alertDiv {
+  text-align: center;
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  height: 120px;
+  width: 200px;
+  background-color: white;
+  font-family: Textt;
+  border-radius: 10px;
+  border: 1px solid #dddddd;
+}
+#alertButton {
+  position: absolute;
+  font-family: Textt;
+  font-size: 20px;
+  border-radius: 10px;
+  bottom: 5%;
+  right: 40%;
+  border: none;
+}
+#alertP {
+  margin-top: 5px;
+}
+#loginInput {
+  position: absolute;
+  text-align: center;
+  font-size: 18px;
+  /*margin: 8px;
+  margin-top: 20px;*/
+  left: 17%;
+  top: 28%;
+  font-family: Textt;
+  border-radius: 10px;
+  background-color: #ececec;
+  border: 1px solid #c9c9c9;
+}
+#loginButton {
+  position: absolute;
+  bottom: 25%;
+  left: 36%;
+  font-family: Textt;
+  font-size: 20px;
+  border-radius: 10px;
+  border: none;
+}
+#loginText {
+  position: absolute;
+  font-size: 18px;
+  text-align: center;
+  top: 8%;
+  left: 15%;
+}
+#loginCookieWarning {
+  font-size: 14px;
+  position: absolute;
+  bottom: -5%;
+  left: 8%;
+}
+
+.blur {
+  /* left: 0px;
+  top: 0px; */
+  filter: blur(10px) brightness(70%);
+}
+
+.background {
+  background-color: rgba(0,0,0, 0.4);
+}
+
+body {
+  padding-top: 5rem;
+}
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
 }
