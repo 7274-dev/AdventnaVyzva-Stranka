@@ -140,13 +140,13 @@ function breakeBall(containerID) {
   container.style.backgroundImage = "url(" + ballResourcePath + newColor + "_broken_ball.png)";
 };
 
-function on_click(event, ballNumber) {
+function on_click(ballNumber) {
   var container = document.getElementById("ball" + ballNumber);
   var currentDate = getDate();
   if (ballNumber > currentDate) {
-    //we want to display
+    //we want to display some info here that day is not avaible
   } else {
-    //code that runs when the date is right
+    //let them complete work and send it
   };
 };
 
@@ -189,8 +189,8 @@ function on_load() {
       currentBall.classList.add("fluid-image");
       currentBall.classList.add("ball");
 
-      currentBall.onclick = function(e) {
-          on_click(e);
+      currentBall.onclick = function() {
+          on_click(i);
       };
 
       ballContainer.appendChild(currentBall);
