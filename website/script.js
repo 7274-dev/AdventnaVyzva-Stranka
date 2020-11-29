@@ -104,25 +104,22 @@ function getDate() {
 
 //tags [audio:url], [image:url], [hyperlink:url]
 //add special tag, needs to be caled for every special tag, tagName can be image/audio/hyperlink, response is server response
-function displayAditionalTagsFromServerResponse(response, tagName) {
+function displayAditionalTagsFromServerResponse(response) {
   var text = response.split(" ");
-  for (txt in text) {
-    if (txt.includes("[" + tagName + ":")) {
-      var link = txt.replace("[" + tagName + ":", "");
-      link = link.replace("]", "");
-      break;
+  var tags = ["audio", "image", "hyperlink"];
+  for (var tag in tags) {
+    for (var txt in text) {
+      if (txt.includes(tag)) {
+        var link = text.indexOf(tag).replace("[" + tag + ":", "");
+        var element = document.createElement(tag);
+        if (tag == "audio") {
+          element.controls = true;
+        element.src = link.replace("]", "");
+        document.body.appendChild(element);
+        };
+      };
     };
   };
-  if (tagName == "audio") {
-    var element = document.createElement("audio");
-    element.controls = true;
-  } else if (tagName == "image") {
-    var element = document.createElement("img");
-  } else if (tagName == "hyperlink") {
-    var element = document.createElement("a");
-  };
-  element.src = link;
-  document.body.appendChild(element);
 };
 
 //change ball image to broken ball
@@ -223,7 +220,8 @@ function getRequest(url) {
   xml.send();
   while (responseText == "") {//we dont have better idea :D
   };
-  return responseText;
+  var wholeText = responseText.split("///");
+  return wholeText[0];
 };
 
 function checkRequestResponse(request) {
@@ -376,7 +374,6 @@ $(window).scroll(function(e) {
   } else {
       $('.navbar').removeClass("navbar-hide");
   }
-
 });
 
 on_load();
