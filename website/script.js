@@ -14,34 +14,6 @@
     
 //   });
 
-function getDate() {
-  var date = new Date;
-  return date.getDay;
-};
-
-//tags [audio:url], [image:url], [hyperlink:url]
-//add special tag, needs to be caled for every special tag, tagName can be image/audio/hyperlink, response is server response
-function displayAditionalTagsFromServerResponse(response, tagName) {
-  var text = response.split(" ");
-  for (txt in text) {
-    if (txt.includes("[" + tagName + ":")) {
-      var link = txt.replace("[" + tagName + ":", "");
-      link = link.replace("]", "");
-      break;
-    };
-  };
-  if (tagName == "audio") {
-    var element = document.createElement("audio");
-    element.controls = true;
-  } else if (tagName == "image") {
-    var element = document.createElement("img");
-  } else if (tagName == "hyperlink") {
-    var element = document.createElement("a");
-  };
-  element.src = link;
-  document.body.appendChild(element);
-};
-
 function getDataCookie() {
   var dc,
   prefix,
@@ -121,6 +93,48 @@ var ballResourcePath = "img/balls/";
 
 function randomInt(bound) {
   return Math.floor(Math.random() * bound);
+};
+
+function getDate() {
+  var date = new Date;
+  return date.getDay;
+};
+
+//tags [audio:url], [image:url], [hyperlink:url]
+//add special tag, needs to be caled for every special tag, tagName can be image/audio/hyperlink, response is server response
+function displayAditionalTagsFromServerResponse(response, tagName) {
+  var text = response.split(" ");
+  for (txt in text) {
+    if (txt.includes("[" + tagName + ":")) {
+      var link = txt.replace("[" + tagName + ":", "");
+      link = link.replace("]", "");
+      break;
+    };
+  };
+  if (tagName == "audio") {
+    var element = document.createElement("audio");
+    element.controls = true;
+  } else if (tagName == "image") {
+    var element = document.createElement("img");
+  } else if (tagName == "hyperlink") {
+    var element = document.createElement("a");
+  };
+  element.src = link;
+  document.body.appendChild(element);
+};
+
+function breakeBall(containerID) {
+  var container = document.getElementById(containerID);
+  var oldSrc = container.style.backgroundImage;
+  var oldColor = oldSrc.replace("_ball.png", "");
+  if (oldColor == "orange_red") {
+    var newColor = "red";
+  } else if (oldColor == "yellow") {
+    var newColor = "white";
+  } else {
+    var newColor = oldColor;
+  };
+  container.style.backgroundImage = "url(" + ballResourcePath + newColor + "_broken_ball.png)";
 };
 
 function on_load() {
