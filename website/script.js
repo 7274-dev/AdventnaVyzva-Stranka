@@ -339,7 +339,7 @@ function openWindow(window, userName) {
     openWindowRequest.send(jsonRequestData);
 };
 
-function getOpenedWindows(name) {
+function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
     var openedWindowsRequest = new XMLHttpRequest();
     const url = backendURL + "windows?userName=" + name;
 
