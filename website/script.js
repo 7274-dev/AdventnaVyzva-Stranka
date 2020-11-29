@@ -14,6 +14,11 @@
     
 //   });
 
+function getDate() {
+  var date = new Date;
+  return date.getDay;
+};
+
 //tags [audio:url]
 function displayAditionalTagsFromServerResponse(response) {
   var text = response.split(" ");
