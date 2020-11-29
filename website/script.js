@@ -253,6 +253,16 @@ function postRequest(url, data) {
   return responseText;
 };
 
+function unBlur() {
+  document.getElementsByClassName("blur").style.filter = "blur(0px) brightness(100%)";
+  document.getElementsByClassName("background").style.backgroundColor = "white";
+};
+
+function blur() {
+  document.getElementsByClassName("blur").style.filter = "blur(10px) brightness(70%)";
+  document.getElementsByClassName("background").style.backgroundColor = "rgba(0,0,0, 0.4)";
+};
+
 var Snowflake = (function() {
 
   var flakes;
