@@ -225,14 +225,14 @@ body {
 }
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #ffffff;
+  background: white;
 }
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+  background: #888888;
+  border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(100, 100, 100);
