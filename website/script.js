@@ -367,7 +367,7 @@ $(window).scroll(function(e) {
 
   // add/remove class to navbar when scrolling to hide/show
   console.log("hi");
-  var scroll = $(window).scrollTop();
+  var scroll = $(window).scrollTo(0, 0);
   if (scroll >= 150) {
       $('.navbar').addClass("navbar-hide");
   } else {
