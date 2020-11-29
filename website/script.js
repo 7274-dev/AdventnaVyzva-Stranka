@@ -357,20 +357,6 @@ var Snowflake = (function() {
 
 }());
 
-function scrollToTop() {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-};
-
-function onScrollFunction() {
-  var scrollBTN = document.getElementById("scrollBTN");
-  if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
-    scrollBTN.style.display = "block";
-  } else {
-    scrollBTN.style.display = "none";
-  };
-};
-
 window.onload = function() {
   setTimeout(function() {
     Snowflake.init(document.getElementById('snow'));
@@ -378,16 +364,15 @@ window.onload = function() {
 }
 
 $(window).scroll(function(e) {
+
   // add/remove class to navbar when scrolling to hide/show
-  onScrollFunction();
   console.log("hi");
-  var scroll = $(window).scrollTop;
-  console.log(scroll);
+  var scroll = $(window).scrollTop();
   if (scroll >= 150) {
       $('.navbar').addClass("navbar-hide");
   } else {
       $('.navbar').removeClass("navbar-hide");
-  };
+  }
 });
 
 on_load();
