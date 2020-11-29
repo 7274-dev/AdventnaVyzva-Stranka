@@ -221,8 +221,7 @@ function getRequest(url) {
   };
 
   xml.send();
-  while (responseText == "") {
-    setTimeout(1000);
+  while (responseText == "") {//we dont have better idea :D
   };
   return responseText;
 };
@@ -254,8 +253,7 @@ function postRequest(url, data) {
   };
 
   xml.send(JSON.stringify(data));
-  while (responseText == "") {
-    setTimeout(1000);
+  while (responseText == "") {//we dont have better idea :D
   };
   return responseText;
 };
