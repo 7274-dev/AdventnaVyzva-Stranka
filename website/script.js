@@ -201,6 +201,12 @@ function on_load() {
   window.scrollTo(0, 0);
 };
 
+function isBroken(ballNumber) {
+  var ballContainer = document.getElementById("ball" + ballNumber);
+  var imageSrc = ballContainer.style.backgroundImage;
+  if (imageSrc.includes("_broken")) return true
+  else return false;
+};
 
 var Snowflake = (function() {
 
