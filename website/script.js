@@ -211,6 +211,13 @@ function isBroken(ballNumber) {
   else return false;
 };
 
+function getRequest(url) {
+  const xml = new XMLHttpRequest();
+
+  xml.open("GET", url);
+  xml.send();
+}
+
 var Snowflake = (function() {
 
   var flakes;
