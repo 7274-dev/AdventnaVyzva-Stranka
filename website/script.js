@@ -19,12 +19,13 @@ function getDate() {
   return date.getDay;
 };
 
-//tags [audio:url]
+//tags [audio:url], [image:url], [hyperlink:url]
+//add special tag, needs to be caled for every special tag, tagName can be image/audio/hyperlink, response is server response
 function displayAditionalTagsFromServerResponse(response, tagName) {
   var text = response.split(" ");
   for (txt in text) {
-    if (txt.includes("[" + tag + ":")) {
-      var link = txt.replace("[" + tag + ":", "");
+    if (txt.includes("[" + tagName + ":")) {
+      var link = txt.replace("[" + tagName + ":", "");
       link = link.replace("]", "");
       break;
     };
