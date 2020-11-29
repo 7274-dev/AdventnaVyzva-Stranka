@@ -20,28 +20,25 @@ function getDate() {
 };
 
 //tags [audio:url]
-function displayAditionalTagsFromServerResponse(response) {
+function displayAditionalTagsFromServerResponse(response, tagName) {
   var text = response.split(" ");
   for (txt in text) {
-    if (txt.includes("[audio:")) {
-      var link = txt.replace("[audio:", "");
+    if (txt.includes("[" + tag + ":")) {
+      var link = txt.replace("[" + tag + ":", "");
+      link = link.replace("]", "");
+      break;
     };
   };
-  link = link.replace("]", "");
-  if (response.includes("[audio:")) {
-    var audio = document.createElement("audio");
-    audio.src = link;
-    audio.controls = true;
-    document.body.appendChild(audio);
-  } else if (response.includes("[image:")) {
-    var img = document.createElement("img");
-    img.src = link;
-    document.body.appendChild(img);
-  } else if (response.includes("[hyperlink:")) {
-    var hyperlink = document.createElement("a");
-    hyperlink.src = link;
-    document.body.appendChild(hyperlink);
+  if (tagName == "audio") {
+    var element = document.createElement("audio");
+    element.controls = true;
+  } else if (tagName == "image") {
+    var element = document.createElement("img");
+  } else if (tagName == "hyperlink") {
+    var element = document.createElement("a");
   };
+  element.src = link;
+  document.body.appendChild(element);
 };
 
 function getDataCookie() {
