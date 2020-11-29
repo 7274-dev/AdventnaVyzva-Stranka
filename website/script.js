@@ -14,7 +14,7 @@
     
 //   });
 
-var responseText;
+var responseText = undefined;
 
 function getDataCookie() {
   var dc,
@@ -232,7 +232,10 @@ function getRequest(url) {
 };
 
   xml.send();
-}
+  while (responseText == "") {
+    //wait
+  }
+};
 
 var Snowflake = (function() {
 
