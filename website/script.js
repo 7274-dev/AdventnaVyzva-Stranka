@@ -91,6 +91,7 @@ const ballImages = [
 
 var ballResourcePath = "img/balls/";
 
+//return random number
 function randomInt(bound) {
   return Math.floor(Math.random() * bound);
 };
@@ -124,6 +125,7 @@ function displayAditionalTagsFromServerResponse(response, tagName) {
   document.body.appendChild(element);
 };
 
+//change ball image to broken ball
 function breakeBall(containerID) {
   var container = document.getElementById(containerID);
   var oldSrc = container.style.backgroundImage;
@@ -142,6 +144,7 @@ function on_click(event, ballNumber) {
   var container = document.getElementById("ball" + ballNumber);
   var currentDate = getDate();
   if (ballNumber > currentDate) {
+    //we want to display
   } else {
     //code that runs when the date is right
   };
@@ -187,7 +190,7 @@ function on_load() {
       currentBall.classList.add("ball");
 
       currentBall.onclick = function(e) {
-          on_click(e, i);
+          on_click(e);
       };
 
       ballContainer.appendChild(currentBall);
