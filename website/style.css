@@ -231,21 +231,3 @@ body {
   padding: 3rem 1.5rem;
   text-align: center;
 }
-#scrollBTN {
-  display: none;
-  position: fixed;
-  bottom: 2%;
-  right: 2%;
-  z-index: 99;
-  font-size: 18px;
-  border: none;
-  outline: none;
-  background-color: green;
-  color: white;
-  cursor: pointer;
-  padding: 15px;
-  border-radius: 4px;
-}
-#scrollBTN:hover {
-  background-color: lightgreen;
-}

@@ -354,7 +354,6 @@ var Snowflake = (function() {
   };
 
   return Snowflake;
-
 }());
 
 window.onload = function() {
@@ -364,7 +363,6 @@ window.onload = function() {
 }
 
 $(window).scroll(function(e) {
-
   // add/remove class to navbar when scrolling to hide/show
   console.log("hi");
   var scroll = $(window).scrollTop();
