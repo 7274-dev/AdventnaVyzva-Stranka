@@ -213,8 +213,13 @@ function isBroken(ballNumber) {
 
 function getRequest(url) {
   const xml = new XMLHttpRequest();
-
   xml.open("GET", url);
+
+  if (this.readyState == 4 && this.status == 200) {
+    // this will happen when document is ready
+    document.getElementById("demo").innerHTML = xml.responseText;
+ }
+
   xml.send();
 }
 
