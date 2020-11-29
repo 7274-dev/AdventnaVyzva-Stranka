@@ -216,6 +216,10 @@ function getRequest(url) {
   const xml = new XMLHttpRequest();
   xml.open("GET", url);
 
+  http.onreadystatechange = function() {
+    checkRequestResponse(this);
+  };
+
   xml.send();
   while (responseText == "") {
     setTimeout(1000);
@@ -228,7 +232,7 @@ function checkRequestResponse(request) {
   if (request.readyState == xml.DONE && request.status === 0 || request.status >= 200 && request.status < 400) {
     // this will happen when document is ready, here is variable with text:
     responseText = JSON.parse(request.responseText).response;
-  } else if (request..responseText == "") {
+  } else if (request.responseText == "") {
     // server is down :o, we want to display error here
     responseText = "Problém je na našej strane... Prosím počkajte, problém sa pokúsime čo najsôr odstrániť.";
   } else if (request.readyState == XMLHttpRequest.DONE) {
@@ -245,12 +249,16 @@ function postRequest(url, data) {
   var xml = new XMLHttpRequest();
   xml.open("POST", url);
 
+  http.onreadystatechange = function() {
+    checkRequestResponse(this);
+  };
+
   xml.send(JSON.stringify(data));
   while (responseText == "") {
     setTimeout(1000);
   };
   return responseText;
-}
+};
 
 var Snowflake = (function() {
 
