@@ -95,6 +95,7 @@ function randomInt(bound) {
   return Math.floor(Math.random() * bound);
 };
 
+//return day
 function getDate() {
   var date = new Date;
   return date.getDay;
@@ -137,6 +138,15 @@ function breakeBall(containerID) {
   container.style.backgroundImage = "url(" + ballResourcePath + newColor + "_broken_ball.png)";
 };
 
+function on_click(event, ballNumber) {
+  var container = document.getElementById("ball" + ballNumber);
+  var currentDate = getDate();
+  if (ballNumber > currentDate) {
+  } else {
+    //code that runs when the date is right
+  };
+};
+
 function on_load() {
   // login();
   var ballContainer = document.getElementById("treecontainer");
@@ -177,7 +187,7 @@ function on_load() {
       currentBall.classList.add("ball");
 
       currentBall.onclick = function(e) {
-          on_click(e);
+          on_click(e, i);
       };
 
       ballContainer.appendChild(currentBall);
