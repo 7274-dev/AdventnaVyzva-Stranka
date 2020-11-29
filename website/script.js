@@ -74,20 +74,29 @@ const positions_small = [
 ];
 
 const positions_big = [
-  {top:"11", right:"48"},//1
-  {top:"15", right:"44"},//2
-  {top:"20.5", right:"40.5"},//3
+  {top:"11", right:"47.5"},//1
+  {top:"16", right:"44"},//2
+  {top:"22", right:"40"},//3
   {top:"18", right:"50"},//4
-  {top:"23", right:"55"},//5
-  {top:"22", right:"45"},//6
-  {top:"27", right:"40"},//7
+  {top:"22.5", right:"55"},//5
+  {top:"23", right:"45"},//6
+  {top:"28", right:"39"},//7
   {top:"25.5", right:"50"},//8
-  {top:"29", right:"45"},//9
-  {top:"30", right:"55"},//10
-  {top:"33", right:"41"},//11
-  {top:"36", right:"58"},//12
-  {top:"32", right:"50"},//13
-  {top:"37", right:"37"},//14
+  {top:"30", right:"44"},//9
+  {top:"30.5", right:"55"},//10
+  {top:"35", right:"39.5"},//11
+  {top:"38", right:"58.5"},//12
+  {top:"33", right:"50"},//13
+  {top:"40", right:"35.5"},//14
+  {top:"38", right:"45.4"},//15
+  {top:"39.5", right:"52.5"},//16
+  {top:"43", right:"41"},//17
+  {top:"47", right:"33.5"},//18
+  {top:"46", right:"60.5"},//19
+  {top:"46", right:"48.5"},//20
+  {top:"48", right:"54.4"},//21
+  {top:"50", right:"44"},//22
+  {top:"51.5", right:"38"},//23
 ];
 
 const ballImages = [
@@ -384,7 +393,6 @@ window.onload = function() {
 
 $(window).scroll(function(e) {
   // add/remove class to navbar when scrolling to hide/show
-  console.log("hi");
   var scroll = $(window).scrollTop();
   if (scroll >= 150) {
       $('.navbar').addClass("navbar-hide");
