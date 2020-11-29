@@ -204,14 +204,14 @@ function on_click(event) {
     http.onreadystatechange = function() {
         if (wasRequestSuccessful(this) && this.responseText != "") {
             description.innerHTML = JSON.parse(this.responseText).response;
-            displayAudioImage(JSON.parse(this.responseText).response);
+            displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
         }
         else if (this.responseText == "") {
             description.innerHTML = "Server down";
         }
         else if (this.readyState == XMLHttpRequest.DONE) {
             description.innerHTML = JSON.parse(this.responseText).response;
-            displayAudioImage(JSON.parse(this.responseText).response);
+            displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
         }
         else {
             description.innerHTML = "Error!";
@@ -226,33 +226,24 @@ function on_click(event) {
     };
 };
 
-// [audio:<url>] [image:<url>] [hyperlink:<url>]
-function displayAudioImage(response) {
-    if (response.includes("[audio:") || response.includes("[image:") || response.includes("[hyperlink:")) {
-        if (text.includes("[audio:")) {
-            var text = response.split("[audio:");
-            var url = text[1].replace("]", "");
-            var audio = document.createElement("audio");
-            audio.controls = true;
-            audio.id = "audio";
-            audio.src = url;
-            descriptionContainer.appendChild(audio);
-        } else if (response.includes("[image:")) {
-            var text = response.split("[image:");
-            var url = text[1].replace("]", "");
-            var image = document.createElement("img");
-            image.id = "image";
-            image.src = url;
-            descriptionContainer.appendChild(image);
-        } else if (response.includes("[hyperlink:")) {
-            var text = response.split("[hyperlink:");
-            var url = text[1].replace("]", "");
-            var hl = document.createElement("a");
-            hl.id = "hyperlink";
-            hl.href = url;
-            descriptionContainer.appendChild(hl);
+//tags [audio:url], [image:url], [hyperlink:url]
+//add special tag, needs to be caled for every special tag, tagName can be image/audio/hyperlink, response is server response
+function displayAditionalTagsFromServerResponse(response) {
+  var text = response.split(" ");
+  var tags = ["audio", "image", "hyperlink"];
+  for (var tag in tags) {
+    for (var txt in text) {
+      if (txt.includes(tag)) {
+        var link = text.indexOf(tag).replace("[" + tag + ":", "");
+        var element = document.createElement(tag);
+        if (tag == "audio") {
+          element.controls = true;
+        element.src = link.replace("]", "");
+        document.body.appendChild(element);
         };
+      };
     };
+  };
 };
 
 function getHomeworkStatus(day) {
