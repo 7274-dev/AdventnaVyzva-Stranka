@@ -216,26 +216,41 @@ function getRequest(url) {
   const xml = new XMLHttpRequest();
   xml.open("GET", url);
 
-  if (this.readyState == xml.DONE && this.status === 0 || this.status >= 200 && this.status < 400) {
-    // this will happen when document is ready, here is variable with text:
-    responseText = JSON.parse(this.responseText).response;
-  } else if (this.responseText == "") {
-    // server is down :o, we want to display error here
-    responseText = "Problém je na našej strane... Prosím počkajte, problém sa pokúsime čo najsôr odstrániť.";
-  } else if (this.readyState == XMLHttpRequest.DONE) {
-    //something is wrong, but we still got the response
-    responseText = JSON.parse(this.responseText).response;
-  } else {
-    //wow when this happends everything is fucked up, bc this should never happen
-    responseText = "Oh, vyzerá to tak že sa niečo fakt pokazilo... Skúste skontrolovať pripojenie k internetu.";
-};
-
   xml.send();
   while (responseText == "") {
     setTimeout(1000);
   };
   return responseText;
 };
+
+function checkRequestResponse(request) {
+  var responseText;
+  if (request.readyState == xml.DONE && request.status === 0 || request.status >= 200 && request.status < 400) {
+    // this will happen when document is ready, here is variable with text:
+    responseText = JSON.parse(request.responseText).response;
+  } else if (request..responseText == "") {
+    // server is down :o, we want to display error here
+    responseText = "Problém je na našej strane... Prosím počkajte, problém sa pokúsime čo najsôr odstrániť.";
+  } else if (request.readyState == XMLHttpRequest.DONE) {
+    //something is wrong, but we still got the response
+    responseText = JSON.parse(request.responseText).response;
+  } else {
+    //wow when this happends everything is fucked up, bc this should never happen
+    responseText = "Oh, vyzerá to tak že sa niečo fakt pokazilo... Skúste skontrolovať pripojenie k internetu.";
+  };
+  return responseText;
+};
+
+function postRequest(url, data) {
+  var xml = new XMLHttpRequest();
+  xml.open("POST", url);
+
+  xml.send(JSON.stringify(data));
+  while (responseText == "") {
+    setTimeout(1000);
+  };
+  return responseText;
+}
 
 var Snowflake = (function() {
 
