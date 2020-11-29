@@ -231,3 +231,22 @@ body {
   padding: 3rem 1.5rem;
   text-align: center;
 }
+
+/*CUSTOM SCROLL BAR*/
+/*width*/
+::-webkit-scrollbar {
+  width: 10px;
+}
+/*background*/
+::-webkit-scrollbar-track {
+  background: lightblue;
+}
+/*handle*/
+::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 10px;
+}
+/*hover*/
+::-webkit-scrollbar-thumb:hover {
+  background-color: black;
+}
