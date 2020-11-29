@@ -196,8 +196,6 @@ function on_load() {
       writeCookie("balls", ballImageIndexes);
   };
 
-  descriptionContainer.removeChild(inputFile);
-  descriptionContainer.removeChild(buttonFile);
   window.scrollTo(0, 0);
 };
 
@@ -314,7 +312,7 @@ var Snowflake = (function() {
       flake.draw();
     }
     requestAnimationFrame(update);
-  }
+  };
 
   Snowflake.init = function(container) {
     flakes = [];
