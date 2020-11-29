@@ -220,8 +220,7 @@ function getRequest(url) {
   xml.send();
   while (responseText == "") {//we dont have better idea :D
   };
-  var wholeText = responseText.split("///");
-  return wholeText[0];
+  return responseText;
 };
 
 function checkRequestResponse(request) {
