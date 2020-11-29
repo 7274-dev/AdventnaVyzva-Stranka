@@ -70,12 +70,24 @@ function writeCookie(key, value) {
 
 const positions_small = [
   {top:"13", right:"38"},
-  {top:"12", right:"48"}
+  {top:"12", right:"48"},
 ];
 
 const positions_big = [
-  {top:"13", right:"45"},
-  {top:"12", right:"48"}
+  {top:"11", right:"48"},//1
+  {top:"15", right:"44"},//2
+  {top:"20.5", right:"40.5"},//3
+  {top:"18", right:"50"},//4
+  {top:"23", right:"55"},//5
+  {top:"22", right:"45"},//6
+  {top:"27", right:"40"},//7
+  {top:"25.5", right:"50"},//8
+  {top:"29", right:"45"},//9
+  {top:"30", right:"55"},//10
+  {top:"33", right:"41"},//11
+  {top:"36", right:"58"},//12
+  {top:"32", right:"50"},//13
+  {top:"37", right:"37"},//14
 ];
 
 const ballImages = [
