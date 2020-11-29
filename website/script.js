@@ -14,8 +14,6 @@
     
 //   });
 
-var responseText = undefined;
-
 function getDataCookie() {
   var dc,
   prefix,
@@ -214,6 +212,7 @@ function isBroken(ballNumber) {
 };
 
 function getRequest(url) {
+  var responseText = "";
   const xml = new XMLHttpRequest();
   xml.open("GET", url);
 
@@ -233,8 +232,9 @@ function getRequest(url) {
 
   xml.send();
   while (responseText == "") {
-    //wait
-  }
+    setTimeout(1000);
+  };
+  return responseText;
 };
 
 var Snowflake = (function() {
