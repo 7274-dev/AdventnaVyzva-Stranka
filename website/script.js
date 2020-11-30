@@ -196,7 +196,7 @@ function on_click(event) {
         dayOpened = dayNumber;
     const http = new XMLHttpRequest();
     
-    const url = backendURL + "text?day=" + dayNumber;
+    var url = backendURL + "text?day=" + dayNumber;
     http.open("GET", url);
 
     var description = document.getElementById("description");
