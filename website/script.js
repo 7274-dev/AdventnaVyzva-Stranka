@@ -309,13 +309,10 @@ function on_click(event) {
 //tags [audio:url], [image:url], [hyperlink:url]
 //add special tag, needs to be caled for every special tag, tagName can be image/audio/hyperlink, response is server response
 function displayAditionalTagsFromServerResponse(response) {
-  var text = response.split(" ");
+  var responseText = response.split(" ");
   for (let tag in tags) {
-      console.log(tag);
-    for (let txt in text) {
-        console.log(txt);
+    for (let txt in responseText) {
       if (txt.includes(tag)) {
-          console.log("proces started");
         var link = txt.replace("[" + tag + ":", "");
         link = link.replace("]", "");
         if (tag == "image") {
@@ -323,12 +320,14 @@ function displayAditionalTagsFromServerResponse(response) {
             element.href = link;
             element.innerHTML = "<img src=" + link + " download>";
         } else {
-            var element = document.createElement(tag);
             if (tag == "audio") {
+              var element = document.createElement("audio");
               element.controls = true;
               element.src = link;
             } else if (tag == "hyperlink") {
+                var element = document.createElement("a");
                 element.href = link;
+                element.innerHTML = "Súbor na pozretie";
             };
             document.getElementById("descriptionContainer").appendChild(element);
         };
