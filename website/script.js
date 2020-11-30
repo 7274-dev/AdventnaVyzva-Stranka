@@ -233,23 +233,23 @@ function displayAditionalTagsFromServerResponse(response) {
   var tags = ["audio", "image", "hyperlink"];
   for (var tag in tags) {
     for (var txt in text) {
-      if (txt.includes(tag)) {
-        var link = text.indexOf(tag);
-        link = link.replace("[" + tag + ":", "");
-        link = link.replace("]", "");
-        if (tag == "image") {
-            var element = document.createElement("a");
-            element.href = link;
-            element.innerHTML = "<img src=" + link + " download>";
-        } else {
-            var element = document.createElement(tag);
-            if (tag == "audio") {
-              element.controls = true;
-              element.src = link;
-            } else if (tag == "hyperlink") {
+        var txt_ = txt.replace("\n", "");
+        if (txt_.includes(tag)) {
+            var link = txt_.replace("[" + tag + ":", "");
+            link = link.replace("]", "");
+            if (tag == "image") {
+                var element = document.createElement("a");
                 element.href = link;
-            };
-            document.body.appendChild(element);
+                element.innerHTML = "<img src=" + link + " download>";
+            } else {
+                var element = document.createElement(tag);
+                if (tag == "audio") {
+                  element.controls = true;
+                  element.src = link;
+                } else if (tag == "hyperlink") {
+                    element.href = link;
+                };
+                document.body.appendChild(element);
         };
       };
     };
@@ -344,7 +344,7 @@ function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
     var openedWindowsRequest = new XMLHttpRequest();
     var url = backendURL + "windows?userName=" + name;
 
-    openedWindowsRequest.open("GET", url, false);
+    openedWindowsRequest.open("GET", url);//there was ", false"
 
     var response;
     openedWindowsRequest.onreadystatechange = function() {
@@ -425,8 +425,9 @@ function unBlur() {
 function breakeBall(ballContainerID) {
     //startup info
     ballContainer = document.getElementById("ball" + ballContainerID);
-    ballColor = ballContainerID.style.backgroundImage.replace("_ball.png");
-    //replace that file with broken file
+    var ballColor = ballContainerID.style.backgroundImage.replace("_ball.png", "");
+    if (!ballColor.includes("_broken")) {
+        //replace that file with broken file
     if (ballColor == "yellow") {
         var nextColor = ballColor.replace("yellow", "white");
     } else if (ballColor == "orange_red") {
@@ -437,6 +438,7 @@ function breakeBall(ballContainerID) {
     nextColor = nextColor.replace('")', '_broken_ball.png)');
     nextColor = nextColor.replace('"', "");
     ballContainer.style.backgroundImage = nextColor;
+    };
 };
 
 function uploadFileShow() {
