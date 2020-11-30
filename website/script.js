@@ -341,7 +341,7 @@ function openWindow(window, userName) {
 
 function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
     var openedWindowsRequest = new XMLHttpRequest();
-    const url = backendURL + "windows?userName=" + name;
+    var url = backendURL + "windows?userName=" + name;
 
     openedWindowsRequest.open("GET", url, false);
 
@@ -366,7 +366,7 @@ function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
 // also handle user "account" creation
 function setWindowData(name) {
     var userExistsRequest = new XMLHttpRequest();
-    const url = backendURL + "exists?userName=" + name;
+    var url = backendURL + "exists?userName=" + name;
     
     userExistsRequest.open("GET", url);
 
