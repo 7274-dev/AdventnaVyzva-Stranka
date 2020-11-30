@@ -242,11 +242,12 @@ function displayAditionalTagsFromServerResponse(response) {
                 element.href = link;
                 element.innerHTML = "<img src=" + link + " download>";
             } else {
-                var element = document.createElement(tag);
                 if (tag == "audio") {
+                    var element = document.createElement("audio");
                   element.controls = true;
                   element.src = link;
                 } else if (tag == "hyperlink") {
+                    var element = document.createElement("a");
                     element.href = link;
                 };
                 document.body.appendChild(element);
