@@ -321,7 +321,7 @@ function displayAditionalTagsFromServerResponse(response) {
             } else if (tag == "hyperlink") {
                 element.href = link;
             };
-            document.body.appendChild(element);
+            document.getElementById("descriptionContainer").appendChild(element);
         };
       };
     };
