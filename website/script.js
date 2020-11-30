@@ -155,8 +155,7 @@ function getDate() {
 };
 
 function easterEgg() {
-    var i;
-    for(i < listOfNumbers.length(); i++){
+    for(var i = 0; i < listOfNumbers.length(); i++){
         if (listOfNumbers[i] == 7 & listOfNumbers[i+1] == 2 & listOfNumbers[i+2] == 7 & listOfNumbers[i+3] == 4){
             console.log("EasterEgg")
         } 
@@ -164,9 +163,42 @@ function easterEgg() {
 
 }
 
+// Thank you Github gist
+// https://gist.github.com/comficker/871d378c535854c1c460f7867a191a5a#file-hex2rgb-js
+function HEX2RGB (hex) {
+  "use strict";
+  if (hex.charAt(0) === '#') {
+      hex = hex.substr(1);
+  }
+  if ((hex.length < 2) || (hex.length > 6)) {
+      return false;
+  }
+  var values = hex.split(''),
+      r,
+      g,
+      b;
+
+  if (hex.length === 2) {
+      r = parseInt(values[0].toString() + values[1].toString(), 16);
+      g = r;
+      b = r;
+  } else if (hex.length === 3) {
+      r = parseInt(values[0].toString() + values[0].toString(), 16);
+      g = parseInt(values[1].toString() + values[1].toString(), 16);
+      b = parseInt(values[2].toString() + values[2].toString(), 16);
+  } else if (hex.length === 6) {
+      r = parseInt(values[0].toString() + values[1].toString(), 16);
+      g = parseInt(values[2].toString() + values[3].toString(), 16);
+      b = parseInt(values[4].toString() + values[5].toString(), 16);
+  } else {
+      return false;
+  }
+  return [r, g, b];
+}
+
 function replaceColor(imageData, oldColor, newColor) {
     // r, g, b, a
-    for (var i = 0; i < imageData; i += 4) {
+    for (var i = 0; i < imageData.length; i += 4) {
         const red = imageData.data[i];
         const green = imageData.data[i + 1];
         const blue = imageData.data[i + 2];
@@ -181,8 +213,31 @@ function replaceColor(imageData, oldColor, newColor) {
 };
 
 function mapColorCountries() {
-    var image = document.getElementById("map");
-};
+    // var canvas = document.getElementById("map");
+    // src="img/europe_map_done.png"
+    // var context = canvas.getContext("2d");
+
+    // var image = new Image();
+    // var isLoaded = false;
+    // var width;
+    // var height;
+    // image.onload = function() {
+    //   width = this.width;
+    //   height = this.window;
+    //   isLoaded = true;
+    //   this.src = "img/europe_map_done.png";
+
+    //   context.drawImage(image, 0, 0);
+    //   console.log(this.width);
+
+    //   var imageData = context.getImageData(0, 0, width, height);
+    //   replaceColor(imageData, HEX2RGB(state_hex.sea), HEX2RGB("#ffffff"));
+
+    //   context.putImageData(imageData, 0, 0);
+    // }
+    
+    
+  };
 
 function wasRequestSuccessful(request) {
     return request.readyState == XMLHttpRequest.DONE &&
@@ -512,6 +567,7 @@ function loginInputEnterClickTriggerButton() {
 
 function on_load() {
     login();
+    mapColorCountries();
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
     var cookieExists = document.cookie.indexOf("balls") != -1;
@@ -556,11 +612,7 @@ function on_load() {
     descriptionContainer.removeChild(buttonFile);
     window.scrollTo(0, 0);
 };
-<<<<<<< HEAD
-on_load();
-=======
 
 //Unexpected end of JSON.parse() help: https://stackoverflow.com/questions/51118396/uncaught-syntaxerror-unexpected-end-of-json-input-at-json-parse-anonymous
 
 on_load();
->>>>>>> 00bb86b5146cfb230b1be732e4ca108eb38f2cf6
