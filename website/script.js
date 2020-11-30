@@ -72,6 +72,8 @@ const state_hex = {
     israel:"#d4af37"
 };
 
+var listOfNumbers = [];
+
 const positions = [
     {top:"20", right:"48"},//right up 01
     {top:"58", right:"44"},//left middle_down 02
@@ -152,6 +154,16 @@ function getDate() {
     return day;
 };
 
+function easterEgg() {
+    var i;
+    for(i < listOfNumbers.length(); i++){
+        if (listOfNumbers[i] == 7 & listOfNumbers[i+1] == 2 & listOfNumbers[i+2] == 7 & listOfNumbers[i+3] == 4){
+            console.log("EasterEgg")
+        } 
+    }
+
+}
+
 function replaceColor(imageData, oldColor, newColor) {
     // r, g, b, a
     for (var i = 0; i < imageData; i += 4) {
@@ -185,9 +197,11 @@ function isBroken(ballNumber) {
     else return false;
 };
 
+
 function on_click(event) {
     element = event.target; // rip IE 6-8
     var dayNumber = element.innerHTML;
+    listOfNumbers.push(dayNumber);
     if (getDate() < dayNumber) {
         console.log(getDate());
         alertUser("Tento deň nieje k dispozícií, počkaj si :)");
@@ -233,22 +247,20 @@ function displayAditionalTagsFromServerResponse(response) {
   var tags = ["audio", "image", "hyperlink"];
   for (var tag in tags) {
     for (var txt in text) {
-        var txt_ = txt.replace("\n", "");
-        if (txt_.includes(tag)) {
-            var link_ = txt_.replace("[" + tag + ":", "");
-            var link = link_.replace("]", "");
-            if (tag == "image") {
-                var element = document.createElement("a");
+      if (txt.includes(tag)) {
+        var link = text.indexOf(tag).replace("[" + tag + ":", "");
+        link = link.replace("]", "");
+        if (tag == "image") {
+            var element = document.createElement("a");
+            element.href = link;
+            element.innerHTML = "<img src=" + link + " download>";
+        } else {
+            var element = document.createElement(tag);
+            if (tag == "audio") {
+              element.controls = true;
+              element.src = link;
+            } else if (tag == "hyperlink") {
                 element.href = link;
-                element.innerHTML = "<img src=" + link + " download>";
-            } else {
-                if (tag == "audio") {
-                    var element = document.createElement("audio");
-                  element.controls = true;
-                  element.src = link;
-                } else if (tag == "hyperlink") {
-                    var element = document.createElement("a");
-                    element.href = link;
             };
             document.body.appendChild(element);
         };
@@ -261,13 +273,12 @@ function getHomeworkStatus(day) {
     if (typeof day == "string") {
         day = parseInt(day);
     };
-    var toReturn = getOpenedWindows(getCookie("loginName"));
-    return toReturn.includes(day);
+    return getOpenedWindows(getCookie("loginName")).includes(day);
 };
 
 function createUser(name) {
     var createUserRequest = new XMLHttpRequest();
-    var url = backendURL + "add";
+    const url = backendURL + "add";
 
     var jsonRequestData = JSON.stringify({"userName": name});
     
@@ -315,7 +326,7 @@ function openWindow(window, userName) {
         window = parseInt(window); // unsafe?
     }
     var openWindowRequest = new XMLHttpRequest();
-    var url = backendURL + "openwindow";
+    const url = backendURL + "openwindow";
 
     var jsonRequestData = JSON.stringify({"day": window, "userName": userName});
 
@@ -346,9 +357,10 @@ function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
     var openedWindowsRequest = new XMLHttpRequest();
     var url = backendURL + "windows?userName=" + name;
 
-    openedWindowsRequest.open("GET", url);//there was ", false"
+    openedWindowsRequest.open("GET", url, false);
 
     var response;
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
     openedWindowsRequest.onreadystatechange = function() {
         console.log(this.responseText);
         if (wasRequestSuccessful(this)) {
@@ -362,13 +374,7 @@ function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
     openedWindowsRequest.send();
 
     return response;
-};
-
-function onLoadBreakBall() {
-    var doneWorks = getOpenedWindows();
-    for (var day in doneWorks) {
-        breakeBall(day);
-    };
+   
 };
 
 // also handle user "account" creation
@@ -403,7 +409,6 @@ function login() {
                 unBlur();
                 writeCookie("loginName", name);
                 document.body.removeChild(document.getElementById("loginDiv"));
-                onLoadBreakBall();
             };  
         };
     } else {
@@ -411,7 +416,6 @@ function login() {
         setWindowData(name);
         unBlur();
         document.body.removeChild(document.getElementById("loginDiv"));
-        onLoadBreakBall();
     };
 };
 
@@ -424,12 +428,10 @@ function unBlur() {
 };
 
 //needed in future, dont delete
-function breakeBall(ballContainerID) {
+function breakeBall(ballColor, ballContainerID) {
     //startup info
     ballContainer = document.getElementById("ball" + ballContainerID);
-    var ballColor = ballContainerID.style.backgroundImage.replace("_ball.png", "");
-    if (!ballColor.includes("_broken")) {
-        //replace that file with broken file
+    //replace that file with broken file
     if (ballColor == "yellow") {
         var nextColor = ballColor.replace("yellow", "white");
     } else if (ballColor == "orange_red") {
@@ -440,7 +442,6 @@ function breakeBall(ballContainerID) {
     nextColor = nextColor.replace('")', '_broken_ball.png)');
     nextColor = nextColor.replace('"', "");
     ballContainer.style.backgroundImage = nextColor;
-    };
 };
 
 function uploadFileShow() {
@@ -453,7 +454,7 @@ function sendHomework() {
     var sendHomeworkRequest = new XMLHttpRequest();
     var homework = inputFile.files;
     var ballColor = document.getElementById("ball" + dayOpened).style.backgroundImage.replace("_ball.png", "");
-    breakeBall(dayOpened - 1);
+    breakeBall(ballColor, dayOpened - 1);
 
     if (homework) {
         openWindow(dayOpened, getCookie("loginName"));
