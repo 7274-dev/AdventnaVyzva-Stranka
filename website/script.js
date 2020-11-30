@@ -264,7 +264,7 @@ function getHomeworkStatus(day) {
 
 function createUser(name) {
     var createUserRequest = new XMLHttpRequest();
-    const url = backendURL + "add";
+    var url = backendURL + "add";
 
     var jsonRequestData = JSON.stringify({"userName": name});
     
@@ -312,7 +312,7 @@ function openWindow(window, userName) {
         window = parseInt(window); // unsafe?
     }
     var openWindowRequest = new XMLHttpRequest();
-    const url = backendURL + "openwindow";
+    var url = backendURL + "openwindow";
 
     var jsonRequestData = JSON.stringify({"day": window, "userName": userName});
 
@@ -346,7 +346,6 @@ function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
     openedWindowsRequest.open("GET", url, false);
 
     var response;
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
     openedWindowsRequest.onreadystatechange = function() {
         console.log(this.responseText);
         if (wasRequestSuccessful(this)) {
