@@ -261,7 +261,8 @@ function getHomeworkStatus(day) {
     if (typeof day == "string") {
         day = parseInt(day);
     };
-    return getOpenedWindows(getCookie("loginName")).includes(day);
+    var toReturn = getOpenedWindows(getCookie("loginName"));
+    return toReturn.includes(day);
 };
 
 function createUser(name) {
