@@ -157,12 +157,11 @@ function getDate() {
 
 function easterEgg() {
     for(var i = 0; i < listOfNumbers.length(); i++){
-        if (listOfNumbers[i] == 7 & listOfNumbers[i+1] == 2 & listOfNumbers[i+2] == 7 & listOfNumbers[i+3] == 4){
-            console.log("EasterEgg")
-        } 
-    }
-
-}
+        if (listOfNumbers[i] == 7 & listOfNumbers[i+1] == 2 & listOfNumbers[i+2] == 7 & listOfNumbers[i+3] == 4) {
+            console.log("EasterEgg");
+        } ;
+    };
+};
 
 // Thank you Github gist
 // https://gist.github.com/comficker/871d378c535854c1c460f7867a191a5a#file-hex2rgb-js
