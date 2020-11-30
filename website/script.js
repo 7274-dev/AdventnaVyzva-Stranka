@@ -302,8 +302,11 @@ function displayAditionalTagsFromServerResponse(response) {
   var text = response.split(" ");
   var tags = ["audio", "image", "hyperlink"];
   for (let tag in tags) {
+      console.log(tag);
     for (let txt in text) {
+        console.log(txt);
       if (txt.includes(tag)) {
+          console.log("proces started");
         var link = txt.replace("[" + tag + ":", "");
         link = link.replace("]", "");
         if (tag == "image") {
