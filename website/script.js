@@ -272,7 +272,7 @@ function on_click(event) {
     var description = document.getElementById("description");
 
     http.onreadystatechange = function() {
-        var responseTextToDisplay = this.responseText.split(" ");
+        var responseTextToDisplay = JSON.parse(this.responseText).response.split(" ");
         for (let tag in tags) {
             for (let txt in responseTextToDisplay) {
                 if (txt.includes(tag)) {
@@ -283,15 +283,15 @@ function on_click(event) {
         };
         if (wasRequestSuccessful(this) && this.responseText != "") {
             // this.responseText.replace("\\n", "<br>")
-            description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
-            displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
+            description.innerHTML = responseTextToDisplay.toString();//should this be here? ".response"
+            displayAditionalTagsFromServerResponse(responseTextToDisplay.toString());//should this be here? ".response"
         }
         else if (this.responseText == "") {
             description.innerHTML = "Server down";
         }
         else if (this.readyState == XMLHttpRequest.DONE) {
-            description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
-            displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
+            description.innerHTML = responseTextToDisplay.toString();//should this be here? ".response"
+            displayAditionalTagsFromServerResponse(responseTextToDisplay.toString());//should this be here? ".response"
         }
         else {
             description.innerHTML = "Error!";
