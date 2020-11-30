@@ -235,8 +235,8 @@ function displayAditionalTagsFromServerResponse(response) {
     for (var txt in text) {
         var txt_ = txt.replace("\n", "");
         if (txt_.includes(tag)) {
-            var link = txt_.replace("[" + tag + ":", "");
-            link = link.replace("]", "");
+            var link_ = txt_.replace("[" + tag + ":", "");
+            var link = link_.replace("]", "");
             if (tag == "image") {
                 var element = document.createElement("a");
                 element.href = link;
