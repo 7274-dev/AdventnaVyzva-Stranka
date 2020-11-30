@@ -110,6 +110,7 @@ const loginInput = document.getElementById("loginInput");
 
 var dayOpened = undefined;
 var alertDisplayed = false;
+var tags = ["audio", "image", "hyperlink"];
 
 const ballImages = [
     "blue",
@@ -271,6 +272,15 @@ function on_click(event) {
     var description = document.getElementById("description");
 
     http.onreadystatechange = function() {
+        var responseTextToDisplay = this.responseText.split(" ");
+        for (let tag in tags) {
+            for (let txt in responseTextToDisplay) {
+                if (txt.includes(tag)) {
+                    var indexOfTag = responseTextToDisplay.indexOf(txt);
+                    responseTextToDisplay = responseTextToDisplay.splice(indexOfTag, 1);
+                };
+            };
+        };
         if (wasRequestSuccessful(this) && this.responseText != "") {
             // this.responseText.replace("\\n", "<br>")
             description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
@@ -300,7 +310,6 @@ function on_click(event) {
 //add special tag, needs to be caled for every special tag, tagName can be image/audio/hyperlink, response is server response
 function displayAditionalTagsFromServerResponse(response) {
   var text = response.split(" ");
-  var tags = ["audio", "image", "hyperlink"];
   for (let tag in tags) {
       console.log(tag);
     for (let txt in text) {
