@@ -1,4 +1,4 @@
-var backendURL = "http://localhost:8080/";
+var backendURL = "http://92.52.4.175:8080";
 
 function getDataCookie() {
     var dc,
