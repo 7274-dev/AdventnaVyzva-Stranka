@@ -272,7 +272,7 @@ function on_click(event) {
 
     http.onreadystatechange = function() {
         if (wasRequestSuccessful(this) && this.responseText != "") {
-            this.responseText.replace("\\n", "\n");
+            this.responseText.replace("\n", "<br>")
             description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
             displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
         }
