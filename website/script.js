@@ -235,11 +235,20 @@ function displayAditionalTagsFromServerResponse(response) {
     for (var txt in text) {
       if (txt.includes(tag)) {
         var link = text.indexOf(tag).replace("[" + tag + ":", "");
-        var element = document.createElement(tag);
-        if (tag == "audio") {
-          element.controls = true;
-        element.src = link.replace("]", "");
-        document.body.appendChild(element);
+        link = link.replace("]", "");
+        if (tag == "image") {
+            var element = document.createElement("a");
+            element.href = link;
+            element.innerHTML = "<img src=" + link + " download>";
+        } else {
+            var element = document.createElement(tag);
+            if (tag == "audio") {
+              element.controls = true;
+              element.src = link;
+            } else if (tag == "hyperlink") {
+                element.href = link;
+            };
+            document.body.appendChild(element);
         };
       };
     };
