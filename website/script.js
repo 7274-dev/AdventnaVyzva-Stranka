@@ -400,6 +400,7 @@ function login() {
                 unBlur();
                 writeCookie("loginName", name);
                 document.body.removeChild(document.getElementById("loginDiv"));
+                onLoadBreakBall();
             };  
         };
     } else {
@@ -407,6 +408,7 @@ function login() {
         setWindowData(name);
         unBlur();
         document.body.removeChild(document.getElementById("loginDiv"));
+        onLoadBreakBall();
     };
 };
 
@@ -547,6 +549,5 @@ function on_load() {
     descriptionContainer.removeChild(inputFile);
     descriptionContainer.removeChild(buttonFile);
     window.scrollTo(0, 0);
-    onLoadBreakBall();
 };
 on_load();
