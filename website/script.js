@@ -301,11 +301,10 @@ function on_click(event) {
 function displayAditionalTagsFromServerResponse(response) {
   var text = response.split(" ");
   var tags = ["audio", "image", "hyperlink"];
-  for (var tag in tags) {
-    for (var txt in text) {
+  for (let tag in tags) {
+    for (let txt in text) {
       if (txt.includes(tag)) {
-        var link_ = text.indexOf(tag);
-        var link = link_.replace("[" + tag + ":", "");
+        var link = txt.replace("[" + tag + ":", "");
         link = link.replace("]", "");
         if (tag == "image") {
             var element = document.createElement("a");
