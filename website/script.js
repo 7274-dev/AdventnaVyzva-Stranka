@@ -203,15 +203,15 @@ function on_click(event) {
 
     http.onreadystatechange = function() {
         if (wasRequestSuccessful(this) && this.responseText != "") {
-            description.innerHTML = JSON.parse(this.responseText).response;
-            displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
+            description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
+            displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
         }
         else if (this.responseText == "") {
             description.innerHTML = "Server down";
         }
         else if (this.readyState == XMLHttpRequest.DONE) {
-            description.innerHTML = JSON.parse(this.responseText).response;
-            displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
+            description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
+            displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
         }
         else {
             description.innerHTML = "Error!";
@@ -353,7 +353,7 @@ function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
         console.log(this.responseText);
         if (wasRequestSuccessful(this)) {
             console.log(JSON.parse(this.responseText));
-            response = JSON.parse(this.responseText).response;
+            response = JSON.parse(this.responseText).response;//should this be here?? ".response"
         }
         else {
             response = null;
@@ -555,4 +555,7 @@ function on_load() {
     descriptionContainer.removeChild(buttonFile);
     window.scrollTo(0, 0);
 };
+
+//Unexpected end of JSON.parse() help: https://stackoverflow.com/questions/51118396/uncaught-syntaxerror-unexpected-end-of-json-input-at-json-parse-anonymous
+
 on_load();
