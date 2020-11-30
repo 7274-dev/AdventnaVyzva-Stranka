@@ -1,4 +1,4 @@
-var backendURL = "http://92.52.4.175:8080/";
+var backendURL = "http://192.168.100.250:8080/";
 
 function getDataCookie() {
     var dc,
@@ -258,7 +258,7 @@ function on_click(event) {
     var dayNumber = element.innerHTML;
     listOfNumbers.push(dayNumber);
     if (getDate() < dayNumber) {
-        console.log(getDate());
+        // console.log(getDate());
         alertUser("Tento deň nieje k dispozícií, počkaj si :)");
     }
     else {
@@ -274,14 +274,14 @@ function on_click(event) {
         if (wasRequestSuccessful(this) && this.responseText != "") {
             // this.responseText.replace("\\n", "<br>")
             description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
-            displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
+            // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
         }
         else if (this.responseText == "") {
             description.innerHTML = "Server down";
         }
         else if (this.readyState == XMLHttpRequest.DONE) {
             description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
-            displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
+            // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
         }
         else {
             description.innerHTML = "Error!";
@@ -417,9 +417,9 @@ function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
 
     var response;
     openedWindowsRequest.onreadystatechange = function() {
-        console.log(this.responseText);
+        // console.log(this.responseText);
         if (wasRequestSuccessful(this)) {
-            console.log(JSON.parse(this.responseText));
+            // console.log(JSON.parse(this.responseText));
             response = JSON.parse(this.responseText).response;//should this be here?? ".response"
         }
         else {
@@ -440,7 +440,7 @@ function setWindowData(name) {
     userExistsRequest.open("GET", url);
 
     userExistsRequest.onreadystatechange = function() {
-        console.log(this.responseText);
+        // console.log(this.responseText);
         if (wasRequestSuccessful(this)) {
             createUser(name);
         }
@@ -504,6 +504,16 @@ function uploadFileShow() {
     descriptionContainer.appendChild(buttonFile);
 };
 
+// b64 encode
+function readData(file, callback) {
+    var reader = new FileReader();
+    console.log(typeof callback + " aaaaa");
+    reader.onload = function() {
+        callback(this.result.split(",")[1]);
+    }
+    reader.readAsDataURL(file);
+}
+
 //finish this shit
 function sendHomework() {
     var sendHomeworkRequest = new XMLHttpRequest();
@@ -516,35 +526,35 @@ function sendHomework() {
         descriptionContainer.removeChild(inputFile);
         descriptionContainer.removeChild(buttonFile);
         writeCookie("day" + dayOpened, "true");
-        var formData = new FormData();
+
         var url = backendURL + "upload";
-        
-        console.log(homework[0]);
-    
-        formData.append("File", homework[0], homework[0].name);
+        function callback(data) {
+            var jsonData = {"filename": homework[0].name, "data": data, "day": parseInt(dayOpened), "userName": getCookie("loginName")};
 
-        formData.append("name", getCookie("loginName"));
-        formData.append("day", dayOpened);
-
-        sendHomeworkRequest.onreadystatechange = function() {
-            if (this.readyState == XMLHttpRequest.DONE) {
-                if (wasRequestSuccessful(this)) {
-                    alertUser("Úloha úspešne odovzdaná! " + homework);
-                }
-                else if (this.status == 500) {
-                    // server error :o , we probably want to display an error here
-                    alertUser("Niečo sa pokazilo... Skontrolujte pripojenie k internetu");
-                }
-            }
-            else {
-                // server is down
-                alertUser("Problém je na našej strane... Poruchu sa pokúsime odstrániť čo najsôr");
+            sendHomeworkRequest.onreadystatechange = function() {
+                    if (this.readyState == XMLHttpRequest.DONE) {
+                        if (wasRequestSuccessful(this)) {
+                            alertUser("Úloha úspešne odovzdaná! " + homework);
+                        }
+                        else if (this.status == 500) {
+                            // server error :o , we probably want to display an error here
+                            alertUser("Niečo sa pokazilo... Skontrolujte pripojenie k internetu");
+                        }
+                    }
+                    else {
+                        // server is down
+                        alertUser("Problém je na našej strane... Poruchu sa pokúsime odstrániť čo najsôr");
+                    };
+                    
+                };
+                sendHomeworkRequest.open("POST", url);
+                sendHomeworkRequest.setRequestHeader("Content-Type", "application/json");
+                console.log(JSON.stringify(jsonData));
+                sendHomeworkRequest.send(JSON.stringify(jsonData));
             };
-        };
-
-        sendHomeworkRequest.open("POST", url);
-        sendHomeworkRequest.send(formData);
-    } else {
+            readData(homework[0], callback);
+    }
+    else {
         alertUser("Niesú pridané žiadne súbory!");
     };
 };
@@ -566,6 +576,9 @@ function loginInputEnterClickTriggerButton() {
 function on_load() {
     login();
     mapColorCountries();
+    document.getElementById("star").onclick = function(e) {
+        on_click(e);
+    }
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
     var cookieExists = document.cookie.indexOf("balls") != -1;
