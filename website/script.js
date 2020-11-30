@@ -110,6 +110,7 @@ const loginInput = document.getElementById("loginInput");
 
 var dayOpened = undefined;
 var alertDisplayed = false;
+var tags = ["audio", "image", "hyperlink"];
 
 const ballImages = [
     "blue",
@@ -156,12 +157,11 @@ function getDate() {
 
 function easterEgg() {
     for(var i = 0; i < listOfNumbers.length(); i++){
-        if (listOfNumbers[i] == 7 & listOfNumbers[i+1] == 2 & listOfNumbers[i+2] == 7 & listOfNumbers[i+3] == 4){
-            console.log("EasterEgg")
-        } 
-    }
-
-}
+        if (listOfNumbers[i] == 7 && listOfNumbers[i+1] == 2 && listOfNumbers[i+2] == 7 && listOfNumbers[i+3] == 4) {
+            console.log("EasterEgg");
+        } ;
+    };
+};
 
 // Thank you Github gist
 // https://gist.github.com/comficker/871d378c535854c1c460f7867a191a5a#file-hex2rgb-js
@@ -271,6 +271,15 @@ function on_click(event) {
     var description = document.getElementById("description");
 
     http.onreadystatechange = function() {
+        var responseTextToDisplay = JSON.parse(this.responseText).response.split(" ");
+        for (let tag in tags) {
+            for (let txt in responseTextToDisplay) {
+                if (txt.includes(tag)) {
+                    var indexOfTag = responseTextToDisplay.indexOf(txt);
+                    responseTextToDisplay = responseTextToDisplay.splice(indexOfTag, 1);
+                };
+            };
+        };
         if (wasRequestSuccessful(this) && this.responseText != "") {
             // this.responseText.replace("\\n", "<br>")
             description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
@@ -299,10 +308,9 @@ function on_click(event) {
 //tags [audio:url], [image:url], [hyperlink:url]
 //add special tag, needs to be caled for every special tag, tagName can be image/audio/hyperlink, response is server response
 function displayAditionalTagsFromServerResponse(response) {
-  var text = response.split(" ");
-  var tags = ["audio", "image", "hyperlink"];
+  var responseText = response.split(" ");
   for (let tag in tags) {
-    for (let txt in text) {
+    for (let txt in responseText) {
       if (txt.includes(tag)) {
         var link = txt.replace("[" + tag + ":", "");
         link = link.replace("]", "");
@@ -311,14 +319,16 @@ function displayAditionalTagsFromServerResponse(response) {
             element.href = link;
             element.innerHTML = "<img src=" + link + " download>";
         } else {
-            var element = document.createElement(tag);
             if (tag == "audio") {
+              var element = document.createElement("audio");
               element.controls = true;
               element.src = link;
             } else if (tag == "hyperlink") {
+                var element = document.createElement("a");
                 element.href = link;
+                element.innerHTML = "Súbor na pozretie";
             };
-            document.body.appendChild(element);
+            document.getElementById("descriptionContainer").appendChild(element);
         };
       };
     };
