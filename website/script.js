@@ -234,7 +234,8 @@ function displayAditionalTagsFromServerResponse(response) {
   for (var tag in tags) {
     for (var txt in text) {
       if (txt.includes(tag)) {
-        var link = text.indexOf(tag).replace("[" + tag + ":", "");
+        var link = text.indexOf(tag);
+        link = link.replace("[" + tag + ":", "");
         link = link.replace("]", "");
         if (tag == "image") {
             var element = document.createElement("a");
@@ -364,7 +365,7 @@ function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
 function onLoadBreakBall() {
     var doneWorks = getOpenedWindows();
     for (var day in doneWorks) {
-        breakeBall("ball" + day);
+        breakeBall(day);
     };
 };
 
