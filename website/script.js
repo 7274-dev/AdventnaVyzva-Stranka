@@ -304,7 +304,8 @@ function displayAditionalTagsFromServerResponse(response) {
   for (var tag in tags) {
     for (var txt in text) {
       if (txt.includes(tag)) {
-        var link = text.indexOf(tag).replace("[" + tag + ":", "");
+        var link_ = text.indexOf(tag);
+        var link = link_.replace("[" + tag + ":", "");
         link = link.replace("]", "");
         if (tag == "image") {
             var element = document.createElement("a");
@@ -524,10 +525,8 @@ function sendHomework() {
     
         formData.append("File", homework[0], homework[0].name);
 
-
         formData.append("name", getCookie("loginName"));
         formData.append("day", dayOpened);
-
 
         sendHomeworkRequest.onreadystatechange = function() {
             if (this.readyState == XMLHttpRequest.DONE) {
