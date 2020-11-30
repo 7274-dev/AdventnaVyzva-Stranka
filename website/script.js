@@ -359,7 +359,13 @@ function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
     openedWindowsRequest.send();
 
     return response;
-   
+};
+
+function onLoadBreakBall() {
+    var doneWorks = getOpenedWindows();
+    for (var day in doneWorks) {
+        breakeBall("ball" + day);
+    };
 };
 
 // also handle user "account" creation
@@ -413,9 +419,10 @@ function unBlur() {
 };
 
 //needed in future, dont delete
-function breakeBall(ballColor, ballContainerID) {
+function breakeBall(ballContainerID) {
     //startup info
     ballContainer = document.getElementById("ball" + ballContainerID);
+    ballColor = ballContainerID.style.backgroundImage.replace("_ball.png");
     //replace that file with broken file
     if (ballColor == "yellow") {
         var nextColor = ballColor.replace("yellow", "white");
@@ -439,7 +446,7 @@ function sendHomework() {
     var sendHomeworkRequest = new XMLHttpRequest();
     var homework = inputFile.files;
     var ballColor = document.getElementById("ball" + dayOpened).style.backgroundImage.replace("_ball.png", "");
-    breakeBall(ballColor, dayOpened - 1);
+    breakeBall(dayOpened - 1);
 
     if (homework) {
         openWindow(dayOpened, getCookie("loginName"));
@@ -540,5 +547,6 @@ function on_load() {
     descriptionContainer.removeChild(inputFile);
     descriptionContainer.removeChild(buttonFile);
     window.scrollTo(0, 0);
+    onLoadBreakBall();
 };
 on_load();
