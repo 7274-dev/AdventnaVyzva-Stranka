@@ -249,8 +249,8 @@ function displayAditionalTagsFromServerResponse(response) {
                 } else if (tag == "hyperlink") {
                     var element = document.createElement("a");
                     element.href = link;
-                };
-                document.body.appendChild(element);
+            };
+            document.body.appendChild(element);
         };
       };
     };
