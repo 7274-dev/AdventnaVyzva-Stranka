@@ -416,7 +416,6 @@ function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
     openedWindowsRequest.open("GET", url, false);
 
     var response;
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
     openedWindowsRequest.onreadystatechange = function() {
         console.log(this.responseText);
         if (wasRequestSuccessful(this)) {
