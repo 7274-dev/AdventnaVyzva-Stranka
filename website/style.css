@@ -13,9 +13,6 @@ html, body, #blurbackground {
 body {
     overflow: hidden;
 }
-strong {
-    font-style: italic;
-}
 #blurbackground {
     background-color: rgba(0,0,0, 0.4);
     min-height: 100%;
@@ -45,6 +42,10 @@ strong {
     flex-wrap: wrap;
     font-family: Textt;
     font-size: 135%;
+}
+strong {
+    font-style: italic;
+    font-size: 24px;
 }
 #background_image {
     height: 85%;
