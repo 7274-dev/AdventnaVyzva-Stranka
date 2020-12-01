@@ -318,6 +318,16 @@ function on_click(event) {
     };
 };
 
+//not working yet
+function createIMG(url) {
+    var element = document.createElement("a");
+    element.href = url;
+    element.download = true;
+    element.id = "imageA";
+    element.innerHTML = "<img id=image src=" + url + ">";
+    document.getElementById("descriptionContainer").appendChild(element);
+};
+
 //tags [audio:url], [image:url], [hyperlink:url]
 //add special tag, needs to be caled for every special tag, tagName can be image/audio/hyperlink, response is server response
 function displayAditionalTagsFromServerResponse(response) {
