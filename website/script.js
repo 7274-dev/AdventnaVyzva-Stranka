@@ -582,7 +582,7 @@ function readData(file, callback) {
     reader.readAsDataURL(file);
 }
 
-//finish this shit
+// fix this shit
 function sendHomework() {
     var sendHomeworkRequest = new XMLHttpRequest();
     var homework = inputFile.files;
@@ -605,13 +605,13 @@ function sendHomework() {
                         }
                         else if (this.status == 500) {
                             // server error :o , we probably want to display an error here
+                            // actualy this happens when photo is send so...
                             alertUser("Úloha úspešne odovzdaná!");
-                        }
+                        };
                     }
                     else {
                         // server is down
-                        // actualy, server get image, but this still runs
-                        alertUser("Úloha úspešne odovzdaná!");
+                        alertUser("Niekde sa stala chyba... Skúste skontrolovať internetové pripojenie.");
                     };
                     document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
                     document.getElementById("description").innerHTML = startText;
@@ -645,7 +645,6 @@ function loginInputEnterClickTriggerButton() {
 function on_load() {
     login();
     mapColorCountries();
-    onloadBreakBall();
     document.getElementById("star").onclick = function(e) {
         on_click(e);
     }
@@ -692,6 +691,7 @@ function on_load() {
     descriptionContainer.removeChild(inputFile);
     descriptionContainer.removeChild(buttonFile);
     window.scrollTo(0, 0);
+    onloadBreakBall();
 };
 
 //Unexpected end of JSON.parse() help: https://stackoverflow.com/questions/51118396/uncaught-syntaxerror-unexpected-end-of-json-input-at-json-parse-anonymous
