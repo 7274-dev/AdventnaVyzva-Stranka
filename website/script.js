@@ -252,7 +252,6 @@ function isBroken(ballNumber) {
     else return false;
 };
 
-
 function on_click(event) {
     element = event.target; // rip IE 6-8
     var dayNumber = element.innerHTML;
@@ -303,6 +302,10 @@ function on_click(event) {
         alertUser("Táto úloha je už hotová!");
     };
     };
+    var audio = document.createElement("audio");
+    audio.src = "day" + dayNumber + ".wav";
+    audio.controls = true;
+    document.getElementById("descriptionContainer").appendChild(audio);
 };
 
 //tags [audio:url], [image:url], [hyperlink:url]
