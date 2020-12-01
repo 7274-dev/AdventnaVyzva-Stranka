@@ -111,6 +111,7 @@ const loginInput = document.getElementById("loginInput");
 var dayOpened = undefined;
 var alertDisplayed = false;
 var tags = ["audio", "image", "hyperlink"];
+var audioDisplayed = false;
 
 const ballImages = [
     "blue",
@@ -303,10 +304,15 @@ function on_click(event) {
             alertUser("Táto úloha je už hotová!");
         };
         if (getDate() >= dayNumber) {
+            if (audioDisplayed) {
+                document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
+                audioDisplayed = false;
+            };
             var audio = document.createElement("audio");
             audio.src = "resources/nahravky/day" + dayNumber + ".wav";
             audio.id = "audio";
             audio.controls = true;
+            audioDisplayed = true;
             document.getElementById("descriptionContainer").appendChild(audio);
         };
     };
