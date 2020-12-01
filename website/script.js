@@ -452,13 +452,13 @@ function openWindow(window, userName) {
             else if (this.status == 500) {
                 // server error :o
                 // we probably want to display an error here.
-                alertUser("Niečo sa pokazilo... Skúste skontrolovať internetové pripojenie.");
+                console.log("Niečo sa pokazilo... Skúste skontrolovať internetové pripojenie.");
                 return;
             }
         }
         else {
             // server is down
-            alertUser("Niečo sa pokazilo... Skúste skontrolovať internetové pripojenie.")
+            alertUser("Niečo sa pokazilo... Skúste skontrolovať internetové pripojenie.");
         };
     };
 
