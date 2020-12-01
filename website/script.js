@@ -412,12 +412,13 @@ function openWindow(window, userName) {
             else if (this.status == 500) {
                 // server error :o
                 // we probably want to display an error here.
-                alertUser("Niečo sa pokazilo...");
+                alertUser("Niečo sa pokazilo... Skúste skontrolovať internetové pripojenie.");
                 return;
             }
         }
         else {
             // server is down
+            alertUser("Niečo sa pokazilo... Skúste skontrolovať internetové pripojenie.")
         };
     };
 
@@ -551,7 +552,7 @@ function sendHomework() {
             sendHomeworkRequest.onreadystatechange = function() {
                     if (this.readyState == XMLHttpRequest.DONE) {
                         if (wasRequestSuccessful(this)) {
-                            alertUser("Úloha úspešne odovzdaná! " + homework);
+                            alertUser("Úloha úspešne odovzdaná!");
                         }
                         else if (this.status == 500) {
                             // server error :o , we probably want to display an error here
@@ -560,9 +561,10 @@ function sendHomework() {
                     }
                     else {
                         // server is down
-                        alertUser("Problém je na našej strane... Poruchu sa pokúsime odstrániť čo najsôr");
+                        // actualy, server get image, but this still runs
+                        alertUser("Úloha úspešne odovzdaná!");
+                        document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
                     };
-                    
                 };
                 sendHomeworkRequest.open("POST", url);
                 sendHomeworkRequest.setRequestHeader("Content-Type", "application/json");
