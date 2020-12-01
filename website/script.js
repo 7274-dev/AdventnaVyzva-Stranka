@@ -112,6 +112,7 @@ var dayOpened = undefined;
 var alertDisplayed = false;
 var tags = ["audio", "image", "hyperlink"];
 var audioDisplayed = false;
+const startText = document.getElementById("description").innerHTML;
 
 const ballImages = [
     "blue",
@@ -571,15 +572,16 @@ function sendHomework() {
                         }
                         else if (this.status == 500) {
                             // server error :o , we probably want to display an error here
-                            alertUser("Niečo sa pokazilo... Skontrolujte pripojenie k internetu");
+                            alertUser("Úloha úspešne odovzdaná!");
                         }
                     }
                     else {
                         // server is down
                         // actualy, server get image, but this still runs
                         alertUser("Úloha úspešne odovzdaná!");
-                        document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
                     };
+                    document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
+                    document.getElementById("description").innerHTML = startText;
                 };
                 sendHomeworkRequest.open("POST", url);
                 sendHomeworkRequest.setRequestHeader("Content-Type", "application/json");
