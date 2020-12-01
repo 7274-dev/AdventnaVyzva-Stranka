@@ -632,6 +632,14 @@ function randomInt(bound) {
     return Math.floor(Math.random() * bound);
 };
 
+function starClick() {
+    if (getDate() < 24) {
+        alertUser("Počkaj si do Vianoc :)");
+    } else {
+        // code block here
+    };
+};
+
 function loginInputEnterClickTriggerButton() {
     loginInput.addEventListener("keyup", function(event) {
         // Number 13 is the "Enter" key on the keyboard
@@ -645,9 +653,6 @@ function loginInputEnterClickTriggerButton() {
 function on_load() {
     login();
     mapColorCountries();
-    document.getElementById("star").onclick = function(e) {
-        on_click(e);
-    }
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
     var cookieExists = document.cookie.indexOf("balls") != -1;
@@ -691,6 +696,9 @@ function on_load() {
     descriptionContainer.removeChild(inputFile);
     descriptionContainer.removeChild(buttonFile);
     window.scrollTo(0, 0);
+    document.getElementById("star").onclick = function(e) {
+        starClick();
+    }
     onloadBreakBall();
 };
 
