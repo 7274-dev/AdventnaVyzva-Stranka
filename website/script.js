@@ -1,4 +1,4 @@
-var backendURL = "http://192.168.100.250:8080/";
+var backendURL = "http://92.52.4.175:8080/";
 
 function getDataCookie() {
     var dc,
@@ -157,11 +157,20 @@ function getDate() {
 
 function easterEgg() {
     for(var i = 0; i < listOfNumbers.length(); i++){
+<<<<<<< HEAD
+        if (listOfNumbers[i] == 7 & listOfNumbers[i+1] == 2 & listOfNumbers[i+2] == 7 & listOfNumbers[i+3] == 4){
+            console.log("EasterEgg")
+        }; 
+    };
+
+}
+=======
         if (listOfNumbers[i] == 7 && listOfNumbers[i+1] == 2 && listOfNumbers[i+2] == 7 && listOfNumbers[i+3] == 4) {
             console.log("EasterEgg");
         } ;
     };
 };
+>>>>>>> dda9b4fc782191624f5eff14627c851875b41d9d
 
 // Thank you Github gist
 // https://gist.github.com/comficker/871d378c535854c1c460f7867a191a5a#file-hex2rgb-js
@@ -256,6 +265,7 @@ function on_click(event) {
     element = event.target; // rip IE 6-8
     var dayNumber = element.innerHTML;
     listOfNumbers.push(dayNumber);
+    easterEgg();
     if (getDate() < dayNumber) {
         // console.log(getDate());
         alertUser("Tento deň nieje k dispozícií, počkaj si :)");
