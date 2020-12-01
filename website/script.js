@@ -160,7 +160,7 @@ function getDate() {
 function easterEgg() {
     for(var i = 0; i < listOfNumbers.length; i++){
         if (listOfNumbers[i] == 7 && listOfNumbers[i+1] == 2 && listOfNumbers[i+2] == 7 && listOfNumbers[i+3] == 4) {
-            console.log("EasterEgg");
+            alertUser("Gratulujeme! Našiel si EasterEgg :)");
         } ;
     };
 };
@@ -696,4 +696,4 @@ function on_load() {
 
 //Unexpected end of JSON.parse() help: https://stackoverflow.com/questions/51118396/uncaught-syntaxerror-unexpected-end-of-json-input-at-json-parse-anonymous
 
-on_load();
+window.onload = () => on_load();
