@@ -304,7 +304,7 @@ function on_click(event) {
     };
     };
     var audio = document.createElement("audio");
-    audio.src = "day" + dayNumber + ".wav";
+    audio.src = "resources/nahravky/day" + dayNumber + ".wav";
     audio.controls = true;
     document.getElementById("descriptionContainer").appendChild(audio);
 };
