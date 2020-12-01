@@ -263,50 +263,52 @@ function on_click(event) {
     }
     else {
         dayOpened = dayNumber;
-    const http = new XMLHttpRequest();
-    
-    var url = backendURL + "text?day=" + dayNumber;
-    http.open("GET", url);
+        const http = new XMLHttpRequest();
+        
+        var url = backendURL + "text?day=" + dayNumber;
+        http.open("GET", url);
 
-    var description = document.getElementById("description");
+        var description = document.getElementById("description");
 
-    http.onreadystatechange = function() {
-        var responseTextToDisplay = JSON.parse(this.responseText).response.split(" ");
-        for (let tag in tags) {
-            for (let txt in responseTextToDisplay) {
-                if (txt.includes(tag)) {
-                    var indexOfTag = responseTextToDisplay.indexOf(txt);
-                    responseTextToDisplay = responseTextToDisplay.splice(indexOfTag, 1);
+        http.onreadystatechange = function() {
+            var responseTextToDisplay = JSON.parse(this.responseText).response.split(" ");
+            for (let tag in tags) {
+                for (let txt in responseTextToDisplay) {
+                    if (txt.includes(tag)) {
+                        var indexOfTag = responseTextToDisplay.indexOf(txt);
+                        responseTextToDisplay = responseTextToDisplay.splice(indexOfTag, 1);
+                    };
                 };
             };
+            if (wasRequestSuccessful(this) && this.responseText != "") {
+                // this.responseText.replace("\\n", "<br>")
+                description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
+                // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
+            }
+            else if (this.responseText == "") {
+                description.innerHTML = "Server down";
+            }
+            else if (this.readyState == XMLHttpRequest.DONE) {
+                description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
+                // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
+            }
+            else {
+                description.innerHTML = "Error!";
+            };
         };
-        if (wasRequestSuccessful(this) && this.responseText != "") {
-            // this.responseText.replace("\\n", "<br>")
-            description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
-            // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
-        }
-        else if (this.responseText == "") {
-            description.innerHTML = "Server down";
-        }
-        else if (this.readyState == XMLHttpRequest.DONE) {
-            description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
-            // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
-        }
-        else {
-            description.innerHTML = "Error!";
+        http.send();
+        if (!getHomeworkStatus(dayNumber)) {
+            uploadFileShow();
+        } else {
+            alertUser("Táto úloha je už hotová!");
         };
-    };
-    http.send();
-    if (!getHomeworkStatus(dayNumber)) {
-        uploadFileShow();
-    } else {
-        alertUser("Táto úloha je už hotová!");
-    };
-    var audio = document.createElement("audio");
-    audio.src = "resources/nahravky/day" + dayNumber + ".wav";
-    audio.id = "audio";
-    audio.controls = true;
-    document.getElementById("descriptionContainer").appendChild(audio);
+        if (getDate() >= dayNumber) {
+            var audio = document.createElement("audio");
+            audio.src = "resources/nahravky/day" + dayNumber + ".wav";
+            audio.id = "audio";
+            audio.controls = true;
+            document.getElementById("descriptionContainer").appendChild(audio);
+        };
     };
 };
 
