@@ -318,11 +318,26 @@ function on_click(event) {
                     createIMG("resources/obrazky/slepa_mapa_Europy.png");
                 case 3:
                     createIMG("resources/obrazky/casova_os.png");
+                case 5:
+                    createHL("https://www.youtube.com/watch?v=Nnuq9PXbywA");
                 case 7:
                     createIMG("resources/obrazky/socha_Davida.jpg");
+                    createHL("https://www.youtube.com/watch?v=_u8LDXhFzPo");
+                case 8:
+                    createHL("https://www.youtube.com/watch?v=K2nOZBgUFcQ");
+                case 9:
+                    createIMG("resources/obrazky/mozaika_potkaniar1.jpg");
+                    createIMG("resources/obrazky/potkaniar.jpg");
             };
         };
     };
+};
+
+function createHL(url) {
+    var element = document.createElement("a");
+    element.href = url;
+    element.innerHTML = "Súbor na pozretie. ";
+    document.getElementById("descriptionContainer").appendChild(element);
 };
 
 function createIMG(url) {
