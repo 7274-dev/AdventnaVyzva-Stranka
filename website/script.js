@@ -156,7 +156,7 @@ function getDate() {
 };
 
 function easterEgg() {
-    for(var i = 0; i < listOfNumbers.length(); i++){
+    for(var i = 0; i < listOfNumbers.length; i++){
         if (listOfNumbers[i] == 7 && listOfNumbers[i+1] == 2 && listOfNumbers[i+2] == 7 && listOfNumbers[i+3] == 4) {
             console.log("EasterEgg");
         } ;
