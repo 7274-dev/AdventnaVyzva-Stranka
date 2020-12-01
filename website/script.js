@@ -260,8 +260,7 @@ function on_click(event) {
     listOfNumbers.push(dayNumber);
     easterEgg();
     if (getDate() < dayNumber) {
-        // console.log(getDate());
-        alertUser("Tento deň nieje k dispozícií, počkaj si :)");
+        alertUser("Tento deň nie je k dispozícii, počkaj si :)");
     }
     else {
         dayOpened = dayNumber;
