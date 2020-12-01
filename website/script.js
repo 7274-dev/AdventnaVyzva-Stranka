@@ -239,7 +239,7 @@ function mapColorCountries() {
     // }
     
     
-  };
+};
 
 function wasRequestSuccessful(request) {
     return request.readyState == XMLHttpRequest.DONE &&
