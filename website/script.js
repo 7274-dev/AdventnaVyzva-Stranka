@@ -158,8 +158,8 @@ function easterEgg() {
     for(var i = 0; i < listOfNumbers.length(); i++){
         if (listOfNumbers[i] == 7 & listOfNumbers[i+1] == 2 & listOfNumbers[i+2] == 7 & listOfNumbers[i+3] == 4){
             console.log("EasterEgg")
-        } 
-    }
+        }; 
+    };
 
 }
 
@@ -257,6 +257,7 @@ function on_click(event) {
     element = event.target; // rip IE 6-8
     var dayNumber = element.innerHTML;
     listOfNumbers.push(dayNumber);
+    easterEgg();
     if (getDate() < dayNumber) {
         console.log(getDate());
         alertUser("Tento deň nieje k dispozícií, počkaj si :)");
