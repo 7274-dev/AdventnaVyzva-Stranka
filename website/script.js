@@ -543,6 +543,7 @@ function unBlur() {
 function onloadBreakBall() {
     var openedBalls = getOpenedWindows(getCookie("loginName"));
     for (let ball in openedBalls) {
+        console.log("Breaking ball " + ball);
         breakeBall(ball);
     };
 };
@@ -586,9 +587,9 @@ function readData(file, callback) {
 function sendHomework() {
     var sendHomeworkRequest = new XMLHttpRequest();
     var homework = inputFile.files;
-    breakeBall(dayOpened - 1);
 
-    if (homework) {
+    if (homework != undefined) {
+        breakeBall(dayOpened - 1);
         openWindow(dayOpened, getCookie("loginName"));
         descriptionContainer.removeChild(inputFile);
         descriptionContainer.removeChild(buttonFile);
