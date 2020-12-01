@@ -510,7 +510,7 @@ function onloadBreakBall() {
     var openedBalls = getOpenedWindows(getCookie("loginName"));
     for (let ball in openedBalls) {
         breakeBall(ball);
-    }
+    };
 };
 
 //needed in future, dont delete
@@ -610,6 +610,7 @@ function loginInputEnterClickTriggerButton() {
 function on_load() {
     login();
     mapColorCountries();
+    onloadBreakBall();
     document.getElementById("star").onclick = function(e) {
         on_click(e);
     }
