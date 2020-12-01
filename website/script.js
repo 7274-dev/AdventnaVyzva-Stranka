@@ -506,21 +506,31 @@ function unBlur() {
     document.body.style.overflow = "scroll";
 };
 
+function onloadBreakBall() {
+    var openedBalls = getOpenedWindows(getCookie("loginName"));
+    for (let ball in openedBalls) {
+        breakeBall(ball);
+    }
+};
+
 //needed in future, dont delete
-function breakeBall(ballColor, ballContainerID) {
+function breakeBall(ballContainerID) {
     //startup info
-    ballContainer = document.getElementById("ball" + ballContainerID);
+    var ballContainer = document.getElementById("ball" + ballContainerID);
+    var ballColor = ballContainer.style.backgroundImage;
+    ballColor = ballColor.replace("url(img/balls/", "");
+    ballColor = ballColor.replace("_ball.png)", "");
     //replace that file with broken file
-    if (ballColor == "yellow") {
-        var nextColor = ballColor.replace("yellow", "white");
-    } else if (ballColor == "orange_red") {
-        var nextColor = "red";
-    } else {
-        var nextColor = ballColor;
+    if (!ballColor.includes("_broken")) {
+        if (ballColor == "yellow") {
+            var nextColor = ballColor.replace("yellow", "white");
+        } else if (ballColor == "orange_red") {
+            var nextColor = "red";
+        } else {
+            var nextColor = ballColor;
+        };
+        ballContainer.style.backgroundImage = "url(img/balls/" + nextColor + "_broken.png)";
     };
-    nextColor = nextColor.replace('")', '_broken_ball.png)');
-    nextColor = nextColor.replace('"', "");
-    ballContainer.style.backgroundImage = nextColor;
 };
 
 function uploadFileShow() {
@@ -542,8 +552,7 @@ function readData(file, callback) {
 function sendHomework() {
     var sendHomeworkRequest = new XMLHttpRequest();
     var homework = inputFile.files;
-    var ballColor = document.getElementById("ball" + dayOpened).style.backgroundImage.replace("_ball.png", "");
-    breakeBall(ballColor, dayOpened - 1);
+    breakeBall(dayOpened - 1);
 
     if (homework) {
         openWindow(dayOpened, getCookie("loginName"));
