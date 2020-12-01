@@ -13,6 +13,9 @@ html, body, #blurbackground {
 body {
     overflow: hidden;
 }
+strong {
+    font-style: italic;
+}
 #blurbackground {
     background-color: rgba(0,0,0, 0.4);
     min-height: 100%;
@@ -34,8 +37,9 @@ body {
     font-family: Textt;
 }
 #description {
+    line-height: 1.5em;
     padding-top: 100px;
-    font-size: 20px;
+    font-size: 18px;
     padding-left: 10px;
     padding-right: 10px;
     flex-wrap: wrap;
