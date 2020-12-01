@@ -1,4 +1,4 @@
-var backendURL = "http://www.ivik.synology.me:8080/";
+var backendURL = "https://ivik.synology.me/";
 
 function getDataCookie() {
     var dc,
