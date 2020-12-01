@@ -302,12 +302,12 @@ function on_click(event) {
     } else {
         alertUser("Táto úloha je už hotová!");
     };
-    };
     var audio = document.createElement("audio");
     audio.src = "resources/nahravky/day" + dayNumber + ".wav";
     audio.id = "audio";
     audio.controls = true;
     document.getElementById("descriptionContainer").appendChild(audio);
+    };
 };
 
 //tags [audio:url], [image:url], [hyperlink:url]
