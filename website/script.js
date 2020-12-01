@@ -282,16 +282,15 @@ function on_click(event) {
                 };
             };
             if (wasRequestSuccessful(this) && this.responseText != "") {
-                // this.responseText.replace("\\n", "<br>")
-                description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
-                // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
+                description.innerHTML = JSON.parse(this.responseText).response;
+                // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
             }
             else if (this.responseText == "") {
                 description.innerHTML = "Server down";
             }
             else if (this.readyState == XMLHttpRequest.DONE) {
-                description.innerHTML = JSON.parse(this.responseText).response;//should this be here? ".response"
-                // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);//should this be here? ".response"
+                description.innerHTML = JSON.parse(this.responseText).response;
+                // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
             }
             else {
                 description.innerHTML = "Error!";
@@ -314,18 +313,28 @@ function on_click(event) {
             audio.controls = true;
             audioDisplayed = true;
             document.getElementById("descriptionContainer").appendChild(audio);
+            switch(dayNumber) {
+                case 2:
+                    createIMG("resources/obrazky/slepa_mapa_Europy.png");
+                case 3:
+                    createIMG("resources/obrazky/casova_os.png");
+                case 7:
+                    createIMG("resources/obrazky/socha_Davida.jpg");
+            };
         };
     };
 };
 
-//not working yet
 function createIMG(url) {
+    var div = document.createElement("div");
+    div.id = "imageDIV"
     var element = document.createElement("a");
     element.href = url;
     element.download = true;
     element.id = "imageA";
     element.innerHTML = "<img id=image src=" + url + ">";
-    document.getElementById("descriptionContainer").appendChild(element);
+    div.appendChild(element);
+    document.getElementById("descriptionContainer").appendChild(div);
 };
 
 //tags [audio:url], [image:url], [hyperlink:url]

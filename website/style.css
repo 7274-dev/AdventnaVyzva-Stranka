@@ -241,13 +241,17 @@ body {
     margin-left: 15%;
     margin-top: 2%;
 }
-#imageA {
+#imageDIV {
     margin-left: 15%;
     margin-top: 2%;
     width: 200px;
     height: 200px;
 }
-#image {
+#imageA {
     width: 100%;
     height: 100%;
+}
+#image {
+    max-height: 100%;
+    max-width: 100%;
 }
