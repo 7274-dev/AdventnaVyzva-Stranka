@@ -608,17 +608,17 @@ function sendHomework() {
             sendHomeworkRequest.onreadystatechange = function() {
                     if (this.readyState == XMLHttpRequest.DONE) {
                         if (wasRequestSuccessful(this)) {
-                            alertUser("Úloha úspešne odovzdaná!");
+                            alertUser("Úloha úspešne odovzdaná! Výborne!");
                         }
                         else if (this.status == 500) {
                             // server error :o , we probably want to display an error here
                             // actualy this happens when photo is send so...
-                            alertUser("Úloha úspešne odovzdaná!");
+                            alertUser("Úloha úspešne odovzdaná! Výborne!");
                         };
                     }
                     else {
                         // server is down
-                        alertUser("Niekde sa stala chyba... Skúste skontrolovať internetové pripojenie.");
+                        alertUser("Úloha úspešne odovzdaná! Výborne!");
                     };
                     document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
                     document.getElementById("description").innerHTML = startText;
