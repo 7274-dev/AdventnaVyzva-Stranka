@@ -460,11 +460,11 @@ function openWindow(window, userName) {
                 // we probably want to display an error here.
                 console.log("Niečo sa pokazilo... Skúste skontrolovať internetové pripojenie.");
                 return;
-            }
+            };
         }
         else {
             // server is down
-            alertUser("Niečo sa pokazilo... Skúste skontrolovať internetové pripojenie.");
+            console.log("Niečo sa pokazilo... Skúste skontrolovať internetové pripojenie.");
         };
     };
 
