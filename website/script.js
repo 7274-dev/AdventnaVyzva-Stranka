@@ -108,6 +108,7 @@ const descriptionContainer = document.getElementById("descriptionContainer")
 const loginInput = document.getElementById("loginInput");
 
 
+var enableClicks = false;
 var dayOpened = undefined;
 var alertDisplayed = false;
 var tags = ["audio", "image", "hyperlink"];
@@ -261,79 +262,81 @@ function isBroken(ballNumber) {
 };
 
 function on_click(event) {
-    element = event.target; // rip IE 6-8
-    var dayNumber = element.innerHTML;
-    listOfNumbers.push(dayNumber);
-    easterEgg();
-    if (getDate() < dayNumber) {
-        alertUser("Tento deň nie je k dispozícii, počkaj si :)");
-    }
-    else {
-        dayOpened = dayNumber;
-        const http = new XMLHttpRequest();
-        
-        var url = backendURL + "text?day=" + dayNumber;
-        http.open("GET", url);
+    if (enableClicks) {
+        element = event.target; // rip IE 6-8
+        var dayNumber = element.innerHTML;
+        listOfNumbers.push(dayNumber);
+        easterEgg();
+        if (getDate() < dayNumber) {
+            alertUser("Tento deň nie je k dispozícii, počkaj si :)");
+        }
+        else {
+            dayOpened = dayNumber;
+            const http = new XMLHttpRequest();
 
-        var description = document.getElementById("description");
+            var url = backendURL + "text?day=" + dayNumber;
+            http.open("GET", url);
 
-        http.onreadystatechange = function() {
-            var responseTextToDisplay = JSON.parse(this.responseText).response.split(" ");
-            for (let tag in tags) {
-                for (let txt in responseTextToDisplay) {
-                    if (txt.includes(tag)) {
-                        var indexOfTag = responseTextToDisplay.indexOf(txt);
-                        responseTextToDisplay = responseTextToDisplay.splice(indexOfTag, 1);
+            var description = document.getElementById("description");
+
+            http.onreadystatechange = function() {
+                var responseTextToDisplay = JSON.parse(this.responseText).response.split(" ");
+                for (let tag in tags) {
+                    for (let txt in responseTextToDisplay) {
+                        if (txt.includes(tag)) {
+                            var indexOfTag = responseTextToDisplay.indexOf(txt);
+                            responseTextToDisplay = responseTextToDisplay.splice(indexOfTag, 1);
+                        };
                     };
                 };
+                if (wasRequestSuccessful(this) && this.responseText != "") {
+                    description.innerHTML = JSON.parse(this.responseText).response;
+                    // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
+                }
+                else if (this.responseText == "") {
+                    description.innerHTML = "Server down";
+                }
+                else if (this.readyState == XMLHttpRequest.DONE) {
+                    description.innerHTML = JSON.parse(this.responseText).response;
+                    // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
+                }
+                else {
+                    description.innerHTML = "Error!";
+                };
             };
-            if (wasRequestSuccessful(this) && this.responseText != "") {
-                description.innerHTML = JSON.parse(this.responseText).response;
-                // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
-            }
-            else if (this.responseText == "") {
-                description.innerHTML = "Server down";
-            }
-            else if (this.readyState == XMLHttpRequest.DONE) {
-                description.innerHTML = JSON.parse(this.responseText).response;
-                // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
-            }
-            else {
-                description.innerHTML = "Error!";
+            http.send();
+            if (!getHomeworkStatus(dayNumber)) {
+                uploadFileShow();
+            } else {
+                alertUser("Táto úloha je už hotová!");
             };
-        };
-        http.send();
-        if (!getHomeworkStatus(dayNumber)) {
-            uploadFileShow();
-        } else {
-            alertUser("Táto úloha je už hotová!");
-        };
-        if (getDate() >= dayNumber) {
-            if (audioDisplayed) {
-                document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
-                audioDisplayed = false;
-            };
-            var audio = document.createElement("audio");
-            audio.src = "resources/nahravky/day" + dayNumber + ".wav";
-            audio.id = "audio";
-            audio.controls = true;
-            audioDisplayed = true;
-            document.getElementById("descriptionContainer").appendChild(audio);
-            switch(dayNumber) {
-                case 2:
-                    createIMG("resources/obrazky/slepa_mapa_Europy.png");
-                case 3:
-                    createIMG("resources/obrazky/casova_os.png");
-                case 5:
-                    createHL("https://www.youtube.com/watch?v=Nnuq9PXbywA");
-                case 7:
-                    createIMG("resources/obrazky/socha_Davida.jpg");
-                    createHL("https://www.youtube.com/watch?v=_u8LDXhFzPo");
-                case 8:
-                    createHL("https://www.youtube.com/watch?v=K2nOZBgUFcQ");
-                case 9:
-                    createIMG("resources/obrazky/mozaika_potkaniar1.jpg");
-                    createIMG("resources/obrazky/potkaniar.jpg");
+            if (getDate() >= dayNumber) {
+                if (audioDisplayed) {
+                    document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
+                    audioDisplayed = false;
+                };
+                var audio = document.createElement("audio");
+                audio.src = "resources/nahravky/day" + dayNumber + ".wav";
+                audio.id = "audio";
+                audio.controls = true;
+                audioDisplayed = true;
+                document.getElementById("descriptionContainer").appendChild(audio);
+                switch(dayNumber) {
+                    case 2:
+                        createIMG("resources/obrazky/slepa_mapa_Europy.png");
+                    case 3:
+                        createIMG("resources/obrazky/casova_os.png");
+                    case 5:
+                        createHL("https://www.youtube.com/watch?v=Nnuq9PXbywA");
+                    case 7:
+                        createIMG("resources/obrazky/socha_Davida.jpg");
+                        createHL("https://www.youtube.com/watch?v=_u8LDXhFzPo");
+                    case 8:
+                        createHL("https://www.youtube.com/watch?v=K2nOZBgUFcQ");
+                    case 9:
+                        createIMG("resources/obrazky/mozaika_potkaniar1.jpg");
+                        createIMG("resources/obrazky/potkaniar.jpg");
+                };
             };
         };
     };
@@ -356,36 +359,6 @@ function createIMG(url) {
     element.innerHTML = "<img id=image src=" + url + ">";
     div.appendChild(element);
     document.getElementById("descriptionContainer").appendChild(div);
-};
-
-//tags [audio:url], [image:url], [hyperlink:url]
-//add special tag, needs to be caled for every special tag, tagName can be image/audio/hyperlink, response is server response
-function displayAditionalTagsFromServerResponse(response) {
-  var responseText = response.split(" ");
-  for (let tag in tags) {
-    for (let txt in responseText) {
-      if (txt.includes(tag)) {
-        var link = txt.replace("[" + tag + ":", "");
-        link = link.replace("]", "");
-        if (tag == "image") {
-            var element = document.createElement("a");
-            element.href = link;
-            element.innerHTML = "<img src=" + link + " download>";
-        } else {
-            if (tag == "audio") {
-              var element = document.createElement("audio");
-              element.controls = true;
-              element.src = link;
-            } else if (tag == "hyperlink") {
-                var element = document.createElement("a");
-                element.href = link;
-                element.innerHTML = "Súbor na pozretie";
-            };
-            document.getElementById("descriptionContainer").appendChild(element);
-        };
-      };
-    };
-  };
 };
 
 function getHomeworkStatus(day) {
@@ -433,6 +406,7 @@ function alertUser(text) {
 };
 
 function blur() {
+    enableClicks = false;
     var blurBackground = document.getElementById("blurbackground");
     var blur = document.getElementById("blur");
     blurBackground.style.backgroundColor = "rgba(0,0,0, 0.4)";
@@ -539,6 +513,7 @@ function login() {
 };
 
 function unBlur() {
+    enableClicks = true;
     var blurBackground = document.getElementById("blurbackground");
     var blur = document.getElementById("blur");
     blurBackground.style.backgroundColor = "white";
@@ -546,6 +521,7 @@ function unBlur() {
     document.body.style.overflow = "scroll";
 };
 
+// fix this function
 function onloadBreakBall() {
     var openedBalls = getOpenedWindows(getCookie("loginName"));
     for (let ball in openedBalls) {
@@ -554,20 +530,15 @@ function onloadBreakBall() {
     };
 };
 
-//FIX THIS FUNTION
+// should work now
 function inTimeAllowed() {
     var date = new Date();
     var hour = date.getHours();
-    /*
-    if (hour <= 1) {// 0 1 2 3 4 5 6 7 8 9 10 11 12 1 2 3 4 5 6 7 8 9 10 11 12
-        return false;
-    } else if (hour >= 21) {
-        return false;
-    } else {
+    if (hour >= 13 && hour <= 20) {
         return true;
+    } else {
+        return false;
     };
-    */
-   return true;
 };
 
 //needed in future, dont delete
@@ -598,14 +569,13 @@ function uploadFileShow() {
 // b64 encode
 function readData(file, callback) {
     var reader = new FileReader();
-    console.log(typeof callback + " aaaaa");
     reader.onload = function() {
         callback(this.result.split(",")[1]);
     }
     reader.readAsDataURL(file);
 }
 
-// fix this shit
+// should be fixed
 function sendHomework() {
     var sendHomeworkRequest = new XMLHttpRequest();
     var homework = inputFile.files;
@@ -656,10 +626,12 @@ function randomInt(bound) {
 };
 
 function starClick() {
-    if (getDate() < 24) {
-        alertUser("Počkaj si do Vianoc :)");
-    } else {
-        // code block here
+    if (enableClicks) {
+        if (getDate() < 24) {
+            alertUser("Počkaj si do Vianoc :)");
+        } else {
+            // code block here
+        };
     };
 };
 
@@ -725,7 +697,7 @@ function on_load() {
         }
         onloadBreakBall();
     } else {
-        alertUser("text");
+        alertUser("Adventný kalendár nie je k dispozícii. Kalendár sa otvára v čase 13:00 - 21:00!");
     };
 };
 
