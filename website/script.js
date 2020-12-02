@@ -113,6 +113,7 @@ var alertDisplayed = false;
 var tags = ["audio", "image", "hyperlink"];
 var audioDisplayed = false;
 const startText = document.getElementById("description").innerHTML;
+var easterEggFound = false;
 
 const ballImages = [
     "blue",
@@ -158,12 +159,15 @@ function getDate() {
 };
 
 function easterEgg() {
-    for(var i = 0; i < listOfNumbers.length; i++){
-        if (listOfNumbers[i] == 7 && listOfNumbers[i+1] == 2 && listOfNumbers[i+2] == 7 && listOfNumbers[i+3] == 4) {
-            alertUser("Gratulujeme! Našiel si EasterEgg :)");
-            listOfNumbers = [];
-            break;
-        } ;
+    if (!easterEggFound) {
+        for(var i = 0; i < listOfNumbers.length; i++){
+            if (listOfNumbers[i] == 7 && listOfNumbers[i+1] == 2 && listOfNumbers[i+2] == 7 && listOfNumbers[i+3] == 4) {
+                listOfNumbers = [];
+                alertUser("Gratulujeme! Našiel si EasterEgg :)");
+                easterEggFound = true;
+                break;
+            } ;
+        };
     };
 };
 
