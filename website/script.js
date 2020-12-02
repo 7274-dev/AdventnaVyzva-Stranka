@@ -554,6 +554,22 @@ function onloadBreakBall() {
     };
 };
 
+//FIX THIS FUNTION
+function inTimeAllowed() {
+    var date = new Date();
+    var hour = date.getHours();
+    /*
+    if (hour <= 1) {// 0 1 2 3 4 5 6 7 8 9 10 11 12 1 2 3 4 5 6 7 8 9 10 11 12
+        return false;
+    } else if (hour >= 21) {
+        return false;
+    } else {
+        return true;
+    };
+    */
+   return true;
+};
+
 //needed in future, dont delete
 function breakeBall(ballContainerID) {
     //startup info
@@ -658,55 +674,59 @@ function loginInputEnterClickTriggerButton() {
 };
 
 function on_load() {
-    login();
-    mapColorCountries();
-    var ballContainer = document.getElementById("treecontainer");
-    var ballImageIndexes = [];
-    var cookieExists = document.cookie.indexOf("balls") != -1;
-    if (cookieExists) {
-        ballImageIndexes = getCookie("balls");
-    };
+    if (inTimeAllowed) {
+        login();
+        mapColorCountries();
+        var ballContainer = document.getElementById("treecontainer");
+        var ballImageIndexes = [];
+        var cookieExists = document.cookie.indexOf("balls") != -1;
+        if (cookieExists) {
+            ballImageIndexes = getCookie("balls");
+        };
 
-    for (var i = 0; i < positions.length; i++) {
-        var currentPosition = positions[i];
-        var currentBall = document.createElement("div");
+        for (var i = 0; i < positions.length; i++) {
+            var currentPosition = positions[i];
+            var currentBall = document.createElement("div");
 
-        var ballImage;
+            var ballImage;
+            if (!cookieExists) {
+                ballImage = randomInt(ballImages.length - 1);
+                ballImageIndexes.push(ballImage);
+            }
+            else {
+                ballImage = ballImageIndexes[i];
+            };
+
+            currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + "_ball.png)";
+            currentBall.innerHTML = i + 1;
+
+            currentBall.style.top = currentPosition.top + "%";
+            currentBall.style.right = currentPosition.right + "%";
+            currentBall.id = "ball" + i;
+
+            currentBall.classList.add("fluid-image");
+            currentBall.classList.add("ball");
+
+            currentBall.onclick = function(e) {
+                on_click(e);
+            };
+
+            ballContainer.appendChild(currentBall);
+        };
         if (!cookieExists) {
-            ballImage = randomInt(ballImages.length - 1);
-            ballImageIndexes.push(ballImage);
+            writeCookie("balls", ballImageIndexes);
+        };
+
+        descriptionContainer.removeChild(inputFile);
+        descriptionContainer.removeChild(buttonFile);
+        window.scrollTo(0, 0);
+        document.getElementById("star").onclick = function(e) {
+            starClick();
         }
-        else {
-            ballImage = ballImageIndexes[i];
-        };
-
-        currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + "_ball.png)";
-        currentBall.innerHTML = i + 1;
-
-        currentBall.style.top = currentPosition.top + "%";
-        currentBall.style.right = currentPosition.right + "%";
-        currentBall.id = "ball" + i;
-
-        currentBall.classList.add("fluid-image");
-        currentBall.classList.add("ball");
-
-        currentBall.onclick = function(e) {
-            on_click(e);
-        };
-
-        ballContainer.appendChild(currentBall);
+        onloadBreakBall();
+    } else {
+        alertUser("text");
     };
-    if (!cookieExists) {
-        writeCookie("balls", ballImageIndexes);
-    };
-
-    descriptionContainer.removeChild(inputFile);
-    descriptionContainer.removeChild(buttonFile);
-    window.scrollTo(0, 0);
-    document.getElementById("star").onclick = function(e) {
-        starClick();
-    }
-    onloadBreakBall();
 };
 
 //Unexpected end of JSON.parse() help: https://stackoverflow.com/questions/51118396/uncaught-syntaxerror-unexpected-end-of-json-input-at-json-parse-anonymous
