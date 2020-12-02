@@ -162,6 +162,7 @@ function easterEgg() {
         if (listOfNumbers[i] == 7 && listOfNumbers[i+1] == 2 && listOfNumbers[i+2] == 7 && listOfNumbers[i+3] == 4) {
             alertUser("Gratulujeme! Našiel si EasterEgg :)");
             listOfNumbers = [];
+            break;
         } ;
     };
 };
