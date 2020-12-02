@@ -627,10 +627,12 @@ function randomInt(bound) {
 
 function starClick() {
     if (enableClicks) {
-        if (getDate() < 24) {
-            alertUser("Počkaj si do Vianoc :)");
-        } else {
-            // code block here
+        if (enableClicks) {
+            if (getDate() < 24) {
+                alertUser("Počkaj si do Vianoc :)");
+            } else {
+                // code block here, needs to get filled
+            };
         };
     };
 };
@@ -694,7 +696,7 @@ function on_load() {
         window.scrollTo(0, 0);
         document.getElementById("star").onclick = function(e) {
             starClick();
-        }
+        };
         onloadBreakBall();
     } else {
         alertUser("Adventný kalendár nie je k dispozícii. Kalendár sa otvára v čase 13:00 - 21:00!");
