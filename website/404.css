@@ -8,6 +8,10 @@
     src: url('Spirax-Regular.ttf');
 }
 
+body {
+    background-color: aliceblue;
+}
+
 #styrinulastyri {
     position: absolute;
     height: 75%;
