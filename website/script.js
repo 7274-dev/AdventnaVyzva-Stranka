@@ -523,7 +523,7 @@ function onloadBreakBall() {
     };
 };
 
-// should work now, but doesn't work, please fix
+// working now
 function inTimeAllowed() {
     var date = new Date();
     var hour = date.getHours();
