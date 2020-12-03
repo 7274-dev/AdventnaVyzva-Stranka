@@ -223,7 +223,7 @@ function HEX2RGB (hex) {
       return false;
   }
   return [r, g, b];
-}
+};
 
 function replaceColor(imageData, oldColor, newColor) {
     // r, g, b, a
@@ -590,7 +590,7 @@ function readData(file, callback) {
         callback(this.result.split(",")[1]);
     }
     reader.readAsDataURL(file);
-}
+};
 
 // should be fixed
 function sendHomework() {
