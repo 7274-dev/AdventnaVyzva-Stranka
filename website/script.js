@@ -630,6 +630,10 @@ function starClick() {
     };
 };
 
+// finish this so time allowed would work finaly
+function tellUser() {
+};
+
 function loginInputEnterClickTriggerButton() {
     loginInput.addEventListener("keyup", function(event) {
         // Number 13 is the "Enter" key on the keyboard
