@@ -1,4 +1,5 @@
 var backendURL = "https://ivik.synology.me/";
+var devPassword = "sudo";
 
 function getDataCookie() {
     var dc,
@@ -129,7 +130,7 @@ const ballImages = [
 ];
 
 function grandAccess(password) {
-    if (password == "sudo") {
+    if (password == devPassword) {
         access = true;
         alertUser("Developer access granted!");
         writeCookie("loginName", "7274 developer");
