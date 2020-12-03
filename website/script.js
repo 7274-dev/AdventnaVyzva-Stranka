@@ -1,5 +1,5 @@
 var backendURL = "https://ivik.synology.me/";
-var devPassword = "sudo";
+var devPassword = "alpha";
 
 function getDataCookie() {
     var dc,
