@@ -108,6 +108,7 @@ const descriptionContainer = document.getElementById("descriptionContainer")
 const loginInput = document.getElementById("loginInput");
 var timeWarning = document.getElementById("timeWarning");
 
+var access = false;
 var enableClicks = false;
 var dayOpened = undefined;
 var alertDisplayed = false;
@@ -126,6 +127,21 @@ const ballImages = [
     "white",
     "yellow"
 ];
+
+function grandAccess(password) {
+    if (password == "sudo") {
+        access = true;
+        alertUser("Developer access granted!");
+        writeCookie("loginName", "7274 developer");
+        try {
+            document.body.removeChild(document.getElementById("loginDiv"));
+        } catch {}
+        try {
+            document.body.removeChild(timeWarning);
+        } catch {}
+        unBlur();
+    };
+};
 
 const dayState = [
     "norway",
@@ -154,9 +170,13 @@ const dayState = [
 ];
 
 function getDate() {
-    var date = new Date();
-    var day = date.getDate();
-    return day;
+    if (!access) {
+        var date = new Date();
+        var day = date.getDate();
+        return day;
+    } else {
+        return 30;
+    };
 };
 
 function easterEgg() {
@@ -525,12 +545,16 @@ function onloadBreakBall() {
 
 // working now
 function inTimeAllowed() {
-    var date = new Date();
-    var hour = date.getHours();
-    if (hour >= 13 && hour <= 20) {
-        return true;
+    if (!access) {
+        var date = new Date();
+        var hour = date.getHours();
+        if (hour >= 13 && hour <= 20) {
+            return true;
+        } else {
+            return false;
+        };
     } else {
-        return false;
+        return true;
     };
 };
 
