@@ -280,28 +280,21 @@ function on_click(event) {
             var description = document.getElementById("description");
 
             http.onreadystatechange = function() {
-                var responseTextToDisplay = JSON.parse(this.responseText).response.split(" ");
-                for (let tag in tags) {
-                    for (let txt in responseTextToDisplay) {
-                        if (txt.includes(tag)) {
-                            var indexOfTag = responseTextToDisplay.indexOf(txt);
-                            responseTextToDisplay = responseTextToDisplay.splice(indexOfTag, 1);
-                        };
+                if (this.responseText) {
+                    if (wasRequestSuccessful(this) && this.responseText != "") {
+                        description.innerHTML = JSON.parse(this.responseText).response;
+                        // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
+                    }
+                    else if (this.responseText == "") {
+                        description.innerHTML = "Server down";
+                    }
+                    else if (this.readyState == XMLHttpRequest.DONE) {
+                        description.innerHTML = JSON.parse(this.responseText).response;
+                        // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
+                    }
+                    else {
+                        description.innerHTML = "Error!";
                     };
-                };
-                if (wasRequestSuccessful(this) && this.responseText != "") {
-                    description.innerHTML = JSON.parse(this.responseText).response;
-                    // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
-                }
-                else if (this.responseText == "") {
-                    description.innerHTML = "Server down";
-                }
-                else if (this.readyState == XMLHttpRequest.DONE) {
-                    description.innerHTML = JSON.parse(this.responseText).response;
-                    // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
-                }
-                else {
-                    description.innerHTML = "Error!";
                 };
             };
             http.send();
