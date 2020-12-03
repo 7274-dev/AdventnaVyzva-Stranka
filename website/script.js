@@ -140,7 +140,6 @@ function grantAccess(password) {
         try {
             document.body.removeChild(timeWarning);
         } catch {}
-        unBlur();
     };
 };
 
