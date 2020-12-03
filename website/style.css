@@ -87,18 +87,6 @@ body {
     font-family: Cisla;
     cursor: pointer;
 }
-#loginDiv {
-    text-align: center;
-    position: absolute;
-    top: 40%;
-    left: 40%;
-    height: 180px;
-    width: 300px;
-    background-color: white;
-    font-family: Textt;
-    border-radius: 10px;
-    border: 1px solid #dddddd;
-}
 #alertDiv {
     text-align: center;
     position: absolute;
@@ -123,12 +111,22 @@ body {
 #alertP {
     margin-top: 5px;
 }
+#loginDiv {
+    text-align: center;
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    height: 180px;
+    width: 300px;
+    background-color: white;
+    font-family: Textt;
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+}
 #loginInput {
     position: absolute;
     text-align: center;
     font-size: 18px;
-    /*margin: 8px;
-    margin-top: 20px;*/
     left: 17%;
     top: 28%;
     font-family: Textt;
@@ -259,4 +257,22 @@ body {
 #image {
     max-height: 100%;
     max-width: 100%;
+}
+#timeWarning {
+    text-align: center;
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    height: 180px;
+    width: 300px;
+    background-color: aliceblue;
+    font-family: Textt;
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+}
+#timeWarningText {
+    font-size: 20px;
+    font-family: Textt;
+    color: black;
+    padding: 20px;
 }

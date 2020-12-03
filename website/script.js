@@ -106,7 +106,7 @@ const inputFile = document.getElementById("inputFile");
 const buttonFile = document.getElementById("buttonFile");
 const descriptionContainer = document.getElementById("descriptionContainer")
 const loginInput = document.getElementById("loginInput");
-
+var timeWarning = document.getElementById("timeWarning");
 
 var enableClicks = false;
 var dayOpened = undefined;
@@ -523,7 +523,7 @@ function onloadBreakBall() {
     };
 };
 
-// should work now
+// should work now, but doesn't work, please fix
 function inTimeAllowed() {
     var date = new Date();
     var hour = date.getHours();
@@ -620,18 +620,21 @@ function randomInt(bound) {
 
 function starClick() {
     if (enableClicks) {
-        if (enableClicks) {
-            if (getDate() < 24) {
-                alertUser("Počkaj si do Vianoc :)");
-            } else {
-                // code block here, needs to get filled
-            };
+        if (getDate() < 24) {
+            alertUser("Počkaj si do Vianoc :)");
+        } else {
+            // code block here, needs to get filled
         };
     };
 };
 
 // finish this so time allowed would work finaly
-function tellUser() {
+function inTimeWarning() {
+    document.body.removeChild(document.getElementById("loginDiv"));
+    document.body.appendChild(timeWarning);
+    var text = document.getElementById("timeWarningText");
+    var time = document.getElementById("timeWarningTime");
+    text.innerHTML = "Adventný kalendár nie je k dispozícii. Kalendár sa otvára v čase 13:00 - 21:00!";
 };
 
 function loginInputEnterClickTriggerButton() {
@@ -645,58 +648,50 @@ function loginInputEnterClickTriggerButton() {
 };
 
 function on_load() {
-    if (inTimeAllowed) {
-        login();
-        mapColorCountries();
-        var ballContainer = document.getElementById("treecontainer");
-        var ballImageIndexes = [];
-        var cookieExists = document.cookie.indexOf("balls") != -1;
-        if (cookieExists) {
-            ballImageIndexes = getCookie("balls");
-        };
-
-        for (var i = 0; i < positions.length; i++) {
-            var currentPosition = positions[i];
-            var currentBall = document.createElement("div");
-
-            var ballImage;
-            if (!cookieExists) {
-                ballImage = randomInt(ballImages.length - 1);
-                ballImageIndexes.push(ballImage);
-            }
-            else {
-                ballImage = ballImageIndexes[i];
-            };
-
-            currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + "_ball.png)";
-            currentBall.innerHTML = i + 1;
-
-            currentBall.style.top = currentPosition.top + "%";
-            currentBall.style.right = currentPosition.right + "%";
-            currentBall.id = "ball" + i;
-
-            currentBall.classList.add("fluid-image");
-            currentBall.classList.add("ball");
-
-            currentBall.onclick = function(e) {
-                on_click(e);
-            };
-
-            ballContainer.appendChild(currentBall);
-        };
+    login();
+    mapColorCountries();
+    var ballContainer = document.getElementById("treecontainer");
+    var ballImageIndexes = [];
+    var cookieExists = document.cookie.indexOf("balls") != -1;
+    if (cookieExists) {
+        ballImageIndexes = getCookie("balls");
+    };
+    for (var i = 0; i < positions.length; i++) {
+        var currentPosition = positions[i];
+        var currentBall = document.createElement("div");
+        var ballImage;
         if (!cookieExists) {
-            writeCookie("balls", ballImageIndexes);
+            ballImage = randomInt(ballImages.length - 1);
+            ballImageIndexes.push(ballImage);
+        }
+        else {
+            ballImage = ballImageIndexes[i];
         };
+        currentBall.style.backgroundImage = "url(" + ballResourcePath + ballImages[ballImage] + "_ball.png)";
+        currentBall.innerHTML = i + 1;
+        currentBall.style.top = currentPosition.top + "%";
+        currentBall.style.right = currentPosition.right + "%";
+        currentBall.id = "ball" + i;
+        currentBall.classList.add("fluid-image");
+        currentBall.classList.add("ball");
+        currentBall.onclick = function(e) {
+            on_click(e);
+        };
+        ballContainer.appendChild(currentBall);
+    };
+    if (!cookieExists) {
+        writeCookie("balls", ballImageIndexes);
+    };
+    descriptionContainer.removeChild(inputFile);
+    descriptionContainer.removeChild(buttonFile);
+    document.body.removeChild(timeWarning);
+    document.getElementById("star").onclick = function(e) {
+        starClick();
+    };
+    onloadBreakBall();
 
-        descriptionContainer.removeChild(inputFile);
-        descriptionContainer.removeChild(buttonFile);
-        window.scrollTo(0, 0);
-        document.getElementById("star").onclick = function(e) {
-            starClick();
-        };
-        onloadBreakBall();
-    } else {
-        alertUser("Adventný kalendár nie je k dispozícii. Kalendár sa otvára v čase 13:00 - 21:00!");
+    if (!inTimeAllowed()) {
+        inTimeWarning();
     };
 };
 
