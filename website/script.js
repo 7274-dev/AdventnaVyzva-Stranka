@@ -129,7 +129,7 @@ const ballImages = [
     "yellow"
 ];
 
-function grandAccess(password) {
+function grantAccess(password) {
     if (password == devPassword) {
         access = true;
         alertUser("Developer access granted!");
