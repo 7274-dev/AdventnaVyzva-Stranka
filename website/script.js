@@ -379,6 +379,9 @@ function isBroken(ballNumber) {
 };
 
 function on_click(event) {
+    if (access) {
+        enableClicks = true;
+    };
     if (enableClicks) {
         element = event.target; // rip IE 6-8
         var dayNumber = element.innerHTML;
@@ -740,6 +743,9 @@ function randomInt(bound) {
 };
 
 function starClick() {
+    if (access) {
+        enableClicks = true;
+    };
     if (enableClicks) {
         if (getDate() < 24) {
             alertUser("Počkaj si do Vianoc :)");
