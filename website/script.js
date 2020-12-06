@@ -727,13 +727,14 @@ function sendHomework() {
                     document.getElementById("description").innerHTML = startText;
                 };
                 sendHomeworkRequest.open("POST", url);
-                sendHomeworkRequest.setRequestHeader("Content-Type", "application/json");
-                console.log(JSON.stringify(jsonData));
+                sendHomeworkRequest.setRequestHeader("Content-Type", "application/json");;
                 sendHomeworkRequest.send(JSON.stringify(jsonData));
             };
-        for (let i; i < homework.length; i++) {
-            readData(homework[i], callback);
-        };
+        //for (let i; i < homework.length; i++) {
+        //    readData(homework[i], callback);
+        //};
+        readData(homework[0], callback);
+        console.log(homework);
     }
     else {
         alertUser("Niesú pridané žiadne súbory!");
