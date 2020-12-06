@@ -731,7 +731,9 @@ function sendHomework() {
                 console.log(JSON.stringify(jsonData));
                 sendHomeworkRequest.send(JSON.stringify(jsonData));
             };
-            readData(homework[0], callback);
+        for (let i; i < homework.length; i++) {
+            readData(homework[i], callback);
+        };
     }
     else {
         alertUser("Niesú pridané žiadne súbory!");
