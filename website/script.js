@@ -687,7 +687,7 @@ function uploadFileShow() {
 function readData(file, callback) {
     var reader = new FileReader();
     reader.onload = function() {
-        callback(this.result.split(",")[1]);
+        callback(this.result.split(",")[1], file.name);
     }
     reader.readAsDataURL(file);
 };
@@ -705,8 +705,8 @@ function sendHomework() {
         writeCookie("day" + dayOpened, "true");
 
         var url = backendURL + "upload";
-        function callback(data) {
-            var jsonData = {"filename": homework[0].name, "data": data, "day": parseInt(dayOpened), "userName": getCookie("loginName")};
+        function callback(data, name) {
+            var jsonData = {"filename": name, "data": data, "day": parseInt(dayOpened), "userName": getCookie("loginName")};
 
             sendHomeworkRequest.onreadystatechange = function() {
                     if (this.readyState == XMLHttpRequest.DONE) {
@@ -723,18 +723,18 @@ function sendHomework() {
                         // server is down
                         alertUser("Úloha úspešne odovzdaná! Výborne!");
                     };
-                    document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
-                    document.getElementById("description").innerHTML = startText;
                 };
                 sendHomeworkRequest.open("POST", url);
                 sendHomeworkRequest.setRequestHeader("Content-Type", "application/json");;
                 sendHomeworkRequest.send(JSON.stringify(jsonData));
+                
             };
-        //for (let i; i < homework.length; i++) {
-        //    readData(homework[i], callback);
-        //};
-        readData(homework[0], callback);
-        console.log(homework);
+        for (var i = 0; i < homework.length; i++) {
+            readData(homework[i], callback);
+        }
+        document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
+        document.getElementById("description").innerHTML = startText;
+        
     }
     else {
         alertUser("Niesú pridané žiadne súbory!");
