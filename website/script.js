@@ -643,9 +643,26 @@ function onloadBreakBall() {
     };
 };
 
+//get bool on base of if its weekends right now
+function isWeekend() {
+    var dayName = getDateName();
+    if (dayName=="sobota" || dayName=="nedela" || dayName=="nedeľa") {
+        return true;
+    } else {
+        return false;
+    };
+};
+
+//get day name like pondelok, utorok...
+function getDateName() {
+    var dateObj = new Date();
+    var weekday = dateObj.toLocaleString("default", { weekday: "long" });
+    return weekday;
+};
+
 // working now
 function inTimeAllowed() {
-    if (!access) {
+    if (!access && !isWeekend()) {
         var date = new Date();
         var hour = date.getHours();
         if (hour >= 13 && hour <= 20) {
