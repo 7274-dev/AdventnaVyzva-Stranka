@@ -534,7 +534,7 @@ function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
         // console.log(this.responseText);
         if (wasRequestSuccessful(this)) {
             // console.log(JSON.parse(this.responseText));
-            response = JSON.parse(this.responseText).response;//should this be here?? ".response"
+            response = JSON.parse(this.responseText).response;
         }
         else {
             response = null;
@@ -543,7 +543,6 @@ function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
     openedWindowsRequest.send();
 
     return response;
-   
 };
 
 // also handle user "account" creation
