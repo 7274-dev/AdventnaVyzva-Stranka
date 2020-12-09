@@ -577,6 +577,7 @@ function login() {
                 unBlur();
                 writeCookie("loginName", name);
                 document.body.removeChild(document.getElementById("loginDiv"));
+                onloadBreakBall();
             };  
         };
     } else {
@@ -584,7 +585,9 @@ function login() {
         setWindowData(name);
         unBlur();
         document.body.removeChild(document.getElementById("loginDiv"));
+        onloadBreakBall();
     };
+    
 };
 
 function unBlur() {
@@ -599,6 +602,7 @@ function unBlur() {
 // fix this function
 function onloadBreakBall() {
     var openedBalls = getOpenedWindows(getCookie("loginName"));
+    console.log("From onloadbreakball: " + openedBalls);
     for (let ball in openedBalls) {
         console.log("Breaking ball " + ball);
         breakeBall(ball);
@@ -795,8 +799,6 @@ function on_load() {
     document.getElementById("star").onclick = function(e) {
         starClick();
     };
-    onloadBreakBall();
-
     if (!inTimeAllowed()) {
         inTimeWarning();
     };
