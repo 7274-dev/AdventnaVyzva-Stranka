@@ -383,7 +383,7 @@ function on_click(event) {
         enableClicks = true;
     };
     if (enableClicks) {
-        element = event.target; // rip IE 6-8
+        element = event.target; // rip IE 6-8 // :DDD
         var dayNumber = element.innerHTML;
         listOfNumbers.push(dayNumber);
         easterEgg();
@@ -434,44 +434,9 @@ function on_click(event) {
                 audio.controls = true;
                 audioDisplayed = true;
                 document.getElementById("descriptionContainer").appendChild(audio);
-                switch(dayNumber) {
-                    case 2:
-                        createIMG("resources/obrazky/slepa_mapa_Europy.png");
-                    case 3:
-                        createIMG("resources/obrazky/casova_os.png");
-                    case 5:
-                        createHL("https://www.youtube.com/watch?v=Nnuq9PXbywA");
-                    case 7:
-                        createIMG("resources/obrazky/socha_Davida.jpg");
-                        createHL("https://www.youtube.com/watch?v=_u8LDXhFzPo");
-                    case 8:
-                        createHL("https://www.youtube.com/watch?v=K2nOZBgUFcQ");
-                    case 9:
-                        createIMG("resources/obrazky/mozaika_potkaniar1.jpg");
-                        createIMG("resources/obrazky/potkaniar.jpg");
-                };
             };
         };
     };
-};
-
-function createHL(url) {
-    var element = document.createElement("a");
-    element.href = url;
-    element.innerHTML = "Súbor na pozretie. ";
-    document.getElementById("descriptionContainer").appendChild(element);
-};
-
-function createIMG(url) {
-    var div = document.createElement("div");
-    div.id = "imageDIV"
-    var element = document.createElement("a");
-    element.href = url;
-    element.download = true;
-    element.id = "imageA";
-    element.innerHTML = "<img id=image src=" + url + ">";
-    div.appendChild(element);
-    document.getElementById("descriptionContainer").appendChild(div);
 };
 
 function getHomeworkStatus(day) {
@@ -545,13 +510,11 @@ function openWindow(window, userName) {
             else if (this.status == 500) {
                 // server error :o
                 // we probably want to display an error here.
-                console.log("Niečo sa pokazilo... Skúste skontrolovať internetové pripojenie.");
                 return;
             };
         }
         else {
             // server is down
-            console.log("Niečo sa pokazilo... Skúste skontrolovať internetové pripojenie.");
         };
     };
 
@@ -679,20 +642,18 @@ function inTimeAllowed() {
 function breakeBall(ballContainerID) {
     //startup info
     var ballContainer = document.getElementById("ball" + ballContainerID);
-    var ballColor = ballContainer.style.backgroundImage;
-    ballColor = ballColor.replace("url(img/balls/", "");
-    ballColor = ballColor.replace("_ball.png)", "");
+    var pathOld = ballContainer.style.backgroundImage;
+    var path;
     //replace that file with broken file
-    if (!ballColor.includes("_broken")) {
-        if (ballColor == "yellow") {
-            var nextColor = ballColor.replace("yellow", "white");
-        } else if (ballColor == "orange_red") {
-            var nextColor = "red";
-        } else {
-            var nextColor = ballColor;
-        };
-        ballContainer.style.backgroundImage = "url(img/balls/" + nextColor + "_broken.png)";
+    if (pathOld.includes("yellow")) {
+        path = pathOld.replace("yellow", "white_broken");
+    } else if (pathOld.includes("orange_red")) {
+        path = pathOld.replace("orange_red", "red_broken");
+    } else {
+        path = pathOld.replace("_ball", "_broken_ball");
     };
+    ballContainer.style.backgroundImage = path;
+    console.log("broken path: " + path)
 };
 
 function uploadFileShow() {
