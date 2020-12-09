@@ -728,17 +728,14 @@ function sendHomework() {
             sendHomeworkRequest.onreadystatechange = function() {
                     if (this.readyState == XMLHttpRequest.DONE) {
                         if (wasRequestSuccessful(this)) {
-                            alertUser("Úloha úspešne odovzdaná! Výborne!");
                         }
                         else if (this.status == 500) {
                             // server error :o , we probably want to display an error here
                             // actualy this happens when photo is send so...
-                            alertUser("Úloha úspešne odovzdaná! Výborne!");
                         };
                     }
                     else {
                         // server is down
-                        alertUser("Úloha úspešne odovzdaná! Výborne!");
                     };
                 };
                 sendHomeworkRequest.open("POST", url);
@@ -748,8 +745,11 @@ function sendHomework() {
             };
         for (var i = 0; i < homework.length; i++) {
             readData(homework[i], callback);
-        }
-        document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
+            alertUser("Úloha úspešne odovzdaná! Výborne!");
+        };
+        try {
+            document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
+        } catch {};
         document.getElementById("description").innerHTML = startText;
         
     }
