@@ -131,7 +131,7 @@ main {
 #loginDiv {
   text-align: center;
   display: table;
-  top: 50vh;
+  top: 45vh;
   
   background-color: white;
   font-family: Textt;
@@ -140,15 +140,10 @@ main {
   z-index: 6;
 }
 
-.login-cell {
-  display: table-cell;
-  vertical-align: middle;
-}
-
 @media (max-width: 1000px) {
   #loginDiv {
     left: 10%;
-    height: 35vh;
+    height: 40vh;
     width: 80vw;
   }
 }
