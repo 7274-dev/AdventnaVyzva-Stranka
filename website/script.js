@@ -14,6 +14,102 @@ var audioDisplayed = false;
 const startText = document.getElementById("descriptioncontainer").innerHTML;
 var easterEggFound = false;
 
+/**
+ *
+ * Created by Borbás Geri on 12/17/13
+ * Copyright (c) 2013 eppz! development, LLC.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ */
+
+
+var EPPZScrollTo =
+{
+    /**
+     * Helpers.
+     */
+    documentVerticalScrollPosition: function()
+    {
+        if (self.pageYOffset) return self.pageYOffset; // Firefox, Chrome, Opera, Safari.
+        if (document.documentElement && document.documentElement.scrollTop) return document.documentElement.scrollTop; // Internet Explorer 6 (standards mode).
+        if (document.body.scrollTop) return document.body.scrollTop; // Internet Explorer 6, 7 and 8.
+        return 0; // None of the above.
+    },
+
+    viewportHeight: function()
+    { return (document.compatMode === "CSS1Compat") ? document.documentElement.clientHeight : document.body.clientHeight; },
+
+    documentHeight: function()
+    { return (document.height !== undefined) ? document.height : document.body.offsetHeight; },
+
+    documentMaximumScrollPosition: function()
+    { return this.documentHeight() - this.viewportHeight(); },
+
+    elementVerticalClientPositionById: function(id)
+    {
+        var element = document.getElementById(id);
+        var rectangle = element.getBoundingClientRect();
+        return rectangle.top;
+    },
+
+    /**
+     * Animation tick.
+     */
+    scrollVerticalTickToPosition: function(currentPosition, targetPosition)
+    {
+        var filter = 0.2;
+        var fps = 60;
+        var difference = parseFloat(targetPosition) - parseFloat(currentPosition);
+
+        // Snap, then stop if arrived.
+        var arrived = (Math.abs(difference) <= 0.5);
+        if (arrived)
+        {
+            // Apply target.
+            scrollTo(0.0, targetPosition);
+            return;
+        }
+
+        // Filtered position.
+        currentPosition = (parseFloat(currentPosition) * (1.0 - filter)) + (parseFloat(targetPosition) * filter);
+
+        // Apply target.
+        scrollTo(0.0, Math.round(currentPosition));
+
+        // Schedule next tick.
+        setTimeout("EPPZScrollTo.scrollVerticalTickToPosition("+currentPosition+", "+targetPosition+")", (1000 / fps));
+    },
+
+    /**
+     * For public use.
+     *
+     * @param id The id of the element to scroll to.
+     * @param padding Top padding to apply above element.
+     */
+    scrollVerticalToElementById: function(id, padding)
+    {
+        var element = document.getElementById(id);
+        if (element == null)
+        {
+            console.warn('Cannot find element with id \''+id+'\'.');
+            return;
+        }
+
+        var targetPosition = this.documentVerticalScrollPosition() + this.elementVerticalClientPositionById(id) - padding;
+        var currentPosition = this.documentVerticalScrollPosition();
+
+        // Clamp.
+        var maximumScrollPosition = this.documentMaximumScrollPosition();
+        if (targetPosition > maximumScrollPosition) targetPosition = maximumScrollPosition;
+
+        // Start animation.
+        this.scrollVerticalTickToPosition(currentPosition, targetPosition);
+    }
+};
+
 function wasRequestSuccessful(request) {
   return request.readyState == XMLHttpRequest.DONE &&
           request.status === 0 || 
@@ -221,9 +317,77 @@ function breakeBall(containerID) {
   container.style.backgroundImage = "url(" + ballResourcePath + newColor + "_broken_ball.png)";
 };
 
-function uploadFileShow() {
-  descriptionContainer.appendChild(inputFile);
-  descriptionContainer.appendChild(buttonFile);
+function sendHomework() {
+  var sendHomeworkRequest = new XMLHttpRequest();
+  var homework = inputFile.files;
+
+  if (homework != undefined) {
+      breakeBall(dayOpened - 1);
+      openWindow(dayOpened, getCookie("loginName"));
+      descriptionContainer.removeChild(inputFile);
+      descriptionContainer.removeChild(buttonFile);
+      writeCookie("day" + dayOpened, "true");
+
+      var url = backendURL + "upload";
+      function callback(data, name) {
+          var jsonData = {"filename": name, "data": data, "day": parseInt(dayOpened), "userName": getCookie("loginName")};
+
+          sendHomeworkRequest.onreadystatechange = function() {
+                  if (this.readyState == XMLHttpRequest.DONE) {
+                      if (wasRequestSuccessful(this)) {
+                      }
+                      else if (this.status == 500) {
+                          // server error :o , we probably want to display an error here
+                          // actualy this happens when photo is send so...
+                      };
+                  }
+                  else {
+                      // server is down
+                  };
+              };
+              sendHomeworkRequest.open("POST", url);
+              sendHomeworkRequest.setRequestHeader("Content-Type", "application/json");;
+              sendHomeworkRequest.send(JSON.stringify(jsonData));
+              
+          };
+      for (var i = 0; i < homework.length; i++) {
+          readData(homework[i], callback);
+          alertUser("Úloha úspešne odovzdaná! Výborne!");
+      };
+      try {
+          document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
+      } catch {};
+      document.getElementById("description").innerHTML = startText;
+      
+  }
+  else {
+      alertUser("Niesú pridané žiadne súbory!");
+  };
+};
+
+
+// is there a better way to do this?
+function showInputControls() {
+  // <input id="inputFile" class="row" type="file" accept="image/*" multiple>
+  var inputElement = document.createElement("input");
+  inputElement.id = "inputFile";
+  inputElement.classList.add("row")
+  inputElement.type = "file";
+  inputElement.accept = "image/*"
+  inputElement.multiple = true;
+
+  // <button id="buttonFile" class ="row" onclick=sendHomework()>Odovzdať úlohu</button>
+  var sendButton = document.createElement("button");
+  sendButton.id = "buttonFile"
+  sendButton.classList.add("row");
+  sendButton.onclick = sendHomework;
+  sendButton.textContent = "Odovzdať úlohu";
+
+  console.log(sendButton);
+  console.log(inputElement);
+
+  document.getElementById("descriptioncontainer").appendChild(inputElement);
+  document.getElementById("descriptioncontainer").appendChild(sendButton);
 };
 
 function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
@@ -255,6 +419,19 @@ function getHomeworkStatus(day) {
   };
   return getOpenedWindows(getCookie("loginName")).includes(day);
 };
+
+function hideInputControls() {
+  document.getElementById("descriptioncontainer").removeChild(document.getElementById("inputFile"));
+  document.getElementById("descriptioncontainer").removeChild(document.getElementById("buttonFile"));
+
+}
+
+function showIntroduction() {
+  document.getElementById("text-heading").innerHTML = "Inštrukcie";
+  document.getElementById("descriptioncontainer").innerHTML = startText;
+  hideInputControls();
+  EPPZScrollTo.scrollVerticalToElementById("descriptioncontainer", 50);
+}
 
 function on_click(event) {
   if (access) {
@@ -298,7 +475,7 @@ function on_click(event) {
           };
           http.send();
           if (!getHomeworkStatus(dayNumber)) {
-              uploadFileShow();
+              showInputControls();
           } else {
               alertUser("Táto úloha je už hotová!");
           };
@@ -313,8 +490,8 @@ function on_click(event) {
               audio.controls = true;
               audioDisplayed = true;
               document.getElementById("descriptioncontainer").appendChild(audio);
-              uploadFileShow();
           };
+          EPPZScrollTo.scrollVerticalToElementById("descriptioncontainer", 50);
       };
   };
 };
@@ -371,6 +548,7 @@ function login() {
   loginInputEnterClickTriggerButton(); 
   var isLoggedIn = getCookie("loginName") != null;
   if (!isLoggedIn) {
+      EPPZScrollTo.scrollVerticalToElementById("login", 80);
       document.getElementById("loginButton").onclick = function() {
           var name = loginInput.value;
           if (name != "") {
@@ -380,6 +558,7 @@ function login() {
               document.getElementById("main").removeChild(document.getElementById("login"));
               showHiddenElements();
               enableClicks = true;
+              document.body.style.overflow = "auto";
           }
       };
   } else {
@@ -391,6 +570,7 @@ function login() {
       onloadBreakBall();
       showHiddenElements();
       enableClicks = true;
+      document.body.style.overflow = "auto";
   };
   
 };
@@ -410,8 +590,6 @@ function starClick() {
 
 function on_load() {
   login();
-  document.getElementById("inputFile").visibility = "hidden";
-  document.getElementById("buttonFile").visibility = "hidden";
   var ballContainer = document.getElementById("treecontainer");
   var ballImageIndexes = [];
   var cookieExists = document.cookie.indexOf("balls") != -1;
@@ -459,12 +637,15 @@ function on_load() {
       writeCookie("balls", ballImageIndexes);
   };
 
+  document.getElementById("descriptioncontainer").removeChild(inputFile);
+  document.getElementById("descriptioncontainer").removeChild(buttonFile);
+
   document.getElementById("star").onclick = function(e) {
     starClick();
   };
   
 
-  window.scrollTo(0, 0);
+  window.scrollTo()
 };
 
 function isBroken(ballNumber) {
@@ -632,11 +813,11 @@ var Snowflake = (function() {
   return Snowflake;
 }());
 
-window.onload = function() {
-  setTimeout(function() {
-    Snowflake.init(document.getElementById('snow'));
-  }, 0);
-}
+// window.onload = function() {
+//   setTimeout(function() {
+//     Snowflake.init(document.getElementById('snow'));
+//   }, 0);
+// }
 
 $(window).scroll(function(e) {
   // add/remove class to navbar when scrolling to hide/show
