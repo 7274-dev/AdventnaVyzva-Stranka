@@ -1,18 +1,60 @@
-// jQuery.fn.snow({
+var backendURL = "https://ivik.synology.me/";
+
+const inputFile = document.getElementById("inputFile");
+const buttonFile = document.getElementById("buttonFile");
+const descriptionContainer = document.getElementById("descriptioncontainer")
+const loginInput = document.getElementById("loginInput");
+var timeWarning = document.getElementById("timeWarning");
+
+var access = false;
+var enableClicks = false;
+var dayOpened = undefined;
+var alertDisplayed = false;
+var audioDisplayed = false;
+const startText = document.getElementById("descriptioncontainer").innerHTML;
+var easterEggFound = false;
+
+function wasRequestSuccessful(request) {
+  return request.readyState == XMLHttpRequest.DONE &&
+          request.status === 0 || 
+          request.status >= 200 && request.status < 400;
+};
+
+function createUser(name) {
+  var createUserRequest = new XMLHttpRequest();
+  const url = backendURL + "add";
+
+  var jsonRequestData = JSON.stringify({"userName": name});
   
-//     // also works on any block element
-//     target: jQuery("body"),
-    
-//     // uses font awesome iconic font
-//     elements  : [
-    
-//       { 
-//         html: '<i class="fa fa-snowflake-o" aria-hidden="true"></i>',
-//         color: '#000000'
-//       }
-//     ]
-    
-//   });
+  createUserRequest.open("POST", url);
+  createUserRequest.send(jsonRequestData);
+
+  // we don't have to handle any errors, if the user doesn't exist,
+  // it's created, else, it already exists.
+  // if the server is down, we shouldn't even get here
+};
+
+function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
+  var openedWindowsRequest = new XMLHttpRequest();
+  var url = backendURL + "windows?userName=" + name;
+
+  openedWindowsRequest.open("GET", url, false);
+
+  var response;
+  openedWindowsRequest.onreadystatechange = function() {
+      // console.log(this.responseText);
+      if (wasRequestSuccessful(this)) {
+          // console.log(JSON.parse(this.responseText));
+          response = JSON.parse(this.responseText).response;
+      }
+      else {
+          response = null;
+      };
+  };
+  openedWindowsRequest.send();
+
+  return response;
+};
 
 function getDataCookie() {
   var dc,
@@ -179,18 +221,194 @@ function breakeBall(containerID) {
   container.style.backgroundImage = "url(" + ballResourcePath + newColor + "_broken_ball.png)";
 };
 
-function on_click(ballNumber) {
-  var container = document.getElementById("ball" + ballNumber);
-  var currentDate = getDate();
-  if (ballNumber > currentDate) {
-    //we want to display some info here that day is not avaible
+function uploadFileShow() {
+  descriptionContainer.appendChild(inputFile);
+  descriptionContainer.appendChild(buttonFile);
+};
+
+function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
+  var openedWindowsRequest = new XMLHttpRequest();
+  var url = backendURL + "windows?userName=" + name;
+
+  openedWindowsRequest.open("GET", url, false);
+
+  var response;
+  openedWindowsRequest.onreadystatechange = function() {
+      // console.log(this.responseText);
+      if (wasRequestSuccessful(this)) {
+          // console.log(JSON.parse(this.responseText));
+          response = JSON.parse(this.responseText).response;
+      }
+      else {
+          response = null;
+      };
+  };
+  openedWindowsRequest.send();
+
+  return response;
+};
+
+
+function getHomeworkStatus(day) {
+  if (typeof day == "string") {
+      day = parseInt(day);
+  };
+  return getOpenedWindows(getCookie("loginName")).includes(day);
+};
+
+function on_click(event) {
+  if (access) {
+      enableClicks = true;
+  };
+  if (enableClicks) {
+      element = event.target; // rip IE 6-8 // :DDD
+      var dayNumber = element.innerHTML;
+      document.getElementById("text-heading").innerHTML = "Deň " + dayNumber
+      // listOfNumbers.push(dayNumber);
+      // easterEgg();
+      if (getDate() < dayNumber) {
+          alertUser("Tento deň nie je k dispozícii, počkaj si :)");
+      }
+      else {
+          dayOpened = dayNumber;
+          const http = new XMLHttpRequest();
+
+          var url = backendURL + "text?day=" + dayNumber;
+          http.open("GET", url);
+
+          var description = document.getElementById("descriptioncontainer");
+
+          http.onreadystatechange = function() {
+              if (this.responseText) {
+                  if (wasRequestSuccessful(this) && this.responseText != "") {
+                      description.innerHTML = JSON.parse(this.responseText).response;
+                      // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
+                  }
+                  else if (this.responseText == "") {
+                      description.innerHTML = "Server down";
+                  }
+                  else if (this.readyState == XMLHttpRequest.DONE) {
+                      description.innerHTML = JSON.parse(this.responseText).response;
+                      // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
+                  }
+                  else {
+                      description.innerHTML = "Error!";
+                  };
+              };
+          };
+          http.send();
+          if (!getHomeworkStatus(dayNumber)) {
+              uploadFileShow();
+          } else {
+              alertUser("Táto úloha je už hotová!");
+          };
+          if (getDate() >= dayNumber) {
+              if (audioDisplayed) {
+                  document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
+                  audioDisplayed = false;
+              };
+              var audio = document.createElement("audio");
+              audio.src = "resources/nahravky/day" + dayNumber + ".wav";
+              audio.id = "audio";
+              audio.controls = true;
+              audioDisplayed = true;
+              document.getElementById("descriptioncontainer").appendChild(audio);
+          };
+      };
+  };
+};
+
+function loginInputEnterClickTriggerButton() {
+  loginInput.addEventListener("keyup", function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+        // Trigger the button element with a click
+        document.getElementById("loginButton").click();
+      };
+  });
+};
+
+// also handle user "account" creation
+function setWindowData(name) {
+  var userExistsRequest = new XMLHttpRequest();
+  var url = backendURL + "exists?userName=" + name;
+  
+  userExistsRequest.open("GET", url);
+
+  userExistsRequest.onreadystatechange = function() {
+      // console.log(this.responseText);
+      if (wasRequestSuccessful(this)) {
+          createUser(name);
+      }
+      else {
+          // TODO: add some kind of error, warning for users, that the server is down
+          // panic
+      };
+      getOpenedWindows(name);
+  };
+
+  userExistsRequest.send();    
+};
+
+// fix this function
+function onloadBreakBall() {
+  var openedBalls = getOpenedWindows(getCookie("loginName"));
+  for (let ball in openedBalls) {
+      console.log("Breaking ball " + ball);
+      breakeBall(ball);
+  };
+};
+
+function showHiddenElements() {
+  var elements = document.getElementsByClassName("hidden-during-login");
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].style.visibility = "visible";
+  }
+};
+
+function login() {
+  loginInputEnterClickTriggerButton(); 
+  var isLoggedIn = getCookie("loginName") != null;
+  if (!isLoggedIn) {
+      document.getElementById("loginButton").onclick = function() {
+          var name = loginInput.value;
+          if (name != "") {
+              unBlur();
+              writeCookie("loginName", name);
+              onloadBreakBall();
+              document.getElementById("main").removeChild(document.getElementById("login"));
+              showHiddenElements();
+              enableClicks = true;
+          }
+      };
   } else {
-    //let them complete work and send it
+      var name = getCookie("loginName");
+      setWindowData(name);
+      unBlur();
+      console.log("i am out there");
+      document.getElementById("main").removeChild(document.getElementById("login"));
+      onloadBreakBall();
+      showHiddenElements();
+      enableClicks = true;
+  };
+  
+};
+
+function starClick() {
+  if (access) {
+      enableClicks = true;
+  };
+  if (enableClicks) {
+      if (getDate() < 24) {
+          alertUser("Počkaj si do Vianoc :)");
+      } else {
+          // code block here, needs to get filled
+      };
   };
 };
 
 function on_load() {
-  // login();
+  login();
   var ballContainer = document.getElementById("treecontainer");
   var ballImageIndexes = [];
   var cookieExists = document.cookie.indexOf("balls") != -1;
@@ -228,8 +446,8 @@ function on_load() {
       currentBall.classList.add("fluid-image");
       currentBall.classList.add("ball");
 
-      currentBall.onclick = function() {
-          on_click(i);
+      currentBall.onclick = function(e) {
+          on_click(e);
       };
 
       ballContainer.appendChild(currentBall);
@@ -237,6 +455,11 @@ function on_load() {
   if (!cookieExists) {
       writeCookie("balls", ballImageIndexes);
   };
+
+  document.getElementById("star").onclick = function(e) {
+    starClick();
+  };
+  
 
   window.scrollTo(0, 0);
 };
@@ -296,13 +519,13 @@ function postRequest(url, data) {
 };
 
 function unBlur() {
-  document.getElementsByClassName("blur").style.filter = "blur(0px) brightness(100%)";
-  document.getElementsByClassName("background").style.backgroundColor = "white";
+  document.getElementsByClassName("blur")[0].style.filter = "blur(0px) brightness(100%)";
+  document.getElementsByClassName("background")[0].style.backgroundColor = "white";
 };
 
 function blur() {
-  document.getElementsByClassName("blur").style.filter = "blur(10px) brightness(70%)";
-  document.getElementsByClassName("background").style.backgroundColor = "rgba(0,0,0, 0.4)";
+  document.getElementsByClassName("blur")[0].style.filter = "blur(10px) brightness(70%)";
+  document.getElementsByClassName("background")[0].style.backgroundColor = "rgba(0,0,0, 0.4)";
 };
 
 var Snowflake = (function() {

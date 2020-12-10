@@ -39,8 +39,6 @@
         }
       }
     </style>
-    <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
   </head>
   <body class="background">
       <!-- https://stackoverflow.com/questions/54164397/bootstrap-4-how-to-make-fixed-top-navbar-disappear-on-scroll -->
@@ -51,25 +49,20 @@
 </nav>
 <div id=snow class="fixed-top"></div>
 
-<main role="main" class="container">
-    <!-- UNBITCH<div id="loginDiv" class="login-prompt d-flex justify-content-center">
-        <p id="loginText">Prosím zadajte svoje meno:</p>
-        <input type="text" placeholder="Vaše meno a preizvisko" id="loginInput"><br>
-        <p id="loginCookieWarning">Súhlasím so spracovaním osobných údajov</p><br>
-        <button id="loginButton">Potvrdiť</button>
-    </div> -->
-    <!--<div class="row blur blurbackground"> TILL HERE-->
+<main role="main" class="container" id="main">
+    <div class="d-flex justify-content-center col" id="login" style="top: 30vh;">
+    <div id="loginDiv" class="d-flex flex-column justify-content-center">
+        <p id="loginText p-2">Prosím zadajte svoje meno:</p>
+        <input type="text" placeholder="Vaše meno a preizvisko" id="loginInput" class="p-2">
+        <p id="loginCookieWarning" class="p-2">Súhlasím so spracovaním osobných údajov</p>
+        <button id="loginButton" class="p-2">Potvrdiť</button>
+    </div>
+  </div>
+    <div class="row blur blurbackground hidden-during-login"> 
         <div class="col"></div>
         <div class="container">
           <div class="col" id="treecontainer">
-              
-              <!-- <h1 style="color: red; position: absolute;">.</h1>
-              <h1 style="color: red; position: absolute; top: 45%; right: 62%;">.</h1>
-              <h1 style="color: red; position: absolute; top: 45%; right: 38%;">.</h1>  
-              <h1 style="color: red; position: absolute; top: 35%; right: 42%;">.</h1>
-              <h1 style="color: red; position: absolute; top: 35%; right: 58%;">.</h1>   -->
-              <!-- <img src="img/balls/blue_ball.png" class="ball img-fluid" style="position: absolute; top: 35%; right: 42%;"> -->
-              <img class="img-fluid mx-auto d-block image" style="height: 8vh;"  src="img/star.png">
+              <img class="img-fluid mx-auto d-block image" style="height: 8vh;" id="star" src="img/star.png">
               <img class="img-fluid mx-auto d-block image" style="height: 57vh;"  src="img/stromcek.png">
               <img class="img-fluid mx-auto d-block image" style="height: 25vh;padding-top: 0.5vh;" src="img/europe_map_done.png">
           </div>
@@ -77,12 +70,14 @@
         <div class="col"></div>
     </div>
     <div class = "row">
-  <div class="starter-template col text-black">
-    <h1>Inštrukcie</h1>
-    <p class="lead" id=descriptioncontainer>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean facilisis finibus imperdiet. Sed varius diam eget viverra consequat. Praesent eu enim mattis, scelerisque diam sit amet, auctor ligula. Curabitur massa eros, dictum quis ipsum in, vulputate blandit est. In hac habitasse platea dictumst. Maecenas vulputate orci massa, ut semper est congue ut. Sed luctus massa magna, eu luctus erat fermentum ut. Aenean mi mauris, malesuada vitae lobortis nec, placerat ac sapien. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla facilisi. Sed tincidunt placerat auctor. Proin mattis malesuada leo, ut vehicula lectus interdum eu. Morbi semper congue dolor, imperdiet pellentesque nisi volutpat et. Donec tristique tincidunt quam eu interdum.
+  <div class="starter-template col text-black hidden-during-login">
+    <h1 id="text-heading">Inštrukcie</h1>
+    <div class="lead" id=descriptioncontainer>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean facilisis finibus imperdiet. Sed varius diam eget viverra consequat. Praesent eu enim mattis, scelerisque diam sit amet, auctor ligula. Curabitur massa eros, dictum quis ipsum in, vulputate blandit est. In hac habitasse platea dictumst. Maecenas vulputate orci massa, ut semper est congue ut. Sed luctus massa magna, eu luctus erat fermentum ut. Aenean mi mauris, malesuada vitae lobortis nec, placerat ac sapien. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla facilisi. Sed tincidunt placerat auctor. Proin mattis malesuada leo, ut vehicula lectus interdum eu. Morbi semper congue dolor, imperdiet pellentesque nisi volutpat et. Donec tristique tincidunt quam eu interdum.
 
         Vivamus mollis tellus placerat finibus ultricies. Cras vitae nisl mollis, placerat ante ut, posuere erat. Donec erat ipsum, convallis ac feugiat vitae, laoreet quis erat. Sed pharetra sem vitae mattis molestie. Vestibulum volutpat ut urna at malesuada. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin eget erat et mi efficitur gravida quis id justo. Maecenas nulla sapien, ornare a justo at, ultrices ultrices ante. Donec quis rhoncus elit, tempor ornare ante. Sed gravida dictum est quis condimentum. Suspendisse eget mi dui. Aenean sodales eros vel dignissim lacinia. Vivamus accumsan mauris in orci pellentesque, non tempus urna feugiat.</p>
   </div>
+  <input id="inputFile" type="file" accept="image/*" multiple>
+                <button id="buttonFile" onclick=sendHomework()>Odovzdať úlohu</button>
     </div>
 
 </main>
