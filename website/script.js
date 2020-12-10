@@ -599,13 +599,24 @@ function unBlur() {
     document.body.style.overflow = "scroll";
 };
 
-// fix this function
+// should be done now
 function onloadBreakBall() {
     var openedBalls = getOpenedWindows(getCookie("loginName"));
-    console.log("From onloadbreakball: " + openedBalls);
-    for (let ball in openedBalls) {
-        console.log("Breaking ball " + ball);
-        breakeBall(ball);
+    if (!openedBalls) {
+        openedBalls = [];
+        for (let i=1; i<14; i++) {
+            let dayStatus = getCookie("day" + i);
+            if (dayStatus == "true") {
+                openedBalls.push(i);
+            };
+        };
+    };
+
+    if (openedBalls) {
+        for (let ball in openedBalls) {
+            console.log("Breaking ball " + ball);
+            breakeBall(ball);
+        };
     };
 };
 
