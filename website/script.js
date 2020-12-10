@@ -453,7 +453,7 @@ function on_click(event) {
           var url = backendURL + "text?day=" + dayNumber;
           http.open("GET", url);
 
-          var description = document.getElementById("descriptioncontainer");
+          var description = document.getElementById("description");
 
           http.onreadystatechange = function() {
               if (this.responseText) {
@@ -475,13 +475,15 @@ function on_click(event) {
           };
           http.send();
           if (!getHomeworkStatus(dayNumber)) {
+              try {hideInputControls();} catch {};
+              
               showInputControls();
           } else {
               alertUser("Táto úloha je už hotová!");
           };
           if (getDate() >= dayNumber) {
               if (audioDisplayed) {
-                  // document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
+                  document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
                   audioDisplayed = false;
               };
               var audio = document.createElement("audio");
@@ -489,9 +491,9 @@ function on_click(event) {
               audio.id = "audio";
               audio.controls = true;
               audioDisplayed = true;
+              console.log(audio);
               document.getElementById("descriptioncontainer").appendChild(audio);
           };
-          console.log("scrolling....");
           EPPZScrollTo.scrollVerticalToElementById("descriptioncontainer", 50);
       };
   };
@@ -545,6 +547,14 @@ function showHiddenElements() {
   }
 };
 
+function inTimeWarning() {
+  document.body.removeChild(document.getElementById("loginDiv"));
+  document.body.appendChild(timeWarning);
+  var text = document.getElementById("timeWarningText");
+  var time = document.getElementById("timeWarningTime");
+  text.innerHTML = "Adventný kalendár nie je k dispozícii. Kalendár sa otvára v čase 13:00 - 21:00!";
+};
+
 function login() {
   loginInputEnterClickTriggerButton(); 
   var isLoggedIn = getCookie("loginName") != null;
@@ -586,6 +596,20 @@ function starClick() {
       } else {
           // code block here, needs to get filled
       };
+  };
+};
+
+function inTimeAllowed() {
+  if (!access && !isWeekend()) {
+      var date = new Date();
+      var hour = date.getHours();
+      if (hour >= 13 && hour <= 20) {
+          return true;
+      } else {
+          return false;
+      };
+  } else {
+      return true;
   };
 };
 
@@ -640,13 +664,16 @@ function on_load() {
 
   document.getElementById("descriptioncontainer").removeChild(inputFile);
   document.getElementById("descriptioncontainer").removeChild(buttonFile);
+  document.body.removeChild(timeWarning);
 
   document.getElementById("star").onclick = function(e) {
     starClick();
   };
-  
 
-  window.scrollTo()
+  if (!inTimeAllowed()) {
+    inTimeWarning();
+  };
+
 };
 
 function isBroken(ballNumber) {

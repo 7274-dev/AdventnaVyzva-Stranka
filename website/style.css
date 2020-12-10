@@ -2,6 +2,10 @@ html {
   scroll-behavior: smooth;
 }
 
+audio {
+    padding-top: 10px;
+}
+
 body {
   overflow: hidden;
 }
