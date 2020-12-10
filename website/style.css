@@ -1,3 +1,6 @@
+main {
+  overflow-x: hidden;
+}
 
 @font-face {
     font-family: Cisla;

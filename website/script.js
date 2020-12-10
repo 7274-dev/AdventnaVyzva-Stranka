@@ -313,6 +313,7 @@ function on_click(event) {
               audio.controls = true;
               audioDisplayed = true;
               document.getElementById("descriptioncontainer").appendChild(audio);
+              uploadFileShow();
           };
       };
   };
@@ -409,6 +410,8 @@ function starClick() {
 
 function on_load() {
   login();
+  document.getElementById("inputFile").visibility = "hidden";
+  document.getElementById("buttonFile").visibility = "hidden";
   var ballContainer = document.getElementById("treecontainer");
   var ballImageIndexes = [];
   var cookieExists = document.cookie.indexOf("balls") != -1;
