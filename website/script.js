@@ -117,23 +117,23 @@ const positions_small = [
   {top:"17", right:"52"},//4
   {top:"23", right:"60"},//5
   {top:"20", right:"42"},//6
-  {top:"28", right:"39"},//7
+  {top:"28", right:"24"},//7
   {top:"25.5", right:"50"},//8
-  {top:"30", right:"44"},//9
-  {top:"30.5", right:"55"},//10
-  {top:"35", right:"39.5"},//11
-  {top:"38", right:"58.5"},//12
+  {top:"28", right:"38"},//9
+  {top:"30.5", right:"60"},//10
+  {top:"35", right:"20"},//11
+  {top:"38", right:"66"},//12
   {top:"33", right:"50"},//13
-  {top:"40", right:"35.5"},//14
-  {top:"38", right:"45.4"},//15
+  {top:"40", right:"32"},//14
+  {top:"34", right:"36"},//15
   {top:"39.5", right:"52.5"},//16
-  {top:"43", right:"41"},//17
-  {top:"47", right:"33.5"},//18
-  {top:"46", right:"60.5"},//19
-  {top:"46", right:"48.5"},//20
-  {top:"48", right:"54.4"},//21
-  {top:"50", right:"44"},//22
-  {top:"51.5", right:"38"},//23
+  {top:"43", right:"16"},//17
+  {top:"47", right:"28"},//18
+  {top:"46", right:"70"},//19
+  {top:"46", right:"44"},//20
+  {top:"50", right:"58"},//21
+  {top:"50", right:"8"},//22
+  {top:"53", right:"40"},//23
 ];
 
 const positions_big = [
