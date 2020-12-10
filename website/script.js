@@ -481,7 +481,7 @@ function on_click(event) {
           };
           if (getDate() >= dayNumber) {
               if (audioDisplayed) {
-                  document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
+                  // document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
                   audioDisplayed = false;
               };
               var audio = document.createElement("audio");
@@ -491,6 +491,7 @@ function on_click(event) {
               audioDisplayed = true;
               document.getElementById("descriptioncontainer").appendChild(audio);
           };
+          console.log("scrolling....");
           EPPZScrollTo.scrollVerticalToElementById("descriptioncontainer", 50);
       };
   };
