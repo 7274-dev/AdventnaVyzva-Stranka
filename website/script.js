@@ -1,11 +1,16 @@
+// var md = new MobileDetect(window.navigator.userAgent);
 var backendURL = "https://ivik.synology.me/";
 var devPassword = "c74d067bc96afb28edb526b5646c1a9319fd34879d313d4c6c55d0d4133c4d3f";
+
+var isBadOrientation = false;
 
 const inputFile = document.getElementById("inputFile");
 const buttonFile = document.getElementById("buttonFile");
 const descriptionContainer = document.getElementById("descriptioncontainer")
 const loginInput = document.getElementById("loginInput");
 var timeWarning = document.getElementById("timeWarning");
+
+var isLoggedIn = getCookie("loginName") != null;
 
 var access = false;
 var enableClicks = false;
@@ -654,27 +659,6 @@ function showInputControls() {
     document.getElementById("descriptioncontainer").appendChild(sendButton);
 };
 
-function getOpenedWindows(name) { //RETURN ALL DAYS DONE / HOMEWORK DONE
-    var openedWindowsRequest = new XMLHttpRequest();
-    var url = backendURL + "windows?userName=" + name;
-
-    openedWindowsRequest.open("GET", url, false);
-
-    var response;
-    openedWindowsRequest.onreadystatechange = function() {
-        // console.log(this.responseText);
-        if (wasRequestSuccessful(this)) {
-            // console.log(JSON.parse(this.responseText));
-            response = JSON.parse(this.responseText).response;
-        } else {
-            response = null;
-        };
-    };
-    openedWindowsRequest.send();
-
-    return response;
-};
-
 function getHomeworkStatus(day) {
     if (typeof day == "string") {
         day = parseInt(day);
@@ -816,7 +800,6 @@ function inTimeWarning() {
 
 function login() {
     loginInputEnterClickTriggerButton();
-    var isLoggedIn = getCookie("loginName") != null;
     if (!isLoggedIn) {
         EPPZScrollTo.scrollVerticalToElementById("login", 80);
         document.getElementById("loginButton").onclick = function() {
@@ -898,8 +881,38 @@ function inTimeAllowed() {
     };
 };
 
+function getOrientation() {
+    console.log(window.orientation % 90 == 0 && window.orientation != 0 ? "landscape" : "portrait");
+    return window.orientation % 90 == 0 && window.orientation != 0 ? "landscape" : "portrait";
+}
+
 function on_load() {
     login();
+    isBadOrientation = getOrientation() == "landscape";
+    if (isBadOrientation) {
+        alertUser("Táto stránka bohužiaľ funguje iba v portrait móde. Otoč prosím svoju obrazovku.");
+        document.getElementById("alertDiv").style.height = "40vh";
+    }
+
+    window.addEventListener("orientationchange", function() {
+    
+        var isPortrait = getOrientation() == "portrait";
+        if (!isPortrait) {
+            alertUser("Táto stránka bohužiaľ funguje iba v portrait móde. Otoč prosím svoju obrazovku.");
+            document.getElementById("alertDiv").style.height = "40vh";
+            document.getElementById("alertDiv").removeChild(document.getElementById("alertButton"));
+        }
+        else {
+            if (!isLoggedIn) {
+                EPPZScrollTo.scrollVerticalToElementById("loginDiv", 50);
+            }
+            if (document.getElementById("alertDiv") != null) {
+                document.body.removeChild(document.getElementById("alertDiv"));
+                unBlur();
+                alertDisplayed = false;
+            }   
+        }
+    }, false);
     var ballContainer = document.getElementById("treecontainer");
     var ballImageIndexes = [];
     var cookieExists = document.cookie.indexOf("balls") != -1;
