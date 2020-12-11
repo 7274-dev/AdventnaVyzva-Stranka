@@ -1,3 +1,23 @@
+html {
+  scroll-behavior: smooth;
+}
+
+audio {
+    padding-top: 10px;
+}
+
+body {
+  overflow: hidden;
+}
+
+main {
+  overflow-x: hidden;
+}
+
+#buttonFile {
+  margin-top: 10px;
+}
+
 @font-face {
     font-family: Cisla;
     src: url('JMH Cthulhumbus Arcade.otf');
@@ -6,274 +26,216 @@
     font-family: Textt;
     src: url('Spirax-Regular.ttf');
 }
-html, body, #blurbackground {
-    min-height: 100%;
-    height: 100%;
+
+@media (max-width: 1000px) {
+      .ball {
+        background-repeat: no-repeat;
+        background-size: contain;
+        text-align: center;
+        display: flex;
+        font-size: 12px;
+        color: black;
+        flex-direction: column;
+        justify-content: center;
+        background-position: center center;
+        width: 6vh;
+        height: 5%;
+        font-size: smaller;
+        position: absolute;
+        font-family: Cisla;
+        cursor: pointer;
+    }
 }
-body {
-    overflow: hidden;
-}
-#blurbackground {
-    background-color: rgba(0,0,0, 0.4);
-    min-height: 100%;
-}
-#blur {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    filter: blur(10px) brightness(70%);
-    width: 100%;
-    min-height: 100%;
-}
-#title {
-    font-size: 70px;
-    /* font-style: italic; */
-    left: 10%;
-    top: -1px;
-    float: left;
-    font-family: Textt;
-}
-#description {
-    line-height: 1.5em;
-    padding-top: 100px;
-    font-size: 18px;
-    padding-left: 10px;
-    padding-right: 10px;
-    flex-wrap: wrap;
-    font-family: Textt;
-    font-size: 135%;
-}
-.strong {
-    font-style: italic;
-    font-size: 24px;
-}
-#background_image {
-    height: 85%;
-    left: 15%;
-    top: 10%;
-    position: absolute;
-    z-index: -1;
-}
-#treecontainer {
-    width: 700px;
-    height: 850px;
-    padding-top: 80px;
-    float: right;
-}
-#tree {
-    width: 100%;
-    height: 100%;
-}
-#star {
-    width: 150px;
-    height: 150px;
-    position: absolute;
-    z-index: 1;
-    top: 1%; /* when this is removed, everything is fucked up? */
-    right: 40%;
-    transform: rotate(2deg);
-}
-.ball {
+
+@media (min-width: 1000px) {
+  .ball {
     background-repeat: no-repeat;
     background-size: contain;
     text-align: center;
     display: flex;
+    font-size: 12px;
+    color: black;
     flex-direction: column;
     justify-content: center;
     background-position: center center;
-    width: 40px;
-    height: 40px;
+    width: 6vh;
+    height: 5%;
     position: absolute;
     font-family: Cisla;
     cursor: pointer;
 }
+}
+
+.strong {
+  font-style: italic;
+  font-size: 24px;
+}
+
+#snow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+  .navbar {
+    z-index: 5;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.navbar-hide {
+    pointer-events: none;
+    opacity: 0;
+}
+
+.title {
+  color: black;
+}
+
+.text-black {
+  color: black;
+}
+
+
+#loginDiv {
+  text-align: center;
+  display: table;
+  top: 45vh;
+  
+  background-color: white;
+  font-family: Textt;
+  border-radius: 10px;
+  border: 1px solid #dddddd;
+  z-index: 6;
+}
+
+@media (max-width: 1000px) {
+  #loginDiv {
+    left: 10%;
+    height: 40vh;
+    width: 80vw;
+  }
+}
+
+@media (min-width: 1000px) {
+  #loginDiv {
+    left: 42%;
+    height: 25vh;
+    width: 15vw;
+  }
+}
+
+@media (max-width: 1000px) {
+  #alertDiv {
+    width: 35vw;
+    height: 20vh;
+  }
+}
+
+@media (min-width: 1000px) {
+  #alertDiv {
+    width: 10vw;
+    height: 13vh;
+  }
+}
+
 #alertDiv {
-    text-align: center;
-    position: absolute;
-    top: 45%;
-    left: 45%;
-    height: 120px;
-    width: 200px;
-    background-color: white;
-    font-family: Textt;
-    border-radius: 10px;
-    border: 1px solid #dddddd;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  transform: translate(0%, -50%);
+  background-color: white;
+  font-family: Textt;
+  border-radius: 10px;
+  border: 1px solid #dddddd;
 }
 #alertButton {
-    position: absolute;
-    font-family: Textt;
-    font-size: 20px;
-    border-radius: 10px;
-    bottom: 5%;
-    right: 40%;
-    border: none;
+  position: absolute;
+  font-family: Textt;
+  font-size: 20px;
+  border-radius: 10px;
+  transform: translate(-50%, 0%);
+  bottom: 5%;
+  border: none;
 }
+
 #alertP {
-    margin-top: 5px;
+  margin-top: 5px;
 }
-#loginDiv {
-    text-align: center;
-    position: absolute;
-    top: 40%;
-    left: 40%;
-    height: 180px;
-    width: 300px;
-    background-color: white;
-    font-family: Textt;
-    border-radius: 10px;
-    border: 1px solid #dddddd;
-}
+
 #loginInput {
-    position: absolute;
-    text-align: center;
-    font-size: 18px;
-    left: 17%;
-    top: 28%;
-    font-family: Textt;
-    border-radius: 10px;
-    background-color: #ececec;
-    border: 1px solid #c9c9c9;
+  /* position: absolute; */
+  text-align: center;
+  font-size: 18px;
+  /* max-width: 179px; */
+  /* max-height: 32px; */
+  /*margin: 8px;
+  margin-top: 20px;*/
+  font-family: Textt;
+  border-radius: 10px;
+  background-color: #ececec;
+  border: 1px solid #c9c9c9;
 }
 #loginButton {
-    position: absolute;
-    bottom: 25%;
-    left: 36%;
-    font-family: Textt;
-    font-size: 20px;
-    border-radius: 10px;
-    border: none;
+  font-family: Textt;
+  font-size: 20px;
+  border-radius: 10px;
+  border: none;
 }
 #loginText {
-    position: absolute;
-    font-size: 18px;
-    text-align: center;
-    top: 8%;
-    left: 15%;
+  font-size: 18px;
+  text-align: center;
+  left: 15%;
 }
 #loginCookieWarning {
-    font-size: 14px;
-    position: absolute;
-    bottom: -5%;
-    left: 8%;
+  font-size: 14px;
 }
-#map {
-    width: 100%;
-    height: 100%;
+
+.blur {
+  /* left: 0px;
+  top: 0px; */
+  filter: blur(10px) brightness(70%);
 }
-#map_container {
-    width: 300px;
-    height: 180px;
-    margin-top: 5px;
-    margin-left: 30%;
+
+.background {
+  background-color: rgba(0,0,0, 0.4);
 }
-#starNumber {
-    font-family: Cisla;
-    font-size: 25px;
-    position: absolute;
-    z-index: 1;
-    top: 6.5%;
-    right: 48.5%;
+
+body {
+  padding-top: 5rem;
 }
-#mapButtonMain {
-    text-align: center;
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    right: 28%;
-    bottom: -7%;
-    background-color: lightblue;
-    cursor: pointer;
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
 }
-#mapButtonMainImage {
-    width: 100%;
-    height: 100%;
+
+.hidden-during-login {
+  visibility: hidden;
 }
-#mapCloser {
-    width: 100px;
-    height: 100px;
-    background-color: lightblue;
-    position: absolute;
-    z-index: 2;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
+
+#star {
+  cursor: pointer;
 }
-#bigMap {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0%;
-    top: 0%;
-    z-index: 1;
-}
-#mapCloserImage {
-    width: 100%;
-    height: 100%;
-}
-#inputFile {
-    margin: 10px;
-    display: inline-block;
-    font-family: Textt;
-    font-size: 20px;
-    border-radius: 10px;
-    border: none;
-}
-#buttonFile {
-    display: inline-block;
-    margin: 10px;
-    font-family: Textt;
-    font-size: 20px;
-    border-radius: 10px;
-    border: none;
-}
-/* Custom Scrollbar */
+
+/*CUSTOM SCROLL BAR*/
+/*width*/
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
+/*background*/
 ::-webkit-scrollbar-track {
-  background: white;
+  background: lightblue;
 }
+/*handle*/
 ::-webkit-scrollbar-thumb {
-  background: #888888;
-  border-radius: 5px;
+  background-color: grey;
+  border-radius: 10px;
 }
+/*hover*/
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(100, 100, 100);
-}
-#audio {
-    margin-left: 15%;
-    margin-top: 2%;
-}
-#imageDIV {
-    margin-left: 15%;
-    margin-top: 2%;
-    width: 200px;
-    height: 200px;
-}
-#imageA {
-    width: 100%;
-    height: 100%;
-}
-#image {
-    max-height: 100%;
-    max-width: 100%;
-}
-#timeWarning {
-    text-align: center;
-    position: absolute;
-    top: 40%;
-    left: 40%;
-    height: 180px;
-    width: 300px;
-    background-color: aliceblue;
-    font-family: Textt;
-    border-radius: 10px;
-    border: 1px solid #dddddd;
-}
-#timeWarningText {
-    font-size: 20px;
-    font-family: Textt;
-    color: black;
-    margin: 20px;
-    margin-top: 40px;
+  background-color: black;
 }
