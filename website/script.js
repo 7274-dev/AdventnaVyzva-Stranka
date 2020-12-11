@@ -689,6 +689,22 @@ function starClick() {
   };
 };
 
+function getDateName() {
+  var dateObj = new Date();
+  var weekday = dateObj.toLocaleString("sk", { weekday: "long" });
+  return weekday;
+};
+
+function isWeekend() {
+  var dayName = getDateName();
+  console.log(dayName);
+  if (dayName=="sobota" || dayName=="nedela") {
+      return true;
+  } else {
+      return false;
+  };
+};
+
 function inTimeAllowed() {
   if (!access && !isWeekend()) {
       var date = new Date();
@@ -754,7 +770,9 @@ function on_load() {
 
   document.getElementById("descriptioncontainer").removeChild(inputFile);
   document.getElementById("descriptioncontainer").removeChild(buttonFile);
-  document.getElementById("main").removeChild(timeWarning);
+  if (timeWarning.parentElement == document.getElementById("main")) {
+    document.getElementById("main").removeChild(timeWarning);
+  }
 
   document.getElementById("star").onclick = function(e) {
     starClick();
@@ -773,10 +791,13 @@ function alertUser(text) {
       var p = document.createElement("p");
       var button = document.createElement("button");
       div.id = "alertDiv";
+      div.classList.add("fixed-top");
+      div.classList.add("mx-auto");
       p.innerHTML = text;
       p.id = "alertP";
       button.innerHTML = "Ok";
       button.id = "alertButton";
+      button.classList.add("mx-auto");
       button.onclick = function () {
           document.body.removeChild(div);
           unBlur();
