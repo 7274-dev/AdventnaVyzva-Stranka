@@ -619,9 +619,6 @@ function sendHomework() {
             readData(homework[i], callback);
             alertUser("Úloha úspešne odovzdaná! Výborne!");
         };
-        try {
-            document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
-        } catch {};
         document.getElementById("description").innerHTML = startText;
     } else {
         alertUser("Niesú pridané žiadne súbory!");
@@ -684,6 +681,9 @@ function hideInputControls() {
     console.log("Hiding " + inputElement + buttonElement);
     document.getElementById("description").removeChild(inputElement);
     document.getElementById("description").removeChild(buttonElement);
+    try {
+        document.getElementById("description").removeChild(document.getElementById("audio"));
+    } catch {};
 };
 
 function showIntroduction() {
@@ -741,7 +741,7 @@ function on_click(event) {
             };
             if (getDate() >= dayNumber) {
                 if (audioDisplayed) {
-                    document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
+                    document.getElementById("description").removeChild(document.getElementById("audio"));
                     audioDisplayed = false;
                 };
                 var audio = document.createElement("audio");
