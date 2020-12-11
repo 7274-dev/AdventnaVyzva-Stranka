@@ -1,8 +1,6 @@
 var backendURL = "https://ivik.synology.me/";
 var devPassword = "c74d067bc96afb28edb526b5646c1a9319fd34879d313d4c6c55d0d4133c4d3f";
 
-const inputFile = document.getElementById("inputFile");
-const buttonFile = document.getElementById("buttonFile");
 const descriptionContainer = document.getElementById("descriptioncontainer")
 const loginInput = document.getElementById("loginInput");
 var timeWarning = document.getElementById("timeWarning");
@@ -940,11 +938,14 @@ function on_load() {
         writeCookie("balls", ballImageIndexes);
     };
 
-    document.getElementById("descriptioncontainer").removeChild(inputFile);
-    document.getElementById("descriptioncontainer").removeChild(buttonFile);
+    if (document.getElementById("inputFile") != null) {
+        document.getElementById("descriptioncontainer").removeChild(document.getElementById("inputFile"));
+        document.getElementById("descriptioncontainer").removeChild(document.getElementById("buttonFile"));
+    };
+    
     if (timeWarning.parentElement == document.getElementById("main")) {
         document.getElementById("main").removeChild(timeWarning);
-    }
+    };
 
     document.getElementById("star").onclick = function(e) {
         starClick();
