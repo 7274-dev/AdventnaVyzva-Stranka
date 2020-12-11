@@ -624,6 +624,8 @@ function sendHomework() {
         alertUser("Niesú pridané žiadne súbory!");
     };
     try {hideInputControls();} catch {};
+    document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
+    audioDisplayed = false;
 };
 
 // is there a better way to do this?
@@ -678,11 +680,9 @@ function getHomeworkStatus(day) {
 function hideInputControls() {
     var inputElement = document.getElementById("inputFile");
     var buttonElement = document.getElementById("buttonFile");
-    console.log("Hiding " + inputElement + buttonElement);
-    document.getElementById("description").removeChild(inputElement);
-    document.getElementById("description").removeChild(buttonElement);
     try {
-        document.getElementById("description").removeChild(document.getElementById("audio"));
+        document.getElementById("description").removeChild(inputElement);
+        document.getElementById("description").removeChild(buttonElement);
     } catch {};
 };
 
@@ -741,7 +741,7 @@ function on_click(event) {
             };
             if (getDate() >= dayNumber) {
                 if (audioDisplayed) {
-                    document.getElementById("description").removeChild(document.getElementById("audio"));
+                    document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
                     audioDisplayed = false;
                 };
                 var audio = document.createElement("audio");
