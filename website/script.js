@@ -614,7 +614,7 @@ function sendHomework() {
             sendHomeworkRequest.open("POST", url);
             sendHomeworkRequest.setRequestHeader("Content-Type", "application/json");;
             sendHomeworkRequest.send(JSON.stringify(jsonData));
-
+            hideInputControls();
         };
         for (var i = 0; i < homework.length; i++) {
             readData(homework[i], callback);
@@ -635,14 +635,14 @@ function showInputControls() {
     // <input id="inputFile" class="row" type="file" accept="image/*" multiple>
     var inputElement = document.createElement("input");
     inputElement.id = "inputFile";
-    inputElement.classList.add("row")
+    inputElement.classList.add("row");
     inputElement.type = "file";
     inputElement.accept = "image/*"
     inputElement.multiple = true;
 
     // <button id="buttonFile" class ="row" onclick=sendHomework()>Odovzdať úlohu</button>
     var sendButton = document.createElement("button");
-    sendButton.id = "buttonFile"
+    sendButton.id = "buttonFile";
     sendButton.classList.add("row");
     sendButton.onclick = sendHomework;
     sendButton.textContent = "Odovzdať úlohu";
@@ -682,7 +682,6 @@ function getHomeworkStatus(day) {
 function hideInputControls() {
     document.getElementById("descriptioncontainer").removeChild(document.getElementById("inputFile"));
     document.getElementById("descriptioncontainer").removeChild(document.getElementById("buttonFile"));
-
 }
 
 function showIntroduction() {
@@ -701,7 +700,7 @@ function on_click(event) {
         var dayNumber = element.innerHTML;
         // listOfNumbers.push(dayNumber);
         // easterEgg();
-        if (getDate() <= dayNumber) {
+        if (getDate() < dayNumber) {
             alertUser("Tento deň nie je k dispozícii, počkaj si :)");
         } else {
             document.getElementById("text-heading").innerHTML = "Deň " + dayNumber;
@@ -872,7 +871,6 @@ function getDateName() {
 
 function isWeekend() {
     var dayName = getDateName();
-    console.log(dayName);
     if (dayName == "sobota" || dayName == "nedela") {
         return true;
     } else {
