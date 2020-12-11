@@ -18,7 +18,7 @@ var dayOpened = undefined;
 var alertDisplayed = false;
 var audioDisplayed = false;
 const startText = document.getElementById("descriptioncontainer").innerHTML;
-var easterEggFound = false;
+var listOfOpenedBalls = [];
 
 function sha256(ascii) {
     function rightRotate(value, amount) {
@@ -619,19 +619,31 @@ function sendHomework() {
             sendHomeworkRequest.open("POST", url);
             sendHomeworkRequest.setRequestHeader("Content-Type", "application/json");;
             sendHomeworkRequest.send(JSON.stringify(jsonData));
-
         };
         for (var i = 0; i < homework.length; i++) {
             readData(homework[i], callback);
             alertUser("Úloha úspešne odovzdaná! Výborne!");
         };
-        try {
-            document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
-        } catch {};
         document.getElementById("description").innerHTML = startText;
-
     } else {
         alertUser("Niesú pridané žiadne súbory!");
+    };
+    try {hideInputControls();} catch {};
+    document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
+    audioDisplayed = false;
+};
+
+function easterEgg() {
+    var listOfNumbers = listOfOpenedBalls;
+    if (!getCookie("easterEgg")) {
+        for(let i = 0; i < listOfNumbers.length; i++){
+            if (listOfNumbers[i] == 7 && listOfNumbers[i+1] == 2 && listOfNumbers[i+2] == 7 && listOfNumbers[i+3] == 4) {
+                listOfNumbers = [];
+                alertUser("Gratulujeme! Našiel si EasterEgg :)");
+                writeCookie("easterEgg", "true");
+                break;
+            };
+        };
     };
 };
 
@@ -640,20 +652,17 @@ function showInputControls() {
     // <input id="inputFile" class="row" type="file" accept="image/*" multiple>
     var inputElement = document.createElement("input");
     inputElement.id = "inputFile";
-    inputElement.classList.add("row")
+    inputElement.classList.add("row");
     inputElement.type = "file";
     inputElement.accept = "image/*"
     inputElement.multiple = true;
 
     // <button id="buttonFile" class ="row" onclick=sendHomework()>Odovzdať úlohu</button>
     var sendButton = document.createElement("button");
-    sendButton.id = "buttonFile"
+    sendButton.id = "buttonFile";
     sendButton.classList.add("row");
     sendButton.onclick = sendHomework;
     sendButton.textContent = "Odovzdať úlohu";
-
-    console.log(sendButton);
-    console.log(inputElement);
 
     document.getElementById("descriptioncontainer").appendChild(inputElement);
     document.getElementById("descriptioncontainer").appendChild(sendButton);
@@ -667,17 +676,20 @@ function getHomeworkStatus(day) {
 };
 
 function hideInputControls() {
-    document.getElementById("descriptioncontainer").removeChild(document.getElementById("inputFile"));
-    document.getElementById("descriptioncontainer").removeChild(document.getElementById("buttonFile"));
-
-}
+    var inputElement = document.getElementById("inputFile");
+    var buttonElement = document.getElementById("buttonFile");
+    try {
+        document.getElementById("description").removeChild(inputElement);
+        document.getElementById("description").removeChild(buttonElement);
+    } catch {};
+};
 
 function showIntroduction() {
     document.getElementById("text-heading").innerHTML = "Inštrukcie";
     document.getElementById("descriptioncontainer").innerHTML = startText;
-    hideInputControls();
+    try {hideInputControls()} catch {};
     EPPZScrollTo.scrollVerticalToElementById("descriptioncontainer", 50);
-}
+};
 
 function on_click(event) {
     if (access) {
@@ -688,11 +700,13 @@ function on_click(event) {
         var dayNumber = element.innerHTML;
         // listOfNumbers.push(dayNumber);
         // easterEgg();
-        if (getDate() <= dayNumber) {
+        if (getDate() < dayNumber) {
             alertUser("Tento deň nie je k dispozícii, počkaj si :)");
         } else {
             document.getElementById("text-heading").innerHTML = "Deň " + dayNumber;
             dayOpened = dayNumber;
+            listOfOpenedBalls.push(dayNumber);
+            easterEgg();
             const http = new XMLHttpRequest();
 
             var url = backendURL + "text?day=" + dayNumber;
@@ -735,7 +749,6 @@ function on_click(event) {
                 audio.id = "audio";
                 audio.controls = true;
                 audioDisplayed = true;
-                console.log(audio);
                 document.getElementById("descriptioncontainer").appendChild(audio);
             };
             EPPZScrollTo.scrollVerticalToElementById("descriptioncontainer", 50);
@@ -818,7 +831,6 @@ function login() {
         var name = getCookie("loginName");
         setWindowData(name);
         unBlur();
-        console.log("i am out there");
         document.getElementById("main").removeChild(document.getElementById("login"));
         onloadBreakBall();
         showHiddenElements();
@@ -859,7 +871,6 @@ function getDateName() {
 
 function isWeekend() {
     var dayName = getDateName();
-    console.log(dayName);
     if (dayName == "sobota" || dayName == "nedela") {
         return true;
     } else {
@@ -868,7 +879,7 @@ function isWeekend() {
 };
 
 function inTimeAllowed() {
-    if (!access && !isWeekend()) {
+    if (!access && !isWeekend()) {// basicly if you have access or its weekend you go in no matter what
         var date = new Date();
         var hour = date.getHours();
         if (hour >= 13 && hour <= 20) {
@@ -924,9 +935,9 @@ function on_load() {
         positions = positions_big;
     } else {
         positions = positions_small;
-    }
+    };
 
-    for (var i = 0; i < positions.length; i++) {
+    for (let i = 0; i < positions.length; i++) {
         var currentPosition = positions[i];
         var currentBall = document.createElement("div");
 
@@ -954,24 +965,32 @@ function on_load() {
 
         ballContainer.appendChild(currentBall);
     };
+    starConfig();
+
     if (!cookieExists) {
         writeCookie("balls", ballImageIndexes);
     };
 
-    document.getElementById("descriptioncontainer").removeChild(inputFile);
-    document.getElementById("descriptioncontainer").removeChild(buttonFile);
+    if (document.getElementById("inputFile") != null) {
+        document.getElementById("descriptioncontainer").removeChild(document.getElementById("inputFile"));
+        document.getElementById("descriptioncontainer").removeChild(document.getElementById("buttonFile"));
+    };
+    
     if (timeWarning.parentElement == document.getElementById("main")) {
         document.getElementById("main").removeChild(timeWarning);
-    }
-
-    document.getElementById("star").onclick = function(e) {
-        starClick();
     };
 
     if (!inTimeAllowed()) {
         inTimeWarning();
     };
 
+};
+
+function starConfig() {
+    var star = document.getElementById("star")
+    star.onclick = function(e) {
+        starClick();
+    };
 };
 
 function alertUser(text) {
@@ -1005,21 +1024,6 @@ function isBroken(ballNumber) {
     var imageSrc = ballContainer.style.backgroundImage;
     if (imageSrc.includes("_broken")) return true
     else return false;
-};
-
-function getRequest(url) {
-    var responseText = "";
-    const xml = new XMLHttpRequest();
-    xml.open("GET", url);
-
-    http.onreadystatechange = function() {
-        checkRequestResponse(this);
-    };
-
-    xml.send();
-    while (responseText == "") { //we dont have better idea :D
-    };
-    return responseText;
 };
 
 function checkRequestResponse(request) {
