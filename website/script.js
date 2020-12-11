@@ -705,7 +705,6 @@ function inTimeAllowed() {
 };
 
 function on_load() {
-  alertUser("test text");
   login();
   var ballContainer = document.getElementById("treecontainer");
   var ballImageIndexes = [];
@@ -930,4 +929,4 @@ document.addEventListener('DOMContentLoaded', function(){
   document.head.append(script);
 });
 
-on_load();
+window.onload = () => on_load();
