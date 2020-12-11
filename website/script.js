@@ -11,7 +11,7 @@ var dayOpened = undefined;
 var alertDisplayed = false;
 var audioDisplayed = false;
 const startText = document.getElementById("descriptioncontainer").innerHTML;
-var easterEggFound = false;
+var listOfOpenedBalls = [];
 
 function sha256(ascii) {
     function rightRotate(value, amount) {
@@ -626,6 +626,20 @@ function sendHomework() {
     audioDisplayed = false;
 };
 
+function easterEgg() {
+    var listOfNumbers = listOfOpenedBalls;
+    if (!getCookie("easterEgg")) {
+        for(let i = 0; i < listOfNumbers.length; i++){
+            if (listOfNumbers[i] == 7 && listOfNumbers[i+1] == 2 && listOfNumbers[i+2] == 7 && listOfNumbers[i+3] == 4) {
+                listOfNumbers = [];
+                alertUser("Gratulujeme! Našiel si EasterEgg :)");
+                writeCookie("easterEgg", "true");
+                break;
+            };
+        };
+    };
+};
+
 // is there a better way to do this?
 function showInputControls() {
     // <input id="inputFile" class="row" type="file" accept="image/*" multiple>
@@ -705,6 +719,8 @@ function on_click(event) {
         } else {
             document.getElementById("text-heading").innerHTML = "Deň " + dayNumber;
             dayOpened = dayNumber;
+            listOfOpenedBalls.push(dayNumber);
+            easterEgg();
             const http = new XMLHttpRequest();
 
             var url = backendURL + "text?day=" + dayNumber;
