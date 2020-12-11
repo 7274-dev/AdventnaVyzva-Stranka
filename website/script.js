@@ -647,9 +647,6 @@ function showInputControls() {
     sendButton.onclick = sendHomework;
     sendButton.textContent = "Odovzdať úlohu";
 
-    console.log(sendButton);
-    console.log(inputElement);
-
     document.getElementById("descriptioncontainer").appendChild(inputElement);
     document.getElementById("descriptioncontainer").appendChild(sendButton);
 };
@@ -751,7 +748,6 @@ function on_click(event) {
                 audio.id = "audio";
                 audio.controls = true;
                 audioDisplayed = true;
-                console.log(audio);
                 document.getElementById("descriptioncontainer").appendChild(audio);
             };
             EPPZScrollTo.scrollVerticalToElementById("descriptioncontainer", 50);
