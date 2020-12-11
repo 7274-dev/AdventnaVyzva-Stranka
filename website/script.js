@@ -531,12 +531,12 @@ function on_click(event) {
   if (enableClicks) {
     element = event.target; // rip IE 6-8 // :DDD
     var dayNumber = element.innerHTML;
-    document.getElementById("text-heading").innerHTML = "Deň " + dayNumber
     // listOfNumbers.push(dayNumber);
     // easterEgg();
     if (getDate() <= dayNumber) {
         alertUser("Tento deň nie je k dispozícii, počkaj si :)");
     } else {
+        document.getElementById("text-heading").innerHTML = "Deň " + dayNumber;
         dayOpened = dayNumber;
         const http = new XMLHttpRequest();
 
@@ -544,7 +544,7 @@ function on_click(event) {
         http.open("GET", url);
 
         var description = document.getElementById("description");
-        
+
         http.onreadystatechange = function() {
             if (this.responseText) {
                 if (wasRequestSuccessful(this) && this.responseText != "") {
