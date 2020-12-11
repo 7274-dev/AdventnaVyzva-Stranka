@@ -920,9 +920,9 @@ function on_load() {
         positions = positions_big;
     } else {
         positions = positions_small;
-    }
+    };
 
-    for (var i = 0; i < positions.length; i++) {
+    for (let i = 0; i < positions.length; i++) {
         var currentPosition = positions[i];
         var currentBall = document.createElement("div");
 
@@ -950,6 +950,8 @@ function on_load() {
 
         ballContainer.appendChild(currentBall);
     };
+    starConfig();
+
     if (!cookieExists) {
         writeCookie("balls", ballImageIndexes);
     };
@@ -963,14 +965,18 @@ function on_load() {
         document.getElementById("main").removeChild(timeWarning);
     };
 
-    document.getElementById("star").onclick = function(e) {
-        starClick();
-    };
-
     if (!inTimeAllowed()) {
         inTimeWarning();
     };
 
+};
+
+function starConfig() {
+    var star = document.getElementById("star")
+    star.onclick = function(e) {
+        starClick();
+    };
+    star.innerHTML = "24";
 };
 
 function alertUser(text) {
