@@ -384,6 +384,12 @@ const ballImages = [
 
 var ballResourcePath = "img/balls/";
 
+function getDay() {
+  var date = new Date();
+  var day = date.getDate();
+  return day;
+};
+
 //return random number
 function randomInt(bound) {
   return Math.floor(Math.random() * bound);
@@ -529,6 +535,7 @@ function on_click(event) {
       enableClicks = true;
   };
   if (enableClicks) {
+    if (getDay()) {
       element = event.target; // rip IE 6-8 // :DDD
       var dayNumber = element.innerHTML;
       document.getElementById("text-heading").innerHTML = "Deň " + dayNumber
@@ -587,6 +594,9 @@ function on_click(event) {
           };
           EPPZScrollTo.scrollVerticalToElementById("descriptioncontainer", 50);
       };
+    } else {
+      alertUser("Tento deň nie je k dispozícii, počkaj si :)");
+    };
   };
 };
 
