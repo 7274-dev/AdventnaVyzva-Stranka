@@ -614,7 +614,6 @@ function sendHomework() {
             sendHomeworkRequest.open("POST", url);
             sendHomeworkRequest.setRequestHeader("Content-Type", "application/json");;
             sendHomeworkRequest.send(JSON.stringify(jsonData));
-            hideInputControls();
         };
         for (var i = 0; i < homework.length; i++) {
             readData(homework[i], callback);
@@ -624,10 +623,10 @@ function sendHomework() {
             document.getElementById("descriptionContainer").removeChild(document.getElementById("audio"));
         } catch {};
         document.getElementById("description").innerHTML = startText;
-
     } else {
         alertUser("Niesú pridané žiadne súbory!");
     };
+    try {hideInputControls();} catch {};
 };
 
 // is there a better way to do this?
@@ -680,16 +679,19 @@ function getHomeworkStatus(day) {
 };
 
 function hideInputControls() {
-    document.getElementById("descriptioncontainer").removeChild(document.getElementById("inputFile"));
-    document.getElementById("descriptioncontainer").removeChild(document.getElementById("buttonFile"));
-}
+    var inputElement = document.getElementById("inputFile");
+    var buttonElement = document.getElementById("buttonFile");
+    console.log("Hiding " + inputElement + buttonElement);
+    document.getElementById("description").removeChild(inputElement);
+    document.getElementById("description").removeChild(buttonElement);
+};
 
 function showIntroduction() {
     document.getElementById("text-heading").innerHTML = "Inštrukcie";
     document.getElementById("descriptioncontainer").innerHTML = startText;
-    hideInputControls();
+    try {hideInputControls()} catch {};
     EPPZScrollTo.scrollVerticalToElementById("descriptioncontainer", 50);
-}
+};
 
 function on_click(event) {
     if (access) {
@@ -830,7 +832,6 @@ function login() {
         var name = getCookie("loginName");
         setWindowData(name);
         unBlur();
-        console.log("i am out there");
         document.getElementById("main").removeChild(document.getElementById("login"));
         onloadBreakBall();
         showHiddenElements();
