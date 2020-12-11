@@ -976,7 +976,6 @@ function starConfig() {
     star.onclick = function(e) {
         starClick();
     };
-    star.innerHTML = "24";
 };
 
 function alertUser(text) {

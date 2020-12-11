@@ -217,6 +217,10 @@ body {
   visibility: hidden;
 }
 
+#star {
+  cursor: pointer;
+}
+
 /*CUSTOM SCROLL BAR*/
 /*width*/
 ::-webkit-scrollbar {
