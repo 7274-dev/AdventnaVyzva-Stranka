@@ -384,12 +384,6 @@ const ballImages = [
 
 var ballResourcePath = "img/balls/";
 
-function getDay() {
-  var date = new Date();
-  var day = date.getDate();
-  return day;
-};
-
 //return random number
 function randomInt(bound) {
   return Math.floor(Math.random() * bound);
@@ -398,7 +392,7 @@ function randomInt(bound) {
 //return day
 function getDate() {
   var date = new Date;
-  return date.getDay;
+  return date.getDate();
 };
 
 //change ball image to broken ball
@@ -535,67 +529,62 @@ function on_click(event) {
       enableClicks = true;
   };
   if (enableClicks) {
-    if (getDay()) {
-      element = event.target; // rip IE 6-8 // :DDD
-      var dayNumber = element.innerHTML;
-      document.getElementById("text-heading").innerHTML = "Deň " + dayNumber
-      // listOfNumbers.push(dayNumber);
-      // easterEgg();
-      if (getDate() < dayNumber) {
-          alertUser("Tento deň nie je k dispozícii, počkaj si :)");
-      }
-      else {
-          dayOpened = dayNumber;
-          const http = new XMLHttpRequest();
-
-          var url = backendURL + "text?day=" + dayNumber;
-          http.open("GET", url);
-
-          var description = document.getElementById("description");
-
-          http.onreadystatechange = function() {
-              if (this.responseText) {
-                  if (wasRequestSuccessful(this) && this.responseText != "") {
-                      description.innerHTML = JSON.parse(this.responseText).response;
-                      // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
-                  }
-                  else if (this.responseText == "") {
-                      description.innerHTML = "Server down";
-                  }
-                  else if (this.readyState == XMLHttpRequest.DONE) {
-                      description.innerHTML = JSON.parse(this.responseText).response;
-                      // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
-                  }
-                  else {
-                      description.innerHTML = "Error!";
-                  };
-              };
-          };
-          http.send();
-          if (!getHomeworkStatus(dayNumber)) {
-              try {hideInputControls();} catch {};
-              
-              showInputControls();
-          } else {
-              alertUser("Táto úloha je už hotová!");
-          };
-          if (getDate() >= dayNumber) {
-              if (audioDisplayed) {
-                  document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
-                  audioDisplayed = false;
-              };
-              var audio = document.createElement("audio");
-              audio.src = "resources/nahravky/day" + dayNumber + ".wav";
-              audio.id = "audio";
-              audio.controls = true;
-              audioDisplayed = true;
-              console.log(audio);
-              document.getElementById("descriptioncontainer").appendChild(audio);
-          };
-          EPPZScrollTo.scrollVerticalToElementById("descriptioncontainer", 50);
-      };
+    element = event.target; // rip IE 6-8 // :DDD
+    var dayNumber = element.innerHTML;
+    document.getElementById("text-heading").innerHTML = "Deň " + dayNumber
+    // listOfNumbers.push(dayNumber);
+    // easterEgg();
+    if (getDate() <= dayNumber) {
+        alertUser("Tento deň nie je k dispozícii, počkaj si :)");
     } else {
-      alertUser("Tento deň nie je k dispozícii, počkaj si :)");
+        dayOpened = dayNumber;
+        const http = new XMLHttpRequest();
+
+        var url = backendURL + "text?day=" + dayNumber;
+        http.open("GET", url);
+
+        var description = document.getElementById("description");
+        
+        http.onreadystatechange = function() {
+            if (this.responseText) {
+                if (wasRequestSuccessful(this) && this.responseText != "") {
+                    description.innerHTML = JSON.parse(this.responseText).response;
+                    // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
+                }
+                else if (this.responseText == "") {
+                    description.innerHTML = "Server down";
+                }
+                else if (this.readyState == XMLHttpRequest.DONE) {
+                    description.innerHTML = JSON.parse(this.responseText).response;
+                    // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
+                }
+                else {
+                    description.innerHTML = "Error!";
+                };
+            };
+        };
+        http.send();
+        if (!getHomeworkStatus(dayNumber)) {
+            try {hideInputControls();} catch {};
+            
+            showInputControls();
+        } else {
+            alertUser("Táto úloha je už hotová!");
+        };
+        if (getDate() >= dayNumber) {
+            if (audioDisplayed) {
+                document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
+                audioDisplayed = false;
+            };
+            var audio = document.createElement("audio");
+            audio.src = "resources/nahravky/day" + dayNumber + ".wav";
+            audio.id = "audio";
+            audio.controls = true;
+            audioDisplayed = true;
+            console.log(audio);
+            document.getElementById("descriptioncontainer").appendChild(audio);
+        };
+        EPPZScrollTo.scrollVerticalToElementById("descriptioncontainer", 50);
     };
   };
 };
