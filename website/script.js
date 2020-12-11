@@ -885,7 +885,7 @@ function isWeekend() {
 };
 
 function inTimeAllowed() {
-    if (!access && !isWeekend()) {
+    if (!access && !isWeekend()) {// basicly if you have access or its weekend you go in no matter what
         var date = new Date();
         var hour = date.getHours();
         if (hour >= 13 && hour <= 20) {
@@ -992,21 +992,6 @@ function isBroken(ballNumber) {
     var imageSrc = ballContainer.style.backgroundImage;
     if (imageSrc.includes("_broken")) return true
     else return false;
-};
-
-function getRequest(url) {
-    var responseText = "";
-    const xml = new XMLHttpRequest();
-    xml.open("GET", url);
-
-    http.onreadystatechange = function() {
-        checkRequestResponse(this);
-    };
-
-    xml.send();
-    while (responseText == "") { //we dont have better idea :D
-    };
-    return responseText;
 };
 
 function checkRequestResponse(request) {
