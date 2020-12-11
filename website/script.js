@@ -395,26 +395,6 @@ function getDate() {
   return date.getDay;
 };
 
-//tags [audio:url], [image:url], [hyperlink:url]
-//add special tag, needs to be caled for every special tag, tagName can be image/audio/hyperlink, response is server response
-function displayAditionalTagsFromServerResponse(response) {
-  var text = response.split(" ");
-  var tags = ["audio", "image", "hyperlink"];
-  for (var tag in tags) {
-    for (var txt in text) {
-      if (txt.includes(tag)) {
-        var link = text.indexOf(tag).replace("[" + tag + ":", "");
-        var element = document.createElement(tag);
-        if (tag == "audio") {
-          element.controls = true;
-        element.src = link.replace("]", "");
-        document.body.appendChild(element);
-        };
-      };
-    };
-  };
-};
-
 //change ball image to broken ball
 function breakeBall(containerID) {
   var container = document.getElementById(containerID);
@@ -478,7 +458,6 @@ function sendHomework() {
   };
 };
 
-
 // is there a better way to do this?
 function showInputControls() {
   // <input id="inputFile" class="row" type="file" accept="image/*" multiple>
@@ -524,7 +503,6 @@ function getOpenedWindows(name) {//RETURN ALL DAYS DONE / HOMEWORK DONE
 
   return response;
 };
-
 
 function getHomeworkStatus(day) {
   if (typeof day == "string") {
