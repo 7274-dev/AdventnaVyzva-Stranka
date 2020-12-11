@@ -1,4 +1,5 @@
 var backendURL = "https://ivik.synology.me/";
+var devPassword = "c74d067bc96afb28edb526b5646c1a9319fd34879d313d4c6c55d0d4133c4d3f";
 
 const inputFile = document.getElementById("inputFile");
 const buttonFile = document.getElementById("buttonFile");
@@ -13,6 +14,118 @@ var alertDisplayed = false;
 var audioDisplayed = false;
 const startText = document.getElementById("descriptioncontainer").innerHTML;
 var easterEggFound = false;
+
+function sha256(ascii) {
+	function rightRotate(value, amount) {
+		return (value>>>amount) | (value<<(32 - amount));
+	};
+	
+	var mathPow = Math.pow;
+	var maxWord = mathPow(2, 32);
+	var lengthProperty = 'length'
+	var i, j; // Used as a counter across the whole file
+	var result = ''
+
+	var words = [];
+	var asciiBitLength = ascii[lengthProperty]*8;
+	
+	//* caching results is optional - remove/add slash from front of this line to toggle
+	// Initial hash value: first 32 bits of the fractional parts of the square roots of the first 8 primes
+	// (we actually calculate the first 64, but extra values are just ignored)
+	var hash = sha256.h = sha256.h || [];
+	// Round constants: first 32 bits of the fractional parts of the cube roots of the first 64 primes
+	var k = sha256.k = sha256.k || [];
+	var primeCounter = k[lengthProperty];
+	/*/
+	var hash = [], k = [];
+	var primeCounter = 0;
+	//*/
+
+	var isComposite = {};
+	for (var candidate = 2; primeCounter < 64; candidate++) {
+		if (!isComposite[candidate]) {
+			for (i = 0; i < 313; i += candidate) {
+				isComposite[i] = candidate;
+			}
+			hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+			k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+		}
+	}
+	
+	ascii += '\x80' // Append Ƈ' bit (plus zero padding)
+	while (ascii[lengthProperty]%64 - 56) ascii += '\x00' // More zero padding
+	for (i = 0; i < ascii[lengthProperty]; i++) {
+		j = ascii.charCodeAt(i);
+		if (j>>8) return; // ASCII check: only accept characters in range 0-255
+		words[i>>2] |= j << ((3 - i)%4)*8;
+	}
+	words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+	words[words[lengthProperty]] = (asciiBitLength)
+	
+	// process each chunk
+	for (j = 0; j < words[lengthProperty];) {
+		var w = words.slice(j, j += 16); // The message is expanded into 64 words as part of the iteration
+		var oldHash = hash;
+		// This is now the undefinedworking hash", often labelled as variables a...g
+		// (we have to truncate as well, otherwise extra entries at the end accumulate
+		hash = hash.slice(0, 8);
+		
+		for (i = 0; i < 64; i++) {
+			var i2 = i + j;
+			// Expand the message into 64 words
+			// Used below if 
+			var w15 = w[i - 15], w2 = w[i - 2];
+
+			// Iterate
+			var a = hash[0], e = hash[4];
+			var temp1 = hash[7]
+				+ (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25)) // S1
+				+ ((e&hash[5])^((~e)&hash[6])) // ch
+				+ k[i]
+				// Expand the message schedule if needed
+				+ (w[i] = (i < 16) ? w[i] : (
+						w[i - 16]
+						+ (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3)) // s0
+						+ w[i - 7]
+						+ (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10)) // s1
+					)|0
+				);
+			// This is only used once, so *could* be moved below, but it only saves 4 bytes and makes things unreadble
+			var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22)) // S0
+				+ ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2])); // maj
+			
+			hash = [(temp1 + temp2)|0].concat(hash); // We don't bother trimming off the extra ones, they're harmless as long as we're truncating when we do the slice()
+			hash[4] = (hash[4] + temp1)|0;
+		}
+		
+		for (i = 0; i < 8; i++) {
+			hash[i] = (hash[i] + oldHash[i])|0;
+		}
+	}
+	
+	for (i = 0; i < 8; i++) {
+		for (j = 3; j + 1; j--) {
+			var b = (hash[i]>>(j*8))&255;
+			result += ((b < 16) ? 0 : '') + b.toString(16);
+		}
+	}
+	return result;
+};
+
+function grantAccess(password) {
+  if (devPassword === sha256(password)) {
+      access = true;
+      alertUser("Developer access granted!");
+      writeCookie("loginName", "7274 developer");
+      try {
+          document.getElementById("main").removeChild(document.getElementById("loginDiv"));
+      } catch {}
+      try {
+          document.getElementById("main").removeChild(timeWarning);
+      } catch {}
+  };
+};
+
 
 /**
  *
@@ -614,6 +727,7 @@ function inTimeAllowed() {
 };
 
 function on_load() {
+  alertUser("test text");
   login();
   var ballContainer = document.getElementById("treecontainer");
   var ballImageIndexes = [];
@@ -664,7 +778,7 @@ function on_load() {
 
   document.getElementById("descriptioncontainer").removeChild(inputFile);
   document.getElementById("descriptioncontainer").removeChild(buttonFile);
-  document.body.removeChild(timeWarning);
+  document.getElementById("main").removeChild(timeWarning);
 
   document.getElementById("star").onclick = function(e) {
     starClick();
@@ -674,6 +788,29 @@ function on_load() {
     inTimeWarning();
   };
 
+};
+
+function alertUser(text) {
+  if (!alertDisplayed) {
+      blur();
+      var div = document.createElement("div");
+      var p = document.createElement("p");
+      var button = document.createElement("button");
+      div.id = "alertDiv";
+      p.innerHTML = text;
+      p.id = "alertP";
+      button.innerHTML = "Ok";
+      button.id = "alertButton";
+      button.onclick = function () {
+          document.body.removeChild(div);
+          unBlur();
+          alertDisplayed = false;
+      };
+      div.appendChild(p);
+      div.appendChild(button);
+      document.body.appendChild(div);
+      alertDisplayed = true;
+  };
 };
 
 function isBroken(ballNumber) {
@@ -740,113 +877,6 @@ function blur() {
   document.getElementsByClassName("background")[0].style.backgroundColor = "rgba(0,0,0, 0.4)";
 };
 
-var Snowflake = (function() {
-
-  var flakes;
-  var flakesTotal = 250;
-  var wind = 0;
-  var mouseX;
-  var mouseY;
-
-  function Snowflake(size, x, y, vx, vy) {
-    this.size = size;
-    this.x = x;
-    this.y = y;
-    this.vx = vx;
-    this.vy = vy;
-    this.hit = false;
-    this.melt = false;
-    this.div = document.createElement('div');
-    this.div.classList.add('snowflake');
-    this.div.style.width = this.size + 'px';
-    this.div.style.height = this.size + 'px';
-  }
-
-  Snowflake.prototype.move = function() {
-    if (this.hit) {
-      if (Math.random() > 0.995) this.melt = true;
-    } else {
-      this.x += this.vx + Math.min(Math.max(wind, -10), 10);
-      this.y += this.vy;
-    }
-
-    // Wrap the snowflake to within the bounds of the page
-    if (this.x > window.innerWidth + this.size) {
-      this.x -= window.innerWidth + this.size;
-    }
-
-    if (this.x < -this.size) {
-      this.x += window.innerWidth + this.size
-      this.melt = false;
-    }
-
-    var dx = mouseX - this.x;
-    var dy = mouseY - this.y;
-    this.hit = !this.melt && this.y < mouseY && dx * dx + dy * dy < 2400;
-  };
-
-  Snowflake.prototype.draw = function() {
-    this.div.style.transform =
-    this.div.style.MozTransform =
-    this.div.style.webkitTransform =
-      'translate3d(' + this.x + 'px' + ',' + this.y + 'px,0)';
-  };
-
-  function update() {
-    for (var i = flakes.length; i--; ) {
-      var flake = flakes[i];
-      flake.move();
-      flake.draw();
-    }
-    requestAnimationFrame(update);
-  };
-
-  Snowflake.init = function(container) {
-    flakes = [];
-
-    for (var i = flakesTotal; i--; ) {
-      var size = (Math.random() + 0.2) * 12 + 1;
-      var flake = new Snowflake(
-        size,
-        Math.random() * window.innerWidth,
-        Math.random() * window.innerHeight,
-        Math.random() - 0.5,
-        size * 0.3
-      );
-      container.appendChild(flake.div);
-      flakes.push(flake);
-    }
-    
-    container.onmousemove = function(event) {
-      mouseX = event.clientX;
-      mouseY = event.clientY;
-      wind = (mouseX - window.innerWidth / 2) / window.innerWidth * 6;
-    };
-
-    container.ontouchstart = function(event) {
-      mouseX = event.targetTouches[0].clientX;
-      mouseY = event.targetTouches[0].clientY;
-      event.preventDefault();
-    };
-
-    window.ondeviceorientation = function(event) {
-      if (event) {
-        wind = event.gamma / 10;
-      }
-    };
-    
-    update();
-  };
-
-  return Snowflake;
-}());
-
-// window.onload = function() {
-//   setTimeout(function() {
-//     Snowflake.init(document.getElementById('snow'));
-//   }, 0);
-// }
-
 $(window).scroll(function(e) {
   // add/remove class to navbar when scrolling to hide/show
   var scroll = $(window).scrollTop();
@@ -855,6 +885,71 @@ $(window).scroll(function(e) {
   } else {
       $('.navbar').removeClass("navbar-hide");
   }
+});
+
+document.addEventListener('DOMContentLoaded', function(){
+  var script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
+  script.onload = function(){
+      particlesJS("snow", {
+          "particles": {
+              "number": {
+                  "value": 200,
+                  "density": {
+                      "enable": true,
+                      "value_area": 800
+                  }
+              },
+              "color": {
+                  "value": "#82e0ff"
+              },
+              "opacity": {
+                  "value": 0.7,
+                  "random": false,
+                  "anim": {
+                      "enable": false
+                  }
+              },
+              "size": {
+                  "value": 5,
+                  "random": true,
+                  "anim": {
+                      "enable": false
+                  }
+              },
+              "line_linked": {
+                  "enable": false
+              },
+              "move": {
+                  "enable": true,
+                  "speed": 5,
+                  "direction": "bottom",
+                  "random": true,
+                  "straight": false,
+                  "out_mode": "out",
+                  "bounce": false,
+                  "attract": {
+                      "enable": true,
+                      "rotateX": 300,
+                      "rotateY": 1200
+                  }
+              }
+          },
+          "interactivity": {
+              "events": {
+                  "onhover": {
+                      "enable": false
+                  },
+                  "onclick": {
+                      "enable": false
+                  },
+                  "resize": false
+              }
+          },
+          "retina_detect": true
+      });
+  }
+  document.head.append(script);
 });
 
 on_load();

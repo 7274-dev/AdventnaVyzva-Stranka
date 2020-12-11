@@ -66,63 +66,20 @@ main {
 }
 }
 
+.strong {
+  font-style: italic;
+  font-size: 24px;
+}
 
-.snowflake {
-  color: lig;
-    position: absolute;
-    display: block;
-    position: absolute;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-    -webkit-transform: translateZ(0);
-    -moz-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    -o-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-    background-image: -webkit-radial-gradient(
-      center,
-      circle farthest-corner,
-      rgba(130, 224, 255) 40%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    background-image: -moz-radial-gradient(
-      center,
-      circle farthest-corner,
-      rgba(130, 224, 255) 40%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    background-image: -ms-radial-gradient(
-      center,
-      circle farthest-corner,
-      rgba(130, 224, 255) 40%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    background-image: radial-gradient(
-      center,
-      circle farthest-corner,
-      rgba(130, 224, 255) 40%,
-      rgba(255, 255, 255, 0) 100%
-    );
-  }
-
-  body {
-    margin: 0;
-    /* color: #5691c9; */
-    /* background-color:  #5691c9;; */
-    /* background-image: -webkit-gradient(linear, left top, left bottom, from(#6af), to(#bdf));
-    background-image: -webkit-linear-gradient(#6af, #bdf);
-    background-image: -moz-linear-gradient(#6af, #bdf);
-    background-image: linear-gradient(#6af, #bdf); */
-  }
-
-  #snow {
-    max-height: 50vh;
-    /* position: absolute; */
-  }
+#snow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
 
   .navbar {
     z-index: 5;
