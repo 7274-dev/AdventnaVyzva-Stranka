@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="sk">
+<html lang="en">
     <head>
         <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
         <meta charset="utf-8">
@@ -15,28 +15,63 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
         <!-- <script src="https://code.jquery.com/jquery.min.js"></script> -->
-        <script src="mobile-detect.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" 
             integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" 
             crossorigin="anonymous"></script>
         <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <!-- <script src="jquery.snow.js"></script> -->
+        <style>
+            .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            }
+            @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+            }
+            }
+        </style>
     </head>
-    <body>
-        <div class="blurbackground Blurdiv" id="blurbackground">
-            <div class="blur Blurdiv" id="blur">
-                <div class="position-relative" id="treecontainer">
-                    <img class="img-fluid" id="tree" src="img/stromcek.png">
-                    <img class="img-fluid" id="star" src="img/star.png">
-                    <div id="map_container"><canvas id="map"></canvas></div>
-                    <p id="starNumber">24</p>
+    <body class="background">
+        <!-- https://stackoverflow.com/questions/54164397/bootstrap-4-how-to-make-fixed-top-navbar-disappear-on-scroll -->
+        <nav class="navbar navbar-expand-md fixed-top smart-scroll blur hidden-during-login" onclick="showIntroduction()">
+            <div class="mx-auto">
+                <a class="mx-auto title" style="font-size: x-large;" href="#">Adventná výzva</a>
+            </div>
+        </nav>
+        <div id="snow" class="fixed-top"></div>
+        <main role="main" class="container" id="main">
+            <div class="d-flex justify-content-center col" id="login" style="top: 30vh;">
+                <div id="timeWarning">
+                    <p id="timeWarningText"></p>
                 </div>
-                <h1 class="float-left position-relative" id="title">Adventná Výzva</h1>
-                <div id="descriptionContainer">
-                    <p id="description">Adventná výzva. 
+                <div id="loginDiv" class="d-flex flex-column justify-content-center blur-when-bad-orientation">
+                    <p id="loginText p-2">Prosím zadajte svoje meno:</p>
+                    <input type="text" placeholder="Vaše meno a preizvisko" id="loginInput" class="p-2">
+                    <p id="loginCookieWarning" class="p-2">Súhlasím so spracovaním osobných údajov</p>
+                    <button id="loginButton" class="p-2">Potvrdiť</button>
+                </div>
+            </div>
+            <div class="row blur blurbackground hidden-during-login">
+                <div class="col"></div>
+                <div class="container">
+                    <div class="col" id="treecontainer">
+                        <img class="img-fluid mx-auto d-block image" style="height: 8vh;" id="star" src="img/star.png">
+                        <img class="img-fluid mx-auto d-block image" style="height: 57vh;"  src="img/stromcek.png">
+                        <img class="img-fluid mx-auto d-block image" style="height: 25vh;padding-top: 0.5vh;" src="img/europe_map_done.png">
+                    </div>
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class = "row">
+            <div class="starter-template col text-black hidden-during-login blur">
+                <h1 id="text-heading">Inštrukcie</h1>
+                <div id="descriptioncontainer">
+                    <p class="lead" id="description">Adventná výzva. 
                         V tých dňoch vyšiel rozkaz od cisára Augusta vykonať súpis ľudu po celom svete. Tento prvý súpis sa konal, keď Sýriu spravoval Kvirínius. A všetci šli dať sa zapísať, každý do svojho mesta. Vybral sa aj Jozef z galilejského mesta Nazaret do Judey, do Dávidovho mesta, ktoré sa volá Betlehem, lebo pochádzal z Dávidovho domu a rodu, aby sa dal zapísať s Máriou, svojou manželkou, ktorá bola v po žehnanom stave. Kým tam boli, nadišiel jej čas pôrodu...
                         Ale to už trochu predbieham, pozývam ťa na dobrodružnú cestu do minulosti, počas ktorej budeme putovať nielen v čase, ale aj priestore. Že sa to nedá? To sa ešte uvidí...
                         Každý deň spolu otvoríme jednu guľu na vianočnom stromčeku. Vo vianočnej guli sa ukrýva jedna časť z príbehu, ktorú si budeš môcť vypočuť, a úloha, ktorú môžeš vypracovať. 
@@ -56,21 +91,12 @@
                         Verím, že rovnako ako Joachim budeš aj ty každý deň nedočkavo otvárať jednotlivé gule, aby si sa dozvedel, ako adventný príbeh pokračuje.
                         <br>
                         „Do Betlehema, do Betlehema!“
-                        </p>
-                <input id="inputFile" type="file" accept="image/*" multiple>
-                <button id="buttonFile" onclick=sendHomework()>Odovzdať úlohu</button>
+                    </p>
+                    </p>
                 </div>
             </div>
-        </div>
-        <div id="loginDiv" class="login-prompt d-flex justify-content-center">
-            <p id="loginText">Prosím zadajte svoje meno:</p>
-            <input type="text" placeholder="Vaše meno a preizvisko" id="loginInput"><br>
-            <p id="loginCookieWarning">Súhlasím so spracovaním osobných údajov</p><br>
-            <button id="loginButton">Potvrdiť</button>
-        </div>
-        <div id="timeWarning">
-            <p id="timeWarningText"></p>
-        </div>
-    <script src="script.js"></script>
+        </main>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="script.js"></script>
     </body>
 </html>
