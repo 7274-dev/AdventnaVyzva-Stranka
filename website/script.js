@@ -260,9 +260,7 @@ function getOpenedWindows(name) { //RETURN ALL DAYS DONE / HOMEWORK DONE
 
     var response;
     openedWindowsRequest.onreadystatechange = function() {
-        // console.log(this.responseText);
         if (wasRequestSuccessful(this)) {
-            // console.log(JSON.parse(this.responseText));
             response = JSON.parse(this.responseText).response;
         } else {
             response = null;
@@ -868,7 +866,6 @@ function setWindowData(name) {
     userExistsRequest.open("GET", url);
 
     userExistsRequest.onreadystatechange = function() {
-        // console.log(this.responseText);
         if (wasRequestSuccessful(this)) {
             createUser(name);
         } else {
@@ -885,7 +882,6 @@ function setWindowData(name) {
 function onloadBreakBall() {
     var openedBalls = getOpenedWindows(getCookie("loginName"));
     for (let ball in openedBalls) {
-        console.log("Breaking ball " + ball);
         breakeBall(ball);
     };
 };
@@ -987,9 +983,8 @@ function inTimeAllowed() {
 };
 
 function getOrientation() {
-    console.log(window.orientation % 90 == 0 && window.orientation != 0 ? "landscape" : "portrait");
     return window.orientation % 90 == 0 && window.orientation != 0 ? "landscape" : "portrait";
-}
+};
 
 function on_load() {
     login();
