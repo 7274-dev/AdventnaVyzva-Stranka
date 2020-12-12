@@ -744,6 +744,9 @@ function easterEgg() {
 
 // is there a better way to do this?
 function showInputControls() {
+    if (document.getElementById("inputFile") != null) {
+        hideInputControls();
+    }
     // <input id="inputFile" class="row" type="file" accept="image/*" multiple>
     var inputElement = document.createElement("input");
     inputElement.id = "inputFile";
@@ -773,10 +776,8 @@ function getHomeworkStatus(day) {
 function hideInputControls() {
     var inputElement = document.getElementById("inputFile");
     var buttonElement = document.getElementById("buttonFile");
-    try {
-        document.getElementById("description").removeChild(inputElement);
-        document.getElementById("description").removeChild(buttonElement);
-    } catch {};
+    document.getElementById("descriptioncontainer").removeChild(inputElement);
+    document.getElementById("descriptioncontainer").removeChild(buttonElement);
 };
 
 function showIntroduction() {
@@ -826,10 +827,6 @@ function on_click(event) {
             };
             http.send();
             if (!getHomeworkStatus(dayNumber)) {
-                try {
-                    hideInputControls();
-                } catch {};
-
                 showInputControls();
             } else {
                 alertUser("Táto úloha je už hotová!");
