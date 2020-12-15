@@ -239,3 +239,17 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background-color: black;
 }
+
+#timeWarning {
+  display: block;
+  width: 300px;
+  height: 150px;
+  position: absolute;
+  z-index: 3;
+  left: 40%;
+  top: 70%;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  background-color: whitesmoke;
+  text-align: center;
+}

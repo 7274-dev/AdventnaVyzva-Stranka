@@ -132,8 +132,10 @@ function grantAccess(password) {
             document.getElementById("main").removeChild(document.getElementById("loginDiv"));
         } catch {}
         try {
-            document.getElementById("main").removeChild(timeWarning);
+            document.body.removeChild(timeWarning);
         } catch {}
+        try {showHiddenElements()} catch {};
+        document.body.style.overflow = "auto";
     };
 };
 
@@ -894,11 +896,8 @@ function showHiddenElements() {
 };
 
 function inTimeWarning() {
-    document.body.removeChild(document.getElementById("loginDiv"));
+    document.getElementById("login").removeChild(document.getElementById("loginDiv"));
     document.body.appendChild(timeWarning);
-    var text = document.getElementById("timeWarningText");
-    var time = document.getElementById("timeWarningTime");
-    text.innerHTML = "Adventný kalendár nie je k dispozícii. Kalendár sa otvára v čase 13:00 - 21:00!";
 };
 
 function login() {
@@ -1059,9 +1058,7 @@ function on_load() {
         document.getElementById("descriptioncontainer").removeChild(document.getElementById("buttonFile"));
     };
     
-    if (timeWarning.parentElement == document.getElementById("main")) {
-        document.getElementById("main").removeChild(timeWarning);
-    };
+    timeWarning.parentElement.removeChild(timeWarning);
 
     if (!inTimeAllowed()) {
         inTimeWarning();
@@ -1142,6 +1139,7 @@ function postRequest(url, data) {
 };
 
 function unBlur() {
+    enableClicks = true;
     var elementsToUnBlur = document.getElementsByClassName("blur");
     for (var i = 0; i < elementsToUnBlur.length; i++) {
         elementsToUnBlur[i].style.filter = "blur(0px) brightness(100%)";
@@ -1153,6 +1151,7 @@ function unBlur() {
 };
 
 function blur() {
+    enableClicks = false;
     var elementsToBlur = document.getElementsByClassName("blur");
     for (var i = 0; i < elementsToBlur.length; i++) {
         elementsToBlur[i].style.filter = "blur(10px) brightness(70%)";
