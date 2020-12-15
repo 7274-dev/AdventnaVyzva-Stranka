@@ -968,7 +968,6 @@ function isWeekend() {
 };
 
 function inTimeAllowed() {
-    return true;
     if (!access && !isWeekend()) {// basicly if you have access or its weekend you go in no matter what
         var date = new Date();
         var hour = date.getHours();
@@ -1059,9 +1058,7 @@ function on_load() {
         document.getElementById("descriptioncontainer").removeChild(document.getElementById("buttonFile"));
     };
     
-    if (timeWarning.parentElement == document.getElementById("main")) {
-        document.getElementById("main").removeChild(timeWarning);
-    };
+    timeWarning.parentElement.removeChild(timeWarning);
 
     if (!inTimeAllowed()) {
         inTimeWarning();
