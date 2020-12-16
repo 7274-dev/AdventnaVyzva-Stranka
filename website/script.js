@@ -632,7 +632,11 @@ function randomInt(bound) {
 //return day
 function getDate() {
     var date = new Date;
-    return date.getDate();
+    if (access) {
+        return 30;
+    } else {
+        return date.getDate();
+    };
 };
 
 function openWindow(window, userName) {
