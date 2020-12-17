@@ -2,6 +2,26 @@ html {
   scroll-behavior: smooth;
 }
 
+canvas {
+  display: block;
+  position: relative;
+  zindex: 1;
+  pointer-events: none;
+}
+
+.fade-out {
+  animation: fadeOut ease 8s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
 audio {
     padding-top: 10px;
 }

@@ -313,103 +313,6 @@ function getCookie(name) {
     return dataCookie[name];
 };
 
-function sha256(ascii) {
-	function rightRotate(value, amount) {
-		return (value>>>amount) | (value<<(32 - amount));
-	};
-	
-	var mathPow = Math.pow;
-	var maxWord = mathPow(2, 32);
-	var lengthProperty = 'length'
-	var i, j; // Used as a counter across the whole file
-	var result = ''
-
-	var words = [];
-	var asciiBitLength = ascii[lengthProperty]*8;
-	
-	//* caching results is optional - remove/add slash from front of this line to toggle
-	// Initial hash value: first 32 bits of the fractional parts of the square roots of the first 8 primes
-	// (we actually calculate the first 64, but extra values are just ignored)
-	var hash = sha256.h = sha256.h || [];
-	// Round constants: first 32 bits of the fractional parts of the cube roots of the first 64 primes
-	var k = sha256.k = sha256.k || [];
-	var primeCounter = k[lengthProperty];
-	/*/
-	var hash = [], k = [];
-	var primeCounter = 0;
-	//*/
-
-	var isComposite = {};
-	for (var candidate = 2; primeCounter < 64; candidate++) {
-		if (!isComposite[candidate]) {
-			for (i = 0; i < 313; i += candidate) {
-				isComposite[i] = candidate;
-			}
-			hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
-			k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
-		}
-	}
-	
-	ascii += '\x80' // Append Ƈ' bit (plus zero padding)
-	while (ascii[lengthProperty]%64 - 56) ascii += '\x00' // More zero padding
-	for (i = 0; i < ascii[lengthProperty]; i++) {
-		j = ascii.charCodeAt(i);
-		if (j>>8) return; // ASCII check: only accept characters in range 0-255
-		words[i>>2] |= j << ((3 - i)%4)*8;
-	}
-	words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
-	words[words[lengthProperty]] = (asciiBitLength)
-	
-	// process each chunk
-	for (j = 0; j < words[lengthProperty];) {
-		var w = words.slice(j, j += 16); // The message is expanded into 64 words as part of the iteration
-		var oldHash = hash;
-		// This is now the undefinedworking hash", often labelled as variables a...g
-		// (we have to truncate as well, otherwise extra entries at the end accumulate
-		hash = hash.slice(0, 8);
-		
-		for (i = 0; i < 64; i++) {
-			var i2 = i + j;
-			// Expand the message into 64 words
-			// Used below if 
-			var w15 = w[i - 15], w2 = w[i - 2];
-
-			// Iterate
-			var a = hash[0], e = hash[4];
-			var temp1 = hash[7]
-				+ (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25)) // S1
-				+ ((e&hash[5])^((~e)&hash[6])) // ch
-				+ k[i]
-				// Expand the message schedule if needed
-				+ (w[i] = (i < 16) ? w[i] : (
-						w[i - 16]
-						+ (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3)) // s0
-						+ w[i - 7]
-						+ (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10)) // s1
-					)|0
-				);
-			// This is only used once, so *could* be moved below, but it only saves 4 bytes and makes things unreadble
-			var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22)) // S0
-				+ ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2])); // maj
-			
-			hash = [(temp1 + temp2)|0].concat(hash); // We don't bother trimming off the extra ones, they're harmless as long as we're truncating when we do the slice()
-			hash[4] = (hash[4] + temp1)|0;
-		}
-		
-		for (i = 0; i < 8; i++) {
-			hash[i] = (hash[i] + oldHash[i])|0;
-		}
-	}
-	
-	for (i = 0; i < 8; i++) {
-		for (j = 3; j + 1; j--) {
-			var b = (hash[i]>>(j*8))&255;
-			result += ((b < 16) ? 0 : '') + b.toString(16);
-		}
-	}
-	return result;
-};
-
 var cookie;
 if (getDataCookie() == null) {
     cookie = {};
@@ -941,6 +844,295 @@ function readData(file, callback) {
     reader.readAsDataURL(file);
 };
 
+function startConfetti() {
+    (function() {
+        // globals
+        var canvas;
+        var ctx;
+        var W;
+        var H;
+        var mp = 150; //max particles
+        var particles = [];
+        var angle = 0;
+        var tiltAngle = 0;
+        var confettiActive = true;
+        var animationComplete = true;
+        var deactivationTimerHandler;
+        var reactivationTimerHandler;
+        var animationHandler;
+      
+        // objects
+      
+        var particleColors = {
+          colorOptions: ["DodgerBlue", "OliveDrab", "Gold", "pink", "SlateBlue", "lightblue", "Violet", "PaleGreen", "SteelBlue", "SandyBrown", "Chocolate", "Crimson"],
+          colorIndex: 0,
+          colorIncrementer: 0,
+          colorThreshold: 10,
+          getColor: function() {
+            if (this.colorIncrementer >= 10) {
+              this.colorIncrementer = 0;
+              this.colorIndex++;
+              if (this.colorIndex >= this.colorOptions.length) {
+                this.colorIndex = 0;
+              }
+            }
+            this.colorIncrementer++;
+            return this.colorOptions[this.colorIndex];
+          }
+        }
+      
+        function confettiParticle(color) {
+          this.x = Math.random() * W; // x-coordinate
+          this.y = (Math.random() * H) - H; //y-coordinate
+          this.r = RandomFromTo(10, 30); //radius;
+          this.d = (Math.random() * mp) + 10; //density;
+          this.color = color;
+          this.tilt = Math.floor(Math.random() * 10) - 10;
+          this.tiltAngleIncremental = (Math.random() * 0.07) + .05;
+          this.tiltAngle = 0;
+      
+          this.draw = function() {
+            ctx.beginPath();
+            ctx.lineWidth = this.r / 2;
+            ctx.strokeStyle = this.color;
+            ctx.moveTo(this.x + this.tilt + (this.r / 4), this.y);
+            ctx.lineTo(this.x + this.tilt, this.y + this.tilt + (this.r / 4));
+            return ctx.stroke();
+          }
+        }
+      
+        $(document).ready(function() {
+          SetGlobals();
+          InitializeButton();
+          InitializeConfetti();
+      
+          $(window).resize(function() {
+            W = window.innerWidth;
+            H = window.innerHeight;
+            canvas.width = W;
+            canvas.height = H;
+          });
+      
+        });
+      
+        function InitializeButton() {
+          $('#stopButton').click(DeactivateConfetti);
+          $('#startButton').click(RestartConfetti);
+        }
+      
+        function SetGlobals() {
+          canvas = document.getElementById("canvas");
+          ctx = canvas.getContext("2d");
+          W = window.innerWidth;
+          H = window.innerHeight;
+          canvas.width = W;
+          canvas.height = H;
+        }
+      
+        function InitializeConfetti() {
+          particles = [];
+          animationComplete = false;
+          for (var i = 0; i < mp; i++) {
+            var particleColor = particleColors.getColor();
+            particles.push(new confettiParticle(particleColor));
+          }
+          StartConfetti();
+        }
+      
+        function Draw() {
+          ctx.clearRect(0, 0, W, H);
+          var results = [];
+          for (var i = 0; i < mp; i++) {
+            (function(j) {
+              results.push(particles[j].draw());
+            })(i);
+          }
+          Update();
+      
+          return results;
+        }
+      
+        function RandomFromTo(from, to) {
+          return Math.floor(Math.random() * (to - from + 1) + from);
+        }
+      
+      
+        function Update() {
+          var remainingFlakes = 0;
+          var particle;
+          angle += 0.01;
+          tiltAngle += 0.1;
+      
+          for (var i = 0; i < mp; i++) {
+            particle = particles[i];
+            if (animationComplete) return;
+      
+            if (!confettiActive && particle.y < -15) {
+              particle.y = H + 100;
+              continue;
+            }
+      
+            stepParticle(particle, i);
+      
+            if (particle.y <= H) {
+              remainingFlakes++;
+            }
+            CheckForReposition(particle, i);
+          }
+      
+          if (remainingFlakes === 0) {
+            StopConfetti();
+          }
+        }
+      
+        function CheckForReposition(particle, index) {
+          if ((particle.x > W + 20 || particle.x < -20 || particle.y > H) && confettiActive) {
+            if (index % 5 > 0 || index % 2 == 0) //66.67% of the flakes
+            {
+              repositionParticle(particle, Math.random() * W, -10, Math.floor(Math.random() * 10) - 20);
+            } else {
+              if (Math.sin(angle) > 0) {
+                //Enter from the left
+                repositionParticle(particle, -20, Math.random() * H, Math.floor(Math.random() * 10) - 20);
+              } else {
+                //Enter from the right
+                repositionParticle(particle, W + 20, Math.random() * H, Math.floor(Math.random() * 10) - 20);
+              }
+            }
+          }
+        }
+      
+        function stepParticle(particle, particleIndex) {
+          particle.tiltAngle += particle.tiltAngleIncremental;
+          particle.y += (Math.cos(angle + particle.d) + 3 + particle.r / 2) / 2;
+          particle.x += Math.sin(angle);
+          particle.tilt = (Math.sin(particle.tiltAngle - (particleIndex / 3))) * 15;
+        }
+      
+        function repositionParticle(particle, xCoordinate, yCoordinate, tilt) {
+          particle.x = xCoordinate;
+          particle.y = yCoordinate;
+          particle.tilt = tilt;
+        }
+      
+        function StartConfetti() {
+          W = window.innerWidth;
+          H = window.innerHeight;
+          canvas.width = W;
+          canvas.height = H;
+          (function animloop() {
+            if (animationComplete) return null;
+            animationHandler = requestAnimFrame(animloop);
+            return Draw();
+          })();
+        }
+      
+        function ClearTimers() {
+          clearTimeout(reactivationTimerHandler);
+          clearTimeout(animationHandler);
+        }
+      
+        function DeactivateConfetti() {
+          confettiActive = false;
+          ClearTimers();
+        }
+      
+        function StopConfetti() {
+          animationComplete = true;
+          if (ctx == undefined) return;
+          ctx.clearRect(0, 0, W, H);
+        }
+      
+        function RestartConfetti() {
+          ClearTimers();
+          StopConfetti();
+          reactivationTimerHandler = setTimeout(function() {
+            confettiActive = true;
+            animationComplete = false;
+            InitializeConfetti();
+          }, 100);
+      
+        }
+      
+        window.requestAnimFrame = (function() {
+          return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function(callback) {
+              return window.setTimeout(callback, 1000 / 60);
+            };
+        })();
+      })();
+      
+}
+
+function initSnowflakes() {
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
+    script.onload = function() {
+        particlesJS("snow", {
+            "particles": {
+                "number": {
+                    "value": 200,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#82e0ff"
+                },
+                "opacity": {
+                    "value": 0.7,
+                    "random": false,
+                    "anim": {
+                        "enable": false
+                    }
+                },
+                "size": {
+                    "value": 5,
+                    "random": true,
+                    "anim": {
+                        "enable": false
+                    }
+                },
+                "line_linked": {
+                    "enable": false
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 5,
+                    "direction": "bottom",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": true,
+                        "rotateX": 300,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "events": {
+                    "onhover": {
+                        "enable": false
+                    },
+                    "onclick": {
+                        "enable": false
+                    },
+                    "resize": false
+                }
+            },
+            "retina_detect": true
+        });
+    }
+    document.head.append(script);
+}
+
 function starClick() {
     if (access) {
         enableClicks = true;
@@ -949,6 +1141,26 @@ function starClick() {
         if (getDate() < 24) {
             alertUser("Počkaj si do Vianoc :)");
         } else {
+            EPPZScrollTo.scrollVerticalToElementById("descriptioncontainer", 50);
+            document.body.removeChild(document.getElementById("snow"));
+            const canvas = document.createElement("canvas");
+            canvas.id = "canvas";
+            canvas.classList.add("fixed-top");
+            document.body.appendChild(canvas);
+            startConfetti();
+            
+            setTimeout(function() {
+                canvas.classList.add("fade-out");
+                setTimeout(function() {
+                    document.body.removeChild(document.getElementById("canvas"));
+                    const snowElement = document.createElement("div");
+                    snowElement.id = "snow";
+                    snowElement.classList.add("fixed-top");
+                    document.body.appendChild(snowElement);
+                    initSnowflakes();
+                }, 8000);
+                
+            }, 4000);
             document.getElementById("text-heading").innerHTML = "Vianoce";
             dayOpened = 24;
             listOfOpenedBalls.push(dayNumber);
