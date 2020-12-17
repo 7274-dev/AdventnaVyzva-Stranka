@@ -949,7 +949,48 @@ function starClick() {
         if (getDate() < 24) {
             alertUser("Počkaj si do Vianoc :)");
         } else {
-            // code block here, needs to get filled
+            document.getElementById("text-heading").innerHTML = "Vianoce";
+            dayOpened = 24;
+            listOfOpenedBalls.push(dayNumber);
+            easterEgg();
+            const http = new XMLHttpRequest();
+
+            var url = backendURL + "text?day=" + dayNumber;
+            http.open("GET", url);
+
+            var description = document.getElementById("description");
+
+            http.onreadystatechange = function() {
+                if (this.responseText) {
+                    if (wasRequestSuccessful(this) && this.responseText != "") {
+                        description.innerHTML = JSON.parse(this.responseText).response;
+                        // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
+                    } else if (this.responseText == "") {
+                        description.innerHTML = "Server down";
+                    } else if (this.readyState == XMLHttpRequest.DONE) {
+                        description.innerHTML = JSON.parse(this.responseText).response;
+                        // displayAditionalTagsFromServerResponse(JSON.parse(this.responseText).response);
+                    } else {
+                        description.innerHTML = "Error!";
+                    };
+                };
+            };
+            http.send();
+            showInputControls();
+            
+            if (getDate() >= dayNumber) {
+                if (audioDisplayed) {
+                    document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
+                    audioDisplayed = false;
+                };
+                var audio = document.createElement("audio");
+                audio.src = "resources/nahravky/day" + dayNumber + ".wav";
+                audio.id = "audio";
+                audio.controls = true;
+                audioDisplayed = true;
+                document.getElementById("descriptioncontainer").appendChild(audio);
+            };
+            EPPZScrollTo.scrollVerticalToElementById("descriptioncontainer", 50);
         };
     };
 };
