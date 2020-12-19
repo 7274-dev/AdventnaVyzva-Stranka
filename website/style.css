@@ -5,7 +5,7 @@ html {
 canvas {
   display: block;
   position: relative;
-  zindex: 1;
+  z-index: 1;
   pointer-events: none;
 }
 
