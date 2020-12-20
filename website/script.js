@@ -19,6 +19,7 @@ var alertDisplayed = false;
 var audioDisplayed = false;
 const startText = document.getElementById("descriptioncontainer").innerHTML;
 var listOfOpenedBalls = [];
+var showSnoflake = true;
 
 function sha256(ascii) {
     function rightRotate(value, amount) {
@@ -128,12 +129,8 @@ function grantAccess(password) {
         access = true;
         alertUser("Developer access granted!");
         writeCookie("loginName", "7274 developer");
-        try {
-            document.getElementById("main").removeChild(document.getElementById("loginDiv"));
-        } catch {}
-        try {
-            document.body.removeChild(timeWarning);
-        } catch {}
+        try {document.getElementById("login").removeChild(document.getElementById("loginDiv"));} catch {}
+        try {document.body.removeChild(timeWarning);} catch {}
         try {showHiddenElements()} catch {};
         document.body.style.overflow = "auto";
     };
@@ -1148,7 +1145,7 @@ function starClick() {
             canvas.classList.add("fixed-top");
             document.body.appendChild(canvas);
             startConfetti();
-            
+
             setTimeout(function() {
                 canvas.classList.add("fade-out");
                 setTimeout(function() {
@@ -1160,7 +1157,7 @@ function starClick() {
                     initSnowflakes();
                 }, 8000);
                 
-            }, 4000);
+            }, 3000);
             document.getElementById("text-heading").innerHTML = "Vianoce";
             dayOpened = 24;
             listOfOpenedBalls.push(dayNumber);
@@ -1381,20 +1378,6 @@ function checkRequestResponse(request) {
     return responseText;
 };
 
-function postRequest(url, data) {
-    var xml = new XMLHttpRequest();
-    xml.open("POST", url);
-
-    http.onreadystatechange = function() {
-        checkRequestResponse(this);
-    };
-
-    xml.send(JSON.stringify(data));
-    while (responseText == "") { //we dont have better idea :D
-    };
-    return responseText;
-};
-
 function unBlur() {
     enableClicks = true;
     var elementsToUnBlur = document.getElementsByClassName("blur");
@@ -1431,6 +1414,8 @@ $(window).scroll(function(e) {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+    //"return none" will stop snowflakes
+    if (!showSnoflake) {return null} // if snowflakes are not enebled nothing will happen
     var script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
     script.onload = function() {
