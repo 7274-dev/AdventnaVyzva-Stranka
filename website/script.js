@@ -1217,7 +1217,7 @@ function getDateName() {
 
 function isWeekend() {
     var dayName = getDateName();
-    if (dayName == "sobota" || dayName == "nedela") {
+    if (dayName == "sobota" || dayName == "nedeľa" || dayName == "nedela") {
         return true;
     } else {
         return false;
