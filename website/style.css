@@ -273,9 +273,3 @@ body {
   background-color: whitesmoke;
   text-align: center;
 }
-
-#test {
-  position: fixed;
-  top: 5%;
-  right: 5%;
-}

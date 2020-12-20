@@ -1,2 +1,2 @@
 # Adventna Vyzva
-Adventna Vyzva
+Adventná Výzva je stránka ktorá je určená pre deti z 5 ročníka školy Gercenova 10 v Petržalke, Bratislave. Stránka na prvý pohlad vyzerá ako Adventný Kalendár, ale v skutočnosti každá gula obsahuje úlohu a nahrávku na určitý deň, niekedy môže úloha obsahovať aj obrázky alebo videá, úloha sa dá odovzdať pani učiteľke Draganovej cez stránku. Ďalšia vec čo si na stránke hneď všimnete, je obmedzenie vypracovávania úloh, deti môžu vypracovávať úlohy len od 13 do 21, aby sa venovali škole keď majú, ale cez výkendy je obmedzenie času vypnuté.

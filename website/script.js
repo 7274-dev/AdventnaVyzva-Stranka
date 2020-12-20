@@ -19,7 +19,6 @@ var alertDisplayed = false;
 var audioDisplayed = false;
 const startText = document.getElementById("descriptioncontainer").innerHTML;
 var listOfOpenedBalls = [];
-var showSnoflake = true;
 
 function sha256(ascii) {
     function rightRotate(value, amount) {
@@ -1414,8 +1413,6 @@ $(window).scroll(function(e) {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    //"return none" will stop snowflakes
-    if (!showSnoflake) {return null} // if snowflakes are not enebled nothing will happen
     var script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
     script.onload = function() {
