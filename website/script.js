@@ -742,7 +742,7 @@ function on_click(event) {
                     audioDisplayed = false;
                 };
                 var audio = document.createElement("audio");
-                audio.src = "resources/nahravky/day" + dayNumber + ".wav";
+                audio.src = "resources/nahravky/day" + dayNumber + ".mp3";
                 audio.id = "audio";
                 audio.controls = true;
                 audioDisplayed = true;
