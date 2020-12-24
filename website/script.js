@@ -572,7 +572,12 @@ function openWindow(window, userName) {
 
 //change ball image to broken ball
 function breakeBall(containerID) {
-    var container = document.getElementById("ball" + containerID);
+    if (containerID == 23) {
+        container = document.getElementById("star");
+    } 
+    else {
+        var container = document.getElementById("ball" + containerID);
+    }
     var oldSrc = container.style.backgroundImage;
     var oldColor = oldSrc.replace("_ball.png", "");
     if (oldColor == "orange_red") {
