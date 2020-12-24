@@ -1186,13 +1186,13 @@ function starClick() {
             http.send();
             showInputControls();
 
-            if (getDate() >= dayNumber) {
+            if (getDate() >= 24) {
                 if (audioDisplayed) {
                     document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
                     audioDisplayed = false;
                 };
                 var audio = document.createElement("audio");
-                audio.src = "resources/nahravky/day" + dayNumber + ".mp3";
+                audio.src = "resources/nahravky/day24.mp3";
                 audio.id = "audio";
                 audio.controls = true;
                 audioDisplayed = true;
