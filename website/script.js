@@ -1159,11 +1159,11 @@ function starClick() {
             }, 3000);
             document.getElementById("text-heading").innerHTML = "Vianoce";
             dayOpened = 24;
-            listOfOpenedBalls.push(dayNumber);
+            listOfOpenedBalls.push(24);
             easterEgg();
             const http = new XMLHttpRequest();
 
-            var url = backendURL + "text?day=" + dayNumber;
+            var url = backendURL + "text?day=24";
             http.open("GET", url);
 
             var description = document.getElementById("description");
@@ -1185,14 +1185,14 @@ function starClick() {
             };
             http.send();
             showInputControls();
-            
+
             if (getDate() >= dayNumber) {
                 if (audioDisplayed) {
                     document.getElementById("descriptioncontainer").removeChild(document.getElementById("audio"));
                     audioDisplayed = false;
                 };
                 var audio = document.createElement("audio");
-                audio.src = "resources/nahravky/day" + dayNumber + ".wav";
+                audio.src = "resources/nahravky/day" + dayNumber + ".mp3";
                 audio.id = "audio";
                 audio.controls = true;
                 audioDisplayed = true;
